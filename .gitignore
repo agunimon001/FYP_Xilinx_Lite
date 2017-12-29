@@ -1,0 +1,8 @@
+#################
+# Initial setup #
+#################
+
+.classpath
+.project
+/bin
+/.settings
