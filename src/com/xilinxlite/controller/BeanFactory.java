@@ -37,8 +37,8 @@ public class BeanFactory {
 			return new Sample();
 
 		// bean IDs
-		case "fileMgr":
-			return new FileMgrImp();
+		case "menuMgr":
+			return new MenuMgrImp();
 
 		// if bean id is not found, throw Exception. For easier identification of
 		// problem location.

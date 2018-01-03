@@ -2,7 +2,7 @@ package com.xilinxlite;
 
 import com.xilinxlite.controller.BeanFactory;
 import com.xilinxlite.controller.BeanInstantiationError;
-import com.xilinxlite.controller.FileMgr;
+import com.xilinxlite.controller.MenuMgr;
 import com.xilinxlite.model.ProjectSettings;
 
 import javafx.application.Application;
@@ -54,7 +54,7 @@ public class MainApplication extends Application {
 	 */
 	private void setupMenuBar(BorderPane pane) throws BeanInstantiationError {
 		// BeanFactory
-		BeanFactory beanFactory = BeanFactory.getInstance();
+		MenuMgr menuMgr = (MenuMgr) BeanFactory.getInstance().getBean("menuMgr");
 
 		// Menu Bar
 		MenuBar mb = new MenuBar();
@@ -74,16 +74,13 @@ public class MainApplication extends Application {
 		fileMenu.getItems().addAll(fMenuNew, fMenuOpenProject, fMenuSave, fMenuSaveAs, fMenuClose, fMenuExit);
 		mb.getMenus().add(fileMenu);
 
-		// Get bean for Menu: File
-		FileMgr fileMgr = (FileMgr) beanFactory.getBean("fileMgr");
-
 		// Functions for Menu: File
-		fMenuNewProject.setOnAction(e -> projectSettings = fileMgr.newProject());
-		fMenuNewFile.setOnAction(e -> fileMgr.createFile());
-		fMenuOpenProject.setOnAction(e -> fileMgr.openProject());
-		fMenuSave.setOnAction(e -> fileMgr.saveProject());
-		fMenuSaveAs.setOnAction(e -> fileMgr.saveProjectAs());
-		fMenuClose.setOnAction(e -> fileMgr.closeProject());
+		fMenuNewProject.setOnAction(e -> projectSettings = menuMgr.newProject());
+		fMenuNewFile.setOnAction(e -> menuMgr.createFile());
+		fMenuOpenProject.setOnAction(e -> menuMgr.openProject());
+		fMenuSave.setOnAction(e -> menuMgr.saveProject());
+		fMenuSaveAs.setOnAction(e -> menuMgr.saveProjectAs());
+		fMenuClose.setOnAction(e -> menuMgr.closeProject());
 		fMenuExit.setOnAction(e -> Platform.exit());
 
 		// Accelerators for Menu: File
@@ -96,9 +93,28 @@ public class MainApplication extends Application {
 		// Menu: Project
 		Menu projectMenu = new Menu("Project");
 		MenuItem pMenuSettings = new MenuItem("Project Settings");
+		projectMenu.getItems().add(pMenuSettings);
+		mb.getMenus().add(projectMenu);
 		
-		// Get Bean
-		ProjectMgr projectMgr = (ProjectMgr) beanFactory.getBean("projectMgr");
+		// Functions for Menu: Project
+		pMenuSettings.setOnAction(e -> menuMgr.projectSettings());
+		
+		// Accelerators for Menu: Project
+		
+		
+		////////////////////////////////////////////
+		// Menu: Remote
+		Menu remoteMenu = new Menu("Remote");
+		MenuItem rMenuSync = new MenuItem("Synchronize");
+		MenuItem rMenuConnection = new MenuItem("Connection Settings");
+		remoteMenu.getItems().addAll(rMenuSync, rMenuConnection);
+		mb.getMenus().add(remoteMenu);
+		
+		// Functions for Menu: Remote
+		rMenuSync.setOnAction(e -> menuMgr.synchronizeFiles());
+		rMenuConnection.setOnAction(e -> menuMgr.connectionSettings());
+		
+		// Accelerators for Menu: Remote
 		
 		// Set Menu Bar to scene
 		pane.setTop(mb);
