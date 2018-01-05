@@ -1,4 +1,4 @@
-package com.xilinxlite.controller;
+package com.xilinxlite.bean;
 
 public class BeanInstantiationError extends Exception {
 

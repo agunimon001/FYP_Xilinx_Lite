@@ -1,7 +1,7 @@
-package com.xilinxlite;
+package com.xilinxlite.demo;
 
-import com.xilinxlite.controller.BeanInstantiationError;
-import com.xilinxlite.controller.BeanFactory;
+import com.xilinxlite.bean.BeanFactory;
+import com.xilinxlite.bean.BeanInstantiationError;
 
 /**
  * For testing BeanFactory only.

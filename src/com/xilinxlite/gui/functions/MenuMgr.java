@@ -1,6 +1,6 @@
-package com.xilinxlite.controller;
+package com.xilinxlite.gui.functions;
 
-import com.xilinxlite.model.ProjectSettings;
+import com.xilinxlite.ProjectSettings;
 
 /**
  * Functions for the menu bar of the main GUI.

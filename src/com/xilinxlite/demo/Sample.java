@@ -1,4 +1,4 @@
-package com.xilinxlite;
+package com.xilinxlite.demo;
 
 /**
  * Sample class for testing only.

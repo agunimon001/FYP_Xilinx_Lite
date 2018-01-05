@@ -1,9 +1,8 @@
 package com.xilinxlite;
 
-import com.xilinxlite.controller.BeanFactory;
-import com.xilinxlite.controller.BeanInstantiationError;
-import com.xilinxlite.controller.MenuMgr;
-import com.xilinxlite.model.ProjectSettings;
+import com.xilinxlite.bean.BeanFactory;
+import com.xilinxlite.bean.BeanInstantiationError;
+import com.xilinxlite.gui.functions.MenuMgr;
 
 import javafx.application.Application;
 import javafx.application.Platform;

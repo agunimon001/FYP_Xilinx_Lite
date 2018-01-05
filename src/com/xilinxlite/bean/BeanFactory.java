@@ -1,6 +1,7 @@
-package com.xilinxlite.controller;
+package com.xilinxlite.bean;
 
-import com.xilinxlite.Sample;
+import com.xilinxlite.demo.Sample;
+import com.xilinxlite.gui.functions.MenuMgrImp;
 
 /**
  * Controls all beans used in project. Lazy Singleton used.
