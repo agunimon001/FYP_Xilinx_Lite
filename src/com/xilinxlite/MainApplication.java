@@ -1,5 +1,6 @@
 package com.xilinxlite;
 
+import com.sun.glass.ui.MenuBar;
 import com.xilinxlite.gui.MainGUI;
 
 import javafx.application.Application;
@@ -30,11 +31,14 @@ public class MainApplication extends Application {
 	@Override
 	public void start(Stage window) throws Exception {
 		// Build window
+		BorderPane mainLayout = new BorderPane();
+		mainLayout.setTop(MainGUI.setMenuBar());
+		mainLayout.setCenter(MainGUI.setSummary());
 		BorderPane layout = new BorderPane();
-		layout.setTop(MainGUI.setMenuBar());
+		mainLayout.setBottom(layout);
 		layout.setLeft(MainGUI.setProjectExplorer());
 
-		window.setScene(new Scene(layout, 900, 600));
+		window.setScene(new Scene(mainLayout, 900, 600));
 		window.show();
 	}
 }
