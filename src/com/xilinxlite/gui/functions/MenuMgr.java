@@ -11,11 +11,11 @@ import com.xilinxlite.ProjectSettings;
 public interface MenuMgr {
 
 	// File
-	public ProjectSettings newProject();
+	public void newProject();
 	
 	public void createFile();
 	
-	public ProjectSettings openProject();
+	public void openProject();
 	
 	public void saveProject();
 	

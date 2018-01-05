@@ -1,13 +1,10 @@
 package com.xilinxlite.gui.functions;
 
-import com.xilinxlite.ProjectSettings;
-
 public class MenuMgrImp implements MenuMgr {
 
 	@Override
-	public ProjectSettings newProject() {
+	public void newProject() {
 		System.err.println("newProject() not implemented.");
-		return null;
 	}
 
 	@Override
@@ -16,9 +13,8 @@ public class MenuMgrImp implements MenuMgr {
 	}
 
 	@Override
-	public ProjectSettings openProject() {
+	public void openProject() {
 		System.err.println("openProject() not implemented.");
-		return null;
 	}
 
 	@Override
