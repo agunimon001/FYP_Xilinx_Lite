@@ -1,5 +1,7 @@
 package com.xilinxlite.gui.functions;
 
+import com.xilinxlite.gui.MainGUI;
+
 public class MenuMgrImp implements MenuMgr {
 
 	@Override
@@ -45,6 +47,12 @@ public class MenuMgrImp implements MenuMgr {
 	@Override
 	public void connectionSettings() {
 		System.err.println("connectionSettings() not implemented.");
+	}
+
+	@Override
+	public void help() {
+		System.err.println("help() not implemented.");
+//		MainGUI.about();
 	}
 
 }

@@ -30,4 +30,7 @@ public interface MenuMgr {
 	public void synchronizeFiles();
 	
 	public void connectionSettings();
+	
+	// Help
+	public void help();
 }

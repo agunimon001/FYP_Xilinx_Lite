@@ -1,6 +1,5 @@
 package com.xilinxlite;
 
-import com.sun.glass.ui.MenuBar;
 import com.xilinxlite.gui.MainGUI;
 
 import javafx.application.Application;
@@ -13,6 +12,11 @@ public class MainApplication extends Application {
 	 * Project settings (singleton)
 	 */
 	private ProjectSettings projectSettings = ProjectSettings.getInstance();
+	
+	/**
+	 * Other Variables
+	 */
+	private final String DEFAULT_TITLE = "Xilinx Lite";
 
 	/**
 	 * Main method
@@ -38,7 +42,8 @@ public class MainApplication extends Application {
 		mainLayout.setBottom(layout);
 		layout.setLeft(MainGUI.setProjectExplorer());
 
-		window.setScene(new Scene(mainLayout, 900, 600));
+		window.setScene(new Scene(mainLayout, 800, 600));
+		window.setTitle(DEFAULT_TITLE);
 		window.show();
 	}
 }
