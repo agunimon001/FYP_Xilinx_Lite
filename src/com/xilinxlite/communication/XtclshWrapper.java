@@ -12,7 +12,8 @@ import java.util.logging.Logger;
  * with the following format: "xtclsh.exe [script] [commands..]". This wrapper
  * is built around the three parameters given on construction. After each run(),
  * both input and error readers must be called again for reading as each run()
- * builds a new process.
+ * builds a new process. Different information has to be read from different
+ * reader.
  * 
  * @author Ong Hock Leng
  *
