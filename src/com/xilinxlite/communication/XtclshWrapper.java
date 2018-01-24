@@ -48,7 +48,7 @@ class XtclshWrapper {
 	 * @return XtclshWrapper
 	 * @throws FileNotFoundException
 	 */
-	public static XtclshWrapper getInstance(String xtclshPath, String tclScriptPath) throws FileNotFoundException {
+	static XtclshWrapper getInstance(String xtclshPath, String tclScriptPath) throws FileNotFoundException {
 		String workingDirectory = System.getProperty("user.home") + "\\Xilinx_Lite";
 		return getInstance(xtclshPath, tclScriptPath, workingDirectory);
 	}
@@ -63,7 +63,7 @@ class XtclshWrapper {
 	 * @return XtclshWrapper
 	 * @throws FileNotFoundException
 	 */
-	public static XtclshWrapper getInstance(String xtclshPath, String tclScriptPath, String workingDirectory)
+	static XtclshWrapper getInstance(String xtclshPath, String tclScriptPath, String workingDirectory)
 			throws FileNotFoundException {
 		String errorMsg = "";
 
