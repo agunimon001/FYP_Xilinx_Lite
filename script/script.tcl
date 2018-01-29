@@ -28,34 +28,143 @@ proc clean {} {
 	}
 }
 
-proc set_attributes {} {
-	# Assumes that remaining arguments are in order
+proc get_attributes {} {
 	if [open_project] {
-		project set family [lindex $argv 2]
-		project set device [lindex $argv 3]
-		project set package [lindex $argv 4]
-		project set speed [lindex $argv 5]
-		project set top-level-source-type [lindex $argv 6]
-		project set synthesis_tool [lindex $argv 7]
-		project set simulator [lindex $argv 8]
-		project set preferred-language [lindex $argv 9]
-		project set enable-message-filtering [lindex $argv 10]
-		project save
-		get_attributes
+		get_family
+		get_device
+		get_package
+		get_speed
+		get_top_level_source_type
+		get_synthesis
+		get_simulator
+		get_language
+		get_message_filter
 	}
 }
 
-proc get_attributes {} {
+proc get_family {} {
 	if [open_project] {
 		puts "Device Family            : [project get family]"
+	}
+}
+
+proc get_device {} {
+	if [open_project] {
 		puts "Device                   : [project get device]"
+	}
+}
+
+proc get_package {} {
+	if [open_project] {
 		puts "Package                  : [project get package]"
+	}
+}
+
+proc get_speed {} {
+	if [open_project] {
 		puts "Speed Grade              : [project get speed]"
+	}
+}
+
+proc get_top_level_source_type {} {
+	if [open_project] {
 		puts "Top-Level Source Type    : [project get top-level-source-type]"
+	}
+}
+
+proc get_synthesis {} {
+	if [open_project] {
 		puts "Synthesis Tool           : [project get synthesis]"
+	}
+}
+
+proc get_simulator {} {
+	if [open_project] {
 		puts "Simulator                : [project get simulator]"
+	}
+}
+
+proc get_language {} {
+	if [open_project] {
 		puts "Preferred Language       : [project get preferred-language]"
+	}
+}
+
+proc get_message_filter {} {
+	if [open_project] {
 		puts "Enable Message Filtering : [project get enable-message-filtering]"
+	}
+}
+
+proc set_family {val} {
+	if [open_project] {
+		project set family $val
+		project save
+		get_family
+	}
+}
+
+proc set_device {val} {
+	if [open_project] {
+		project set device $val
+		project save
+		get_device
+	}
+}
+
+proc set_package {val} {
+	if [open_project] {
+		project set package $val
+		project save
+		get_package
+	}
+}
+
+proc set_speed {val} {
+	if [open_project] {
+		project set speed $val
+		project save
+		get_speed
+	}
+}
+
+proc set_top_level_source_type {val} {
+	if [open_project] {
+		project set top-level-source-type $val
+		project save
+		get_top_level_source_type
+	}
+}
+
+proc set_synthesis {val} {
+	if [open_project] {
+		project set synthesis_tool $val
+		project save
+		get_synthesis
+	}
+}
+
+proc set_simulator {val} {
+	if [open_project] {
+		project set simulator $val
+		project save
+		get_simulator
+	}
+}
+
+proc set_language {val} {
+	if [open_project] {
+		project set preferred-language $val
+		project save
+		get_language
+	}
+}
+
+proc set_message_filter {val} {
+	if [open_project] {
+		project set enable-message-filtering $val
+		project save
+		get_message_filter
 	}
 }
 
@@ -108,8 +217,25 @@ switch $option {
 	"get_attributes" {get_attributes}
 	"get_family_list" {get_family_list}
 	"get_arch_data" {get_arch_data [lindex $argv 2]}
-	"set_attributes" {set_attributes}
 	"add_file" {add_file [lindex $argv 2]}
 	"view_files" {view_files}
+	"set_family" {set_family [lindex $argv 2]}
+	"get_family" {get_family}
+	"set_device" {set_device [lindex $argv 2]}
+	"get_device" {get_device}
+	"set_package" {set_package [lindex $argv 2]}
+	"get_package" {get_package}
+	"set_speed" {set_speed [lindex $argv 2]}
+	"get_speed" {get_speed}
+	"set_top_level_source_type" {set_top_level_source_type [lindex $argv 2]}
+	"get_top_level_source_type" {get_top_level_source_type}
+	"set_synthesis" {set_synthesis [lindex $argv 2]}
+	"get_synthesis" {get_synthesis}
+	"set_simulator" {set_simulator [lindex $argv 2]}
+	"get_simulator" {get_simulator}
+	"set_language" {set_language [lindex $argv 2]}
+	"get_language" {get_language}
+	"set_message_filter" {set_message_filter [lindex $argv 2]}
+	"get_message_filter" {get_message_filter}
 	default {puts "ERROR: option invalid"}
 }
