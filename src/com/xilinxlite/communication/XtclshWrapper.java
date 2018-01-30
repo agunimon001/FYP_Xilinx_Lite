@@ -41,19 +41,6 @@ class XtclshWrapper {
 	}
 
 	/**
-	 * Build instance with default working directory.
-	 * 
-	 * @param xtclshPath
-	 * @param tclScriptPath
-	 * @return XtclshWrapper
-	 * @throws FileNotFoundException
-	 */
-	static XtclshWrapper getInstance(String xtclshPath, String tclScriptPath) throws FileNotFoundException {
-		String workingDirectory = System.getProperty("user.home") + "\\Xilinx_Lite";
-		return getInstance(xtclshPath, tclScriptPath, workingDirectory);
-	}
-
-	/**
 	 * Validates all three parameters before construction. Throws exception if error
 	 * building.
 	 * 

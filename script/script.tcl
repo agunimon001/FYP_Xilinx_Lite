@@ -195,6 +195,7 @@ proc view_files {} {
 # Currently only implements for one synthesis_tool
 proc synthesize {} {
 	if [open_project] {
+		clean
 		puts [process run "Synthesize - XST" -force rerun_all]
 	}
 }

@@ -13,54 +13,114 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Implemented class of Commands. Uses local copy of Xilinx ISE. Development
+ * based on Xilinx ISE 14.7. Project needs to be opened before using other
+ * methods.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 class XtclshCommands implements Commands {
 
 	private static final Logger logger = Logger.getLogger(XtclshCommands.class.getName());
 
-	private XtclshWrapper xtclsh;
+	private XtclshWrapper xtclsh = null;
 	private String projectName = "";
 	private BufferedReader r;
 	private String line;
 
-	public XtclshCommands(String xtclshPath, String tclScriptPath) throws FileNotFoundException {
-		xtclsh = XtclshWrapper.getInstance(xtclshPath, tclScriptPath);
-	}
-
+	/**
+	 * Constructor.
+	 * 
+	 * @param xtclshPath
+	 * @param tclScriptPath
+	 * @param workingDirectory
+	 * @throws FileNotFoundException
+	 */
 	public XtclshCommands(String xtclshPath, String tclScriptPath, String workingDirectory)
 			throws FileNotFoundException {
 		xtclsh = XtclshWrapper.getInstance(xtclshPath, tclScriptPath, workingDirectory);
 	}
 
+	/**
+	 * Test connection. True if connection is successful; false otherwise (can be no
+	 * connection has been setup).
+	 * 
+	 * @return Test success
+	 */
+	public boolean testConnection() {
+		// Check if connection is set up
+		if (xtclsh != null) {
+			try {
+				// Switch off logger to prevent false alarm
+				Level level = logger.getLevel();
+				logger.setLevel(Level.OFF);
+
+				// Test connection with insufficient argument
+				run("open_project");
+
+				// Revert logger status
+				logger.setLevel(level);
+
+				// Read for line; return true if found
+				r = xtclsh.getInputReader();
+				while ((line = r.readLine()) != null) {
+					if (line.contains("Error: arguments insufficient")) {
+						return true;
+					}
+				}
+			} catch (IOException e) {
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Used to run commands with xtclsh.exe within this class.
+	 * 
+	 * @param commands
+	 * @throws IOException
+	 */
 	private void run(String... commands) throws IOException {
+		// Check if projectName is available.
 		if (this.projectName.isEmpty()) {
 			logger.info("Project not opened.");
 		}
 
+		// Build String array to be used.
 		String[] arr = new String[commands.length + 1];
 		arr[0] = projectName;
 		for (int i = 0; i < commands.length; i++) {
 			arr[i + 1] = commands[i];
 		}
 
+		// Run command
 		xtclsh.run(arr);
 	}
 
+	/**
+	 * Reads output from xtclsh.exe for project attributes. This method is designed
+	 * with the accompanied TCL script. Returns as Map<String, String>. May return
+	 * empty Map if no attribute is found.
+	 * 
+	 * @return Attributes stored in a Map using XilinxAttribute
+	 */
 	private Map<String, String> readAttributes() {
 		Map<String, String> attributes = new HashMap<String, String>();
 		Pattern pattern = Pattern.compile("^\\s*\\b(?<key>.+)\\b\\s*:\\s*(?<value>.+)\\s*$");
 		Matcher matcher;
 
 		try {
+			// Reads output and puts into Map if found valid line
 			r = xtclsh.getInputReader();
-			System.out.println("=== start ===");
 			while ((line = r.readLine()) != null) {
-				System.out.println(line);
 				matcher = pattern.matcher(line);
 				if (matcher.matches()) {
 					attributes.put(matcher.group("key"), matcher.group("value"));
 				}
 			}
-			System.out.println("=== end ===");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
@@ -82,9 +142,8 @@ class XtclshCommands implements Commands {
 
 			r = xtclsh.getInputReader();
 			while ((line = r.readLine()) != null) {
-				System.out.println(line);
 				if (line.contains("Error")) {
-					this.projectName = null;
+					this.projectName = "";
 					return false;
 				}
 			}
@@ -98,7 +157,7 @@ class XtclshCommands implements Commands {
 
 	@Override
 	public void closeProject() {
-		this.projectName = null;
+		this.projectName = "";
 	}
 
 	@Override
@@ -111,7 +170,7 @@ class XtclshCommands implements Commands {
 			r = xtclsh.getInputReader();
 			while ((line = r.readLine()) != null) {
 				if (line.contains("Error")) {
-					this.projectName = null;
+					this.projectName = "";
 					return false;
 				}
 			}
@@ -122,6 +181,9 @@ class XtclshCommands implements Commands {
 		return true;
 	}
 
+	/**
+	 * 
+	 */
 	@Override
 	public Map<String, String> setAttributes(Map<String, String> attributes) {
 		// Run through all Attribute set methods sequentially
@@ -382,12 +444,28 @@ class XtclshCommands implements Commands {
 	}
 
 	@Override
-	public void addFile(String filename) {
+	public boolean addFile(String filename) {
 		try {
+			// adjust filename to suit xtclsh usage
+			filename = filename.replaceAll("\\\\", "/");
+			while (filename.contains("//")) {
+				filename.replaceAll("//", "/");
+			}
+
 			run("add_file", filename);
+
+			// Check for error caused by file being present
+			r = xtclsh.getErrorReader();
+			while ((line = r.readLine()) != null) {
+				if (line.contains("is already present")) {
+					return false;
+				}
+			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
+
+		return true;
 	}
 
 	@Override
@@ -412,23 +490,13 @@ class XtclshCommands implements Commands {
 	public void synthesize() {
 		try {
 			run("synthesize");
-
-			r = xtclsh.getInputReader();
-			while ((line = r.readLine()) != null) {
-				System.out.println(line);
-			}
-			System.out.println("============");
-			r = xtclsh.getErrorReader();
-			while ((line = r.readLine()) != null) {
-				System.out.println(line);
-			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 	}
 
 	@Override
-	public List<String> getFamilyList() {
+	public List<String> getArchitectList() {
 		List<String> list = new ArrayList<String>();
 
 		try {
