@@ -1,37 +1,14 @@
 package com.xilinxlite.gui;
 
-import com.xilinxlite.bean.BeanFactory;
-import com.xilinxlite.bean.BeanInstantiationError;
-import com.xilinxlite.gui.functions.MenuMgr;
-
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import sun.font.FontFamily;
-import sun.font.SunFontManager.FamilyDescription;
 
-public class MainGUI {
-
-	/**
-	 * Sets the menu bar for the main GUI. Uses implemented interface MenuMgr for
-	 * menu bar's functionalities.
-	 * 
-	 * @return MenuBar extends Node
-	 * @throws BeanInstantiationError
-	 */
-	public static MenuBar setMenuBar() throws BeanInstantiationError {
-		// BeanFactory
-		MenuMgr menuMgr = (MenuMgr) BeanFactory.getInstance().getBean("menuMgr");
-
+public abstract class MenuBarDesign {
+	
+	public MenuBar getInstance() {
 		// MenuBar
 		MenuBar mb = new MenuBar();
 
@@ -53,12 +30,12 @@ public class MainGUI {
 		mb.getMenus().add(fileMenu);
 
 		// Functions for Menu: File
-		fMenuNewProject.setOnAction(e -> menuMgr.newProject());
-		fMenuNewFile.setOnAction(e -> menuMgr.createFile());
-		fMenuOpenProject.setOnAction(e -> menuMgr.openProject());
-		fMenuSave.setOnAction(e -> menuMgr.saveProject());
-		fMenuSaveAs.setOnAction(e -> menuMgr.saveProjectAs());
-		fMenuClose.setOnAction(e -> menuMgr.closeProject());
+		fMenuNewProject.setOnAction(e -> newProject());
+		fMenuNewFile.setOnAction(e -> createFile());
+		fMenuOpenProject.setOnAction(e -> openProject());
+		fMenuSave.setOnAction(e -> saveProject());
+		fMenuSaveAs.setOnAction(e -> saveProjectAs());
+		fMenuClose.setOnAction(e -> closeProject());
 		fMenuExit.setOnAction(e -> Platform.exit());
 
 		// Accelerators for Menu: File
@@ -77,7 +54,7 @@ public class MainGUI {
 		mb.getMenus().add(projectMenu);
 
 		// Functions for Menu: Project
-		pMenuSettings.setOnAction(e -> menuMgr.projectSettings());
+		pMenuSettings.setOnAction(e -> projectSettings());
 
 		// Accelerators for Menu: Project
 
@@ -92,8 +69,8 @@ public class MainGUI {
 		mb.getMenus().add(remoteMenu);
 
 		// Functions for Menu: Remote
-		rMenuSync.setOnAction(e -> menuMgr.synchronizeFiles());
-		rMenuConnection.setOnAction(e -> menuMgr.connectionSettings());
+		rMenuSync.setOnAction(e -> synchronizeFiles());
+		rMenuConnection.setOnAction(e -> connectionSettings());
 
 		// Accelerators for Menu: Remote
 
@@ -107,29 +84,28 @@ public class MainGUI {
 		mb.getMenus().add(helpMenu);
 
 		// Functions for Menu: Help
-		hMenuAbout.setOnAction(e -> menuMgr.help());
-
+		hMenuAbout.setOnAction(e -> help());
+		
 		return mb;
 	}
 
-	public static Pane setSummary() {
-		System.err.println("MainGUI.setSummary() not implemenet.");
-		return null;
-	}
+	protected abstract void newProject();
 
-	public static Pane setProjectExplorer() {
-		System.err.println("MainGUI.setProjectExplorer() not implemented.");
-		return null;
-	}
+	protected abstract void createFile();
 
-//	public static void about() {
-//		Stage stage = new Stage();
-//		stage.setTitle("About Xilinx Lite");
-//		// disable parent window till this window close
-//		stage.initModality(Modality.APPLICATION_MODAL);
-//		
-//		VBox layout = new VBox(10);
-//		Text title = new Text("Xilinx Lite");
-//		title.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
-//	}
+	protected abstract void openProject();
+
+	protected abstract void saveProject();
+
+	protected abstract void saveProjectAs();
+
+	protected abstract void closeProject();
+
+	protected abstract void projectSettings();
+
+	protected abstract void synchronizeFiles();
+	
+	protected abstract void connectionSettings();
+	
+	protected abstract void help();
 }

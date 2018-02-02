@@ -1,8 +1,8 @@
 package com.xilinxlite.gui.functions;
 
-import com.xilinxlite.gui.MainGUI;
+import com.xilinxlite.gui.MenuBarDesign;
 
-public class MenuMgrImp implements MenuMgr {
+public class MenuBarMgr extends MenuBarDesign {
 
 	@Override
 	public void newProject() {

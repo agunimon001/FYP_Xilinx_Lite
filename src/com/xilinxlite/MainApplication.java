@@ -1,6 +1,14 @@
 package com.xilinxlite;
 
-import com.xilinxlite.gui.MainGUI;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import com.xilinxlite.bean.BeanInstantiationError;
+import com.xilinxlite.communication.CommunicationMgr;
+import com.xilinxlite.gui.functions.LocalOrRemoteMgr;
+import com.xilinxlite.gui.functions.MenuBarMgr;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -8,24 +16,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application {
-	/**
-	 * Project settings (singleton)
-	 */
-	private ProjectSettings projectSettings = ProjectSettings.getInstance();
-	
-	/**
-	 * Other Variables
-	 */
-	private final String DEFAULT_TITLE = "Xilinx Lite";
 
-	/**
-	 * Main method
-	 * 
-	 * @param args
-	 */
+	private static final Logger logger = Logger.getLogger(MainApplication.class.getName());
+
+	private final String DEFAULT_TITLE = "Xilinx_Lite";
+
+	private CommunicationMgr cmdMgr = new CommunicationMgr();
+
 	public static void main(String[] args) {
 		launch(); // launches JavaFX
-		System.out.println("\n-- Program terminated --");
+		logger.info("Application exited.");
 	}
 
 	/**
@@ -33,17 +33,39 @@ public class MainApplication extends Application {
 	 * main window.
 	 */
 	@Override
-	public void start(Stage window) throws Exception {
+	public void start(Stage window) throws BeanInstantiationError {
+
+		// Enable logging to file
+		setLogger();
+
 		// Build window
 		BorderPane mainLayout = new BorderPane();
-		mainLayout.setTop(MainGUI.setMenuBar());
-		mainLayout.setCenter(MainGUI.setSummary());
-		BorderPane layout = new BorderPane();
-		mainLayout.setBottom(layout);
-		layout.setLeft(MainGUI.setProjectExplorer());
+		mainLayout.setTop(new MenuBarMgr().getInstance());
+
+		mainLayout.setCenter(new LocalOrRemoteMgr(cmdMgr).getLayout());
 
 		window.setScene(new Scene(mainLayout, 800, 600));
 		window.setTitle(DEFAULT_TITLE);
 		window.show();
+
+	}
+
+	/**
+	 * Sets up logging to file
+	 */
+	private void setLogger() {
+		String workingDirectory = System.getProperty("user.dir") + System.getProperty("file.separator");
+		// Get root logger
+		Logger logger = Logger.getLogger("");
+		FileHandler fh;
+		try {
+			fh = new FileHandler(workingDirectory + "logfile.log");
+			logger.addHandler(fh);
+			fh.setFormatter(new SimpleFormatter());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		// logger.setLevel(Level.FINE);
 	}
 }

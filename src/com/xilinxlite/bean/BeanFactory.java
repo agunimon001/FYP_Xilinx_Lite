@@ -1,7 +1,7 @@
 package com.xilinxlite.bean;
 
 import com.xilinxlite.demo.Sample;
-import com.xilinxlite.gui.functions.MenuMgrImp;
+import com.xilinxlite.gui.functions.MenuBarMgr;
 
 /**
  * Controls all beans used in project. Lazy Singleton used.
@@ -39,7 +39,7 @@ public class BeanFactory {
 
 		// bean IDs
 		case "menuMgr":
-			return new MenuMgrImp();
+			return new MenuBarMgr();
 
 		// if bean id is not found, throw Exception. For easier identification of
 		// problem location.
