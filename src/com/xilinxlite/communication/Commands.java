@@ -34,7 +34,7 @@ public interface Commands {
 	/**
 	 * Get opened project's name.
 	 * 
-	 * @return Project's name; null if unavailable.
+	 * @return Project's name; empty String if unavailable.
 	 */
 	public String getProjectName();
 
