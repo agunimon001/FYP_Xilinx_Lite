@@ -56,14 +56,14 @@ class XtclshWrapper {
 
 		// Validate xtclshPath
 		if (!xtclshPath.endsWith("xtclsh.exe")) {
-			errorMsg += "Program file is not xtclsh.exe";
+			errorMsg += "Program file is not xtclsh.exe: " + xtclshPath;
 		} else if (!new File(xtclshPath).exists()) {
 			errorMsg += xtclshPath + " not found.";
 		}
 
 		// Validate tclScriptPath
 		if (!tclScriptPath.endsWith(".tcl")) {
-			errorMsg += (errorMsg.isEmpty() ? "" : "\n") + "Script file not TCL file.";
+			errorMsg += (errorMsg.isEmpty() ? "" : "\n") + "Script file not TCL file: " + tclScriptPath;
 		} else if (!new File(tclScriptPath).exists()) {
 			errorMsg += (errorMsg.isEmpty() ? "" : "\n") + tclScriptPath + " not found.";
 		}
@@ -72,7 +72,7 @@ class XtclshWrapper {
 		File wd = new File(workingDirectory);
 		if (!wd.exists()) {
 			if (wd.mkdirs()) {
-				logger.info("Working Directory \"" + workingDirectory + "\" created.");
+				logger.info("Working Directory \"" + workingDirectory + "\" created: " + workingDirectory);
 			} else {
 				errorMsg += (errorMsg.isEmpty() ? "" : "\n") + "Error creating working directory \"" + workingDirectory
 						+ "\".";

@@ -6,8 +6,21 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCombination;
 
+/**
+ * Provides MenuBar GUI design. Use getInstance() to obtain a MenuBar. Extend
+ * this class to implement required functions.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public abstract class MenuBarDesign {
-	
+
+	/**
+	 * Call this method to get a MenuBar GUI. Best to use BorderPane to put this
+	 * MenuBar to the edge.
+	 * 
+	 * @return
+	 */
 	public MenuBar getInstance() {
 		// MenuBar
 		MenuBar mb = new MenuBar();
@@ -85,7 +98,7 @@ public abstract class MenuBarDesign {
 
 		// Functions for Menu: Help
 		hMenuAbout.setOnAction(e -> help());
-		
+
 		return mb;
 	}
 
@@ -104,8 +117,8 @@ public abstract class MenuBarDesign {
 	protected abstract void projectSettings();
 
 	protected abstract void synchronizeFiles();
-	
+
 	protected abstract void connectionSettings();
-	
+
 	protected abstract void help();
 }

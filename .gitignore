@@ -8,3 +8,6 @@
 /.settings
 sync.ffs_db
 /Diagrams
+logfile*
+/doc
+/Xilinx_Lite

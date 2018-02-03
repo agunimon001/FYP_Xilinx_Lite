@@ -69,9 +69,9 @@ public class CommunicationMgr implements Commands {
 	}
 
 	/**
-	 * Gets connection type (0 = NONE, 1 = LOCAL, 2 = REMOTE).
+	 * Gets connection type (Enum {LOCAL, REMOTE, NONE}).
 	 * 
-	 * @return ConnectionType (int)
+	 * @return ConnectionType (Enum)
 	 */
 	public ConnectionType getConnectiontype() {
 		if (cmd instanceof XtclshCommands) {
@@ -81,6 +81,33 @@ public class CommunicationMgr implements Commands {
 		} else {
 			return ConnectionType.NONE;
 		}
+	}
+	
+	/**
+	 * Check if connection is local.
+	 * 
+	 * @return
+	 */
+	public boolean isLocal() {
+		return cmd instanceof XtclshCommands;
+	}
+	
+	/**
+	 * Check if connection is remote.
+	 * 
+	 * @return
+	 */
+	public boolean isRemote() {
+		return cmd instanceof SshCommands;
+	}
+	
+	/**
+	 * Check if there is no connection.
+	 * 
+	 * @return
+	 */
+	public boolean isNone() {
+		return cmd == null;
 	}
 
 	/**

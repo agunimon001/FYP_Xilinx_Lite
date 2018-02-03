@@ -1,58 +1,112 @@
 package com.xilinxlite.gui.functions;
 
+import java.util.logging.Logger;
+
+import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.MenuBarDesign;
 
+/**
+ * Function implementation for MenuBarDesign GUI.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class MenuBarMgr extends MenuBarDesign {
 
+	private static final Logger logger = Logger.getLogger(MenuBarMgr.class.getName());
+
+	private CommunicationMgr cmdMgr;
+	private FunctionController fnController;
+
+	public MenuBarMgr(CommunicationMgr cmdMgr, FunctionController fnController) {
+		this.cmdMgr = cmdMgr;
+		this.fnController = fnController;
+	}
+
+	/**
+	 * Function for creating new Project
+	 */
 	@Override
 	public void newProject() {
-		System.err.println("newProject() not implemented.");
+		logger.warning("newProject() not implemented.");
 	}
 
+	/**
+	 * Function for creating a new file. Not an IDE, so don't need to allow editing.
+	 * Let user edit with their own editor.
+	 */
 	@Override
 	public void createFile() {
-		System.err.println("createFile() not implemented.");
+		logger.warning("createFile() not implemented.");
 	}
 
+	/**
+	 * Opens project. TO-DO: Require further implementation.
+	 */
 	@Override
 	public void openProject() {
-		System.err.println("openProject() not implemented.");
+		cmdMgr.openProject("testProj");
+		System.out.println(">>" + cmdMgr.getProjectName());
+		fnController.update();
+
+		logger.warning("openProject() implemented test.");
 	}
 
+	/**
+	 * Saves currently opened project.
+	 */
 	@Override
 	public void saveProject() {
-		System.err.println("saveProject() not implemented.");
+		logger.warning("saveProject() not implemented.");
 	}
 
+	/**
+	 * Saves currently opened project as another name.
+	 */
 	@Override
 	public void saveProjectAs() {
-		System.err.println("saveProjectAs() not implemented.");
+		logger.warning("saveProjectAs() not implemented.");
 	}
 
+	/**
+	 * Closes currently opened project.
+	 */
 	@Override
 	public void closeProject() {
-		System.err.println("closeProject() not implemented.");
+		logger.warning("closeProject() not implemented.");
 	}
 
+	/**
+	 * Opens project settings window.
+	 */
 	@Override
 	public void projectSettings() {
-		System.err.println("projectSettings() not implemented");
+		logger.warning("projectSettings() not implemented");
 	}
 
+	/**
+	 * Synchronize files with remote server.
+	 */
 	@Override
 	public void synchronizeFiles() {
-		System.err.println("synchronizeFiles() not implemented.");
+		logger.warning("synchronizeFiles() not implemented.");
 	}
 
+	/**
+	 * Opens connection settings window.
+	 */
 	@Override
 	public void connectionSettings() {
-		System.err.println("connectionSettings() not implemented.");
+		logger.warning("connectionSettings() not implemented.");
 	}
 
+	/**
+	 * Show help.
+	 */
 	@Override
 	public void help() {
-		System.err.println("help() not implemented.");
-//		MainGUI.about();
+		logger.warning("help() not implemented.");
+		// MainGUI.about();
 	}
 
 }

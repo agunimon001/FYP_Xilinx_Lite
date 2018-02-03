@@ -1,27 +1,36 @@
 package com.xilinxlite;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import com.xilinxlite.bean.BeanInstantiationError;
 import com.xilinxlite.communication.CommunicationMgr;
+import com.xilinxlite.gui.DesignManager;
+import com.xilinxlite.gui.functions.FunctionController;
+import com.xilinxlite.gui.functions.LayoutController;
 import com.xilinxlite.gui.functions.LocalOrRemoteMgr;
 import com.xilinxlite.gui.functions.MenuBarMgr;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class MainApplication extends Application {
+public class MainApplication extends Application implements LayoutController {
 
 	private static final Logger logger = Logger.getLogger(MainApplication.class.getName());
 
 	private final String DEFAULT_TITLE = "Xilinx_Lite";
 
 	private CommunicationMgr cmdMgr = new CommunicationMgr();
+	private FunctionController fnControl = new FunctionController();
+
+	private final String SETTINGS_FOLDER = "Xilinx_Lite/.settings";
+
+	private BorderPane mainLayout;
 
 	public static void main(String[] args) {
 		launch(); // launches JavaFX
@@ -33,16 +42,20 @@ public class MainApplication extends Application {
 	 * main window.
 	 */
 	@Override
-	public void start(Stage window) throws BeanInstantiationError {
+	public void start(Stage window) {
 
 		// Enable logging to file
 		setLogger();
 
-		// Build window
-		BorderPane mainLayout = new BorderPane();
-		mainLayout.setTop(new MenuBarMgr().getInstance());
+		// Build SETTINGS_FOLDER
+		new File(SETTINGS_FOLDER).mkdirs();
 
-		mainLayout.setCenter(new LocalOrRemoteMgr(cmdMgr).getLayout());
+		// Build window
+		mainLayout = new BorderPane();
+		mainLayout.setTop(new MenuBarMgr(cmdMgr, fnControl).getInstance());
+
+		DesignManager dm = new LocalOrRemoteMgr(cmdMgr, SETTINGS_FOLDER, this);
+		updateLayout(dm);
 
 		window.setScene(new Scene(mainLayout, 800, 600));
 		window.setTitle(DEFAULT_TITLE);
@@ -50,16 +63,21 @@ public class MainApplication extends Application {
 
 	}
 
+	@Override
+	public void updateLayout(DesignManager dm) {
+		mainLayout.setCenter(dm.getLayout());
+		fnControl.setUpdateTarget(dm);
+	}
+
 	/**
 	 * Sets up logging to file
 	 */
 	private void setLogger() {
-		String workingDirectory = System.getProperty("user.dir") + System.getProperty("file.separator");
 		// Get root logger
 		Logger logger = Logger.getLogger("");
 		FileHandler fh;
 		try {
-			fh = new FileHandler(workingDirectory + "logfile.log");
+			fh = new FileHandler(SETTINGS_FOLDER + "XilinxLite_logfile.log");
 			logger.addHandler(fh);
 			fh.setFormatter(new SimpleFormatter());
 		} catch (IOException e) {
