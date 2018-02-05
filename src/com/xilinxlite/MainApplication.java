@@ -16,7 +16,6 @@ import com.xilinxlite.gui.functions.MenuBarMgr;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MainApplication extends Application implements LayoutController {
@@ -28,7 +27,7 @@ public class MainApplication extends Application implements LayoutController {
 	private CommunicationMgr cmdMgr = new CommunicationMgr();
 	private FunctionController fnControl = new FunctionController();
 
-	private final String SETTINGS_FOLDER = "Xilinx_Lite/.settings";
+	private final File SETTINGS_FOLDER = new File("Xilinx_Lite/.settings");
 
 	private BorderPane mainLayout;
 
@@ -48,7 +47,7 @@ public class MainApplication extends Application implements LayoutController {
 		setLogger();
 
 		// Build SETTINGS_FOLDER
-		new File(SETTINGS_FOLDER).mkdirs();
+		SETTINGS_FOLDER.mkdirs();
 
 		// Build window
 		mainLayout = new BorderPane();
@@ -77,11 +76,11 @@ public class MainApplication extends Application implements LayoutController {
 		Logger logger = Logger.getLogger("");
 		FileHandler fh;
 		try {
-			fh = new FileHandler(SETTINGS_FOLDER + "XilinxLite_logfile.log");
+			fh = new FileHandler(SETTINGS_FOLDER + File.separator + "XilinxLite_logfile.log");
 			logger.addHandler(fh);
 			fh.setFormatter(new SimpleFormatter());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.finer(e.getMessage());
 		}
 
 		// logger.setLevel(Level.FINE);

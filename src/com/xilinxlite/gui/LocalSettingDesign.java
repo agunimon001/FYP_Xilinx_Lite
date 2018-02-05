@@ -31,7 +31,8 @@ public abstract class LocalSettingDesign {
 	private final Label workingDirectoryLabel = new Label("Working Directory:");
 
 	protected TextField xtclshPathField = new TextField();
-	protected TextField workingDirectoryField = new TextField();
+	protected TextField workingDirectoryField = new TextField(
+			new File(System.getProperty("user.home") + File.separator + "Xilinx_Lite").getAbsolutePath());
 	protected Label errorMsg = new Label();
 
 	/**
@@ -87,7 +88,8 @@ public abstract class LocalSettingDesign {
 	/**
 	 * Selects a file. Limited to 'xtclsh.exe'.
 	 * 
-	 * @param txt The TextField to update text with
+	 * @param txt
+	 *            The TextField to update text with
 	 */
 	private void fileChooser(TextField txt) {
 		FileChooser chooser = new FileChooser();
@@ -101,7 +103,8 @@ public abstract class LocalSettingDesign {
 	/**
 	 * Selects a folder.
 	 * 
-	 * @param txt The TextField to update text with
+	 * @param txt
+	 *            The TextField to update text with
 	 */
 	private void directoryChooser(TextField txt) {
 		DirectoryChooser chooser = new DirectoryChooser();

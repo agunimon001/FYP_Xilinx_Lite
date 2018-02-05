@@ -42,6 +42,20 @@ public interface Commands {
 	 * Closes project.
 	 */
 	public void closeProject();
+	
+	/**
+	 * Change working directory.
+	 * 
+	 * @return True if successfully changed working directory; false if otherwise.
+	 */
+	public boolean setWorkingDirectory(String newWorkingDirectoryPath);
+	
+	/**
+	 * Gets current working directory.
+	 * 
+	 * @return 
+	 */
+	public String getWorkingDirectory();
 
 	/**
 	 * Sets project attributes. Attributes can be found in XilinxAttribute Enum

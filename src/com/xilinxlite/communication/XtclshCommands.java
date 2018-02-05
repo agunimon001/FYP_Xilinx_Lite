@@ -40,7 +40,7 @@ class XtclshCommands implements Commands {
 	 */
 	public XtclshCommands(String xtclshPath, String tclScriptPath, String workingDirectory)
 			throws FileNotFoundException {
-		xtclsh = XtclshWrapper.getInstance(xtclshPath, tclScriptPath, workingDirectory);
+		this.xtclsh = XtclshWrapper.getInstance(xtclshPath, tclScriptPath, workingDirectory);
 	}
 
 	/**
@@ -179,6 +179,32 @@ class XtclshCommands implements Commands {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean setWorkingDirectory(String newWorkingDirectoryPath) {
+		if (xtclsh != null) {
+			try {
+				xtclsh = XtclshWrapper.getInstance(xtclsh.getXtclshPath(), xtclsh.getTclScriptPath(),
+						newWorkingDirectoryPath);
+				return true;
+			} catch (FileNotFoundException e) {
+				logger.log(Level.WARNING, "Cannot update working directory", e);
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Gets current working directory; returns null otherwise.
+	 */
+	@Override
+	public String getWorkingDirectory() {
+		if (xtclsh != null) {
+			return xtclsh.getWorkingDirectory();
+		}
+		return null;
 	}
 
 	/**

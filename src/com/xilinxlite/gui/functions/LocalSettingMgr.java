@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.LocalSettingDesign;
+import com.xilinxlite.gui.functions.PropertiesController.KEY;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -30,12 +31,11 @@ public class LocalSettingMgr extends LocalSettingDesign {
 
 	private CommunicationMgr cmdMgr = null;
 
-	private String settingsFolderPath;
+	private File settingsFolderPath;
 	private String scriptPath = "";
 	private File config;
-	private Properties props = null;
-	private final String KEY_XTCLSH = "local.xtclsh";
-	private final String KEY_WD = "local.wd";
+
+	private PropertiesController props;
 
 	/**
 	 * Sets up LocalSettingMgr instance. Remember to call launch().
@@ -45,10 +45,11 @@ public class LocalSettingMgr extends LocalSettingDesign {
 	 * @param settingsFolderPath
 	 *            Path for Settings folder
 	 */
-	public LocalSettingMgr(CommunicationMgr cmdMgr, String settingsFolderPath) {
+	public LocalSettingMgr(CommunicationMgr cmdMgr, File settingsFolderPath) {
 		this.cmdMgr = cmdMgr;
 		this.settingsFolderPath = settingsFolderPath;
-		this.config = new File(this.settingsFolderPath + "/XilinxLite_config.properties");
+		this.config = new File(this.settingsFolderPath + File.separator + "XilinxLite_config.properties");
+		this.props = PropertiesController.load(this.config);
 	}
 
 	/**
@@ -59,7 +60,7 @@ public class LocalSettingMgr extends LocalSettingDesign {
 	protected void initialize() {
 		logger.entering("LocalSettingMgr", "initialize");
 
-		File script = new File(settingsFolderPath + "/script.tcl");
+		File script = new File(settingsFolderPath.getAbsolutePath() + File.separator + "script.tcl");
 		scriptPath = script.getAbsolutePath();
 
 		if (!script.exists()) {
@@ -72,17 +73,12 @@ public class LocalSettingMgr extends LocalSettingDesign {
 			}
 		}
 
-		if (props == null)
-			props = new Properties();
-		try (FileReader reader = new FileReader(config)) {
-			props.load(reader);
+		String value = props.get(KEY.KEY_XTCLSH);
+		xtclshPathField.setText(value != null ? value : "");
 
-			xtclshPathField.setText(props.getProperty(KEY_XTCLSH, ""));
-
-			workingDirectoryField.setText(props.getProperty(KEY_WD, System.getProperty("user.home") + "/Xilinx_Lite"));
-		} catch (IOException e) {
-			logger.warning("config file cannot be read");
-		}
+		value = props.get(KEY.KEY_WD);
+		workingDirectoryField
+				.setText(value != null ? value : System.getProperty("user.home") + File.separator + "Xilinx_Lite");
 	}
 
 	/**
@@ -92,22 +88,11 @@ public class LocalSettingMgr extends LocalSettingDesign {
 	@Override
 	protected void save(Stage window) {
 		if (cmdMgr.localConnection(xtclshPathField.getText(), scriptPath, workingDirectoryField.getText())) {
-			if (props == null) {
-				props = new Properties();
-			}
+			
+			props.put(KEY.KEY_XTCLSH, xtclshPathField.getText());
+			props.put(KEY.KEY_WD, workingDirectoryField.getText());
 
-			props.setProperty(KEY_XTCLSH, xtclshPathField.getText());
-			props.setProperty(KEY_WD, workingDirectoryField.getText());
-
-			try (FileWriter writer = new FileWriter(config)) {
-				props.store(writer, "Storing for local connection");
-			} catch (IOException e) {
-				logger.log(Level.WARNING, "Cannot write to config file: " + config.getAbsolutePath(), e);
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Alert");
-				alert.setHeaderText("Unable to save properties");
-				alert.setContentText("Don't worry, you can still use this program.");
-			}
+			props.save();
 
 			window.close();
 		} else {

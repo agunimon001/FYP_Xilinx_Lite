@@ -1,5 +1,6 @@
 package com.xilinxlite.gui.functions;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import com.xilinxlite.communication.CommunicationMgr;
@@ -17,7 +18,7 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign implements DesignManag
 	private static final Logger logger = Logger.getLogger(LocalOrRemoteMgr.class.getName());
 
 	private CommunicationMgr mgr = null;
-	private String settingsFolderPath;
+	private File settingsFolderPath;
 	private LayoutController masterLayout;
 
 	/**
@@ -26,7 +27,7 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign implements DesignManag
 	 * @param mgr Pass reference to CommunicatonMgr
 	 * @param settingsFolderPath Location for Settings folder
 	 */
-	public LocalOrRemoteMgr(CommunicationMgr mgr, String settingsFolderPath, LayoutController masterLayout) {
+	public LocalOrRemoteMgr(CommunicationMgr mgr, File settingsFolderPath, LayoutController masterLayout) {
 		this.mgr = mgr;
 		this.settingsFolderPath = settingsFolderPath;
 		this.masterLayout = masterLayout;

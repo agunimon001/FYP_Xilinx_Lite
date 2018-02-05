@@ -149,6 +149,17 @@ public class CommunicationMgr implements Commands {
 	}
 
 	@Override
+	public boolean setWorkingDirectory(String newWorkingDirectoryPath) {
+		logger.fine("Updating working directory");
+		return cmd.setWorkingDirectory(newWorkingDirectoryPath);
+	}
+
+	@Override
+	public String getWorkingDirectory() {
+		return cmd.getWorkingDirectory();
+	}
+
+	@Override
 	public Map<String, String> setAttributes(Map<String, String> attributes) {
 		logger.fine("Setting multiple attributes");
 		return cmd.setAttributes(attributes);

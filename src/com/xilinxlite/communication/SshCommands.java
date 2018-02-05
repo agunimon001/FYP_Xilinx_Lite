@@ -5,11 +5,11 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 public class SshCommands implements Commands {
-	
+
 	private static final Logger logger = Logger.getLogger(SshCommands.class.getName());
-	
+
 	public SshCommands() {
-		
+
 	}
 
 	@Override
@@ -34,6 +34,18 @@ public class SshCommands implements Commands {
 	public void closeProject() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public boolean setWorkingDirectory(String newWorkingDirectoryPath) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String getWorkingDirectory() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
