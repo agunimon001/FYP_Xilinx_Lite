@@ -19,7 +19,7 @@ public abstract class MenuBarDesign {
 	 * Call this method to get a MenuBar GUI. Best to use BorderPane to put this
 	 * MenuBar to the edge.
 	 * 
-	 * @return
+	 * @return Instance of MenuBar
 	 */
 	public MenuBar getInstance() {
 		// MenuBar

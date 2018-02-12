@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.xilinxlite.communication.CommunicationMgr;
-import com.xilinxlite.gui.DesignManager;
 import com.xilinxlite.gui.ProjectViewDesign;
 
 import javafx.scene.layout.Pane;
 
-public class ProjectViewMgr extends ProjectViewDesign implements DesignManager, Updateable {
+public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 
 	private CommunicationMgr cmdMgr = null;
 	List<Updateable> updateList = new ArrayList<Updateable>();

@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import com.xilinxlite.communication.CommunicationMgr;
-import com.xilinxlite.gui.DesignManager;
 import com.xilinxlite.gui.LocalOrRemoteDesign;
 
 /**
@@ -13,7 +12,7 @@ import com.xilinxlite.gui.LocalOrRemoteDesign;
  * @author Ong Hock Leng
  *
  */
-public class LocalOrRemoteMgr extends LocalOrRemoteDesign implements DesignManager {
+public class LocalOrRemoteMgr extends LocalOrRemoteDesign {
 
 	private static final Logger logger = Logger.getLogger(LocalOrRemoteMgr.class.getName());
 
@@ -22,10 +21,15 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign implements DesignManag
 	private LayoutController masterLayout;
 
 	/**
-	 * Sets up instance of LocalOrRemoteMgr. Remember to call getLayout() to get the GUI.
+	 * Sets up instance of LocalOrRemoteMgr. Remember to call getLayout() to get the
+	 * GUI.
 	 * 
-	 * @param mgr Pass reference to CommunicatonMgr
-	 * @param settingsFolderPath Location for Settings folder
+	 * @param mgr
+	 *            Pass reference to CommunicatonMgr
+	 * @param settingsFolderPath
+	 *            Location for Settings folder
+	 * @param masterLayout
+	 *            Parent layout
 	 */
 	public LocalOrRemoteMgr(CommunicationMgr mgr, File settingsFolderPath, LayoutController masterLayout) {
 		this.mgr = mgr;
@@ -40,7 +44,7 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign implements DesignManag
 	protected void setLocal() {
 		new LocalSettingMgr(mgr, settingsFolderPath).launch();
 		if (mgr.isLocal()) {
-			masterLayout.updateLayout(new ProjectViewMgr(mgr));		// to update with next layout
+			masterLayout.updateLayout(new ProjectViewMgr(mgr)); // to update with next layout
 		}
 	}
 

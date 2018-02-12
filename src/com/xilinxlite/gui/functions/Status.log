@@ -1,0 +1,13 @@
+Package information:
+Implements functionalities of the provided Designs files.
+Each implement file is to complement a single Design file and vice versa.
+
+
+Interface:
+- LayoutController		# only has one method: updateLayout()
+- Updateable			# only has one method: update()
+
+
+# Parent layout is passed down for reference to allow changing active layout.
+Implementation (LayoutController):
+- 

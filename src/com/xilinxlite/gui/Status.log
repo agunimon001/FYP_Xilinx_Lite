@@ -1,0 +1,23 @@
+Package information:
+All design files are abstract files with only the GUI design with no implementation of its own (or with limited functionality).
+Functionalities are implemented in ~/functions package.
+This is to separate View and Control components.
+This allows easier development of different aspects.
+
+Interface:
+- DesignManager		# only has one method: getLayout()
+
+
+Implementation (DesignManager):
+- LocalOrRemomteDesign (completed)
+- ProjectViewDesign (working, layout finished, not designed properly)
+- SummaryTableDesign (working, layout finished, not designed properly)
+- DirectoryViewDesign (not designed)
+- ButtonSetDesign (not designed)
+- MessageViewDesign (not designed)
+
+
+# Layouts either using own window or special implementation
+Non-implementation (DesignManager):
+- MenuBarDesign (completed, special implementation)
+- LocalSettingDesign (completed)

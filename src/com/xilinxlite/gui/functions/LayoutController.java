@@ -13,7 +13,7 @@ public interface LayoutController {
 	/**
 	 * Updates with targeted layout.
 	 * 
-	 * @param layout
+	 * @param dm layout
 	 */
 	public void updateLayout(DesignManager dm);
 

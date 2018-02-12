@@ -42,18 +42,21 @@ public interface Commands {
 	 * Closes project.
 	 */
 	public void closeProject();
-	
+
 	/**
 	 * Change working directory.
+	 * 
+	 * @param newWorkingDirectoryPath
+	 *            New working directory
 	 * 
 	 * @return True if successfully changed working directory; false if otherwise.
 	 */
 	public boolean setWorkingDirectory(String newWorkingDirectoryPath);
-	
+
 	/**
 	 * Gets current working directory.
 	 * 
-	 * @return 
+	 * @return Path of current working directory
 	 */
 	public String getWorkingDirectory();
 
@@ -79,6 +82,7 @@ public interface Commands {
 	 * Setter for Device Family attribute.
 	 * 
 	 * @param family
+	 *            New family name
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setFamily(String family);
@@ -95,6 +99,7 @@ public interface Commands {
 	 * Setter for Device attribute.
 	 * 
 	 * @param device
+	 *            New device name
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setDevice(String device);
@@ -111,6 +116,7 @@ public interface Commands {
 	 * Setter for Package attribute.
 	 * 
 	 * @param _package
+	 *            New package name
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setPackage(String _package);
@@ -127,6 +133,7 @@ public interface Commands {
 	 * Setter for Speed Grade attribute.
 	 * 
 	 * @param speed
+	 *            New speed rating
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setSpeed(String speed);
@@ -143,6 +150,7 @@ public interface Commands {
 	 * Setter for Top-Level Source Type attribute.
 	 * 
 	 * @param type
+	 *            New top source type name
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setTopSourceType(String type);
@@ -159,6 +167,7 @@ public interface Commands {
 	 * Setter for Synthesis Tool attribute.
 	 * 
 	 * @param synthesis
+	 *            New synthesis name
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setSynthesis(String synthesis);
@@ -175,6 +184,7 @@ public interface Commands {
 	 * Setter for Simulator attribute.
 	 * 
 	 * @param simulator
+	 *            New simulator name
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setSimulator(String simulator);
@@ -191,6 +201,7 @@ public interface Commands {
 	 * Setter for Preferred Language attribute.
 	 * 
 	 * @param language
+	 *            New preferred language
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setPreferredLanguage(String language);
@@ -207,6 +218,7 @@ public interface Commands {
 	 * Setter for Enable Message Filtering attribute.
 	 * 
 	 * @param filter
+	 *            New message filter setting
 	 * @return A Map containing entry if successful; empty Map if otherwise.
 	 */
 	public Map<String, String> setMessageFilter(boolean filter);
@@ -224,6 +236,8 @@ public interface Commands {
 	 * 
 	 * @param filename
 	 *            Provide absolute path of file to add.
+	 * 
+	 * @return True if adding file is successful; false if otherwise.
 	 */
 	public boolean addFile(String filename);
 
@@ -242,7 +256,7 @@ public interface Commands {
 	/**
 	 * Gets List of Architecture available for use.
 	 * 
-	 * @return
+	 * @return List of available architectures
 	 */
 	public List<String> getArchitectList();
 

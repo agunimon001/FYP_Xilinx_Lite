@@ -1,6 +1,5 @@
 package com.xilinxlite.gui;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -31,7 +30,7 @@ public abstract class SummaryTableDesign implements DesignManager {
 		layout.setAlignment(Pos.TOP_CENTER);
 		layout.setStyle("-fx-border-color: grey");
 
-//		titleLabel.setPadding(new Insets(30));
+		// titleLabel.setPadding(new Insets(30));
 
 		FlowPane layout1 = new FlowPane(Orientation.HORIZONTAL, 30, 30);
 

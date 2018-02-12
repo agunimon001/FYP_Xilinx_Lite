@@ -1,0 +1,13 @@
+Interface:
+- Commands
+
+
+Implementation (Commands):
+- CommunicationMgr (incomplete, missing SshCommands implementation)
+- XtclshCommands (completed)
+- XtclshWrapper (completed)
+- *SshCommands (incomplete, untouched)
+
+
+Enum:
+- XilinxAttribute (completed)

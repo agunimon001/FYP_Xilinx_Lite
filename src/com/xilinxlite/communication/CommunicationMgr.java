@@ -33,8 +33,11 @@ public class CommunicationMgr implements Commands {
 	 * Sets up connection to local Xilinx ISE.
 	 * 
 	 * @param xtclshPath
+	 *            File path of xtclsh.exe
 	 * @param tclScriptPath
+	 *            File path of TCL script
 	 * @param workingDirectory
+	 *            File path of working directory
 	 * @return True if connection is live; false otherwise.
 	 */
 	public boolean localConnection(String xtclshPath, String tclScriptPath, String workingDirectory) {
@@ -55,7 +58,7 @@ public class CommunicationMgr implements Commands {
 	/**
 	 * Incomplete...
 	 * 
-	 * @return
+	 * @return True if connection is live; false if otherwise.
 	 */
 	public boolean remoteConnection() {
 		if (cmd != null) {
@@ -82,29 +85,29 @@ public class CommunicationMgr implements Commands {
 			return ConnectionType.NONE;
 		}
 	}
-	
+
 	/**
 	 * Check if connection is local.
 	 * 
-	 * @return
+	 * @return True if local connection; false if otherwise.
 	 */
 	public boolean isLocal() {
 		return cmd instanceof XtclshCommands;
 	}
-	
+
 	/**
 	 * Check if connection is remote.
 	 * 
-	 * @return
+	 * @return True if remote connection; false if otherwise.
 	 */
 	public boolean isRemote() {
 		return cmd instanceof SshCommands;
 	}
-	
+
 	/**
 	 * Check if there is no connection.
 	 * 
-	 * @return
+	 * @return True if no conection; false if otherwise.
 	 */
 	public boolean isNone() {
 		return cmd == null;
