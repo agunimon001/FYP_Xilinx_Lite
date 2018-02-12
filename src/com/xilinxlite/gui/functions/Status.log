@@ -4,10 +4,28 @@ Each implement file is to complement a single Design file and vice versa.
 
 
 Interface:
-- LayoutController		# only has one method: updateLayout()
+- LayoutController		# implemented by parent layout class, only has one method: updateLayout()
 - Updateable			# only has one method: update()
 
+# Non-design functional classes; add-on functions
+Controllers:
+- FunctionController	# Manages update target (target must be Updateable)
+- PropertiesController	# One-stop for accessing program properties
 
-# Parent layout is passed down for reference to allow changing active layout.
+
 Implementation (LayoutController):
-- 
+- MainApplication
+
+
+Implementation (Updateable):
+- ProjectViewMgr	(completed)
+- SummaryTableMgr	(completed)
+- DirectoryViewMgr	(incomplete)
+- ButtonSetMgr		(incomplete)
+- MessageViewMgr	(incomplete)
+
+
+No Implementation:
+- LocalOrRemoteMgr	(completed)
+- LocalSettingMgr	(completed)
+- MenuBarMgr		(completed)

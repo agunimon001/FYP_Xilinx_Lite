@@ -11,6 +11,13 @@ import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * One-stop Singleton class for accessing program's properties. After the class has been
+ * instantiated, the instance can be called again with load() method.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 class PropertiesController {
 
 	private static Logger logger = Logger.getLogger(PropertiesController.class.getName());
@@ -23,6 +30,12 @@ class PropertiesController {
 	static final String KEY_XTCLSH = "local.xtclsh";
 	static final String KEY_WD = "local.wd";
 
+	/**
+	 * Enum with available keys.
+	 * 
+	 * @author Ong Hock Leng
+	 *
+	 */
 	enum KEY {
 		KEY_XTCLSH("local.xtclsh"), KEY_WD("local.wd");
 
@@ -55,7 +68,8 @@ class PropertiesController {
 	/**
 	 * Singleton. Gets instance of PropertiesController.
 	 * 
-	 * @param file To contain filepath to the properties file (existing or new)
+	 * @param file
+	 *            To contain filepath to the properties file (existing or new)
 	 * @return Instance of PropertiesController
 	 */
 	static PropertiesController load(File file) {

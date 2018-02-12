@@ -8,11 +8,24 @@ import com.xilinxlite.gui.ProjectViewDesign;
 
 import javafx.scene.layout.Pane;
 
+/**
+ * Implementation of ProjectViewDesign's functions. Layout container for project
+ * view.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 
 	private CommunicationMgr cmdMgr = null;
 	List<Updateable> updateList = new ArrayList<Updateable>();
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param cmdMgr
+	 *            CommunicationMgr instance
+	 */
 	public ProjectViewMgr(CommunicationMgr cmdMgr) {
 		this.cmdMgr = cmdMgr;
 	}

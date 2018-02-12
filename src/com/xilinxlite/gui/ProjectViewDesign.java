@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
- * GUI design template for opened project.
+ * GUI design template for project view.
  * 
  * @author Ong Hock Leng
  *

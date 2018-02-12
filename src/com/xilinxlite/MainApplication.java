@@ -18,6 +18,12 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * Main class of the project.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class MainApplication extends Application implements LayoutController {
 
 	private static final Logger logger = Logger.getLogger(MainApplication.class.getName());
@@ -31,6 +37,11 @@ public class MainApplication extends Application implements LayoutController {
 
 	private BorderPane mainLayout;
 
+	/**
+	 * Launches program.
+	 * 
+	 * @param args Extra parameters
+	 */
 	public static void main(String[] args) {
 		launch(); // launches JavaFX
 		logger.info("Application exited.");
@@ -49,14 +60,18 @@ public class MainApplication extends Application implements LayoutController {
 		// Build SETTINGS_FOLDER
 		SETTINGS_FOLDER.mkdirs();
 
-		// Build window
+		// Build window with menu bar
 		mainLayout = new BorderPane();
 		mainLayout.setTop(new MenuBarMgr(cmdMgr, fnControl).getInstance());
 
+		// Instantiate LocalOrRemoteMgr and update to main window
 		DesignManager dm = new LocalOrRemoteMgr(cmdMgr, SETTINGS_FOLDER, this);
 		updateLayout(dm);
 
+		// Set scene and show window
 		window.setScene(new Scene(mainLayout, 800, 600));
+		window.setMinHeight(600);
+		window.setMinWidth(800);
 		window.setTitle(DEFAULT_TITLE);
 		window.show();
 
