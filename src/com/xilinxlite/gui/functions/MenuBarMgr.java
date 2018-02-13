@@ -27,11 +27,11 @@ public class MenuBarMgr extends MenuBarDesign {
 	private static final Logger logger = Logger.getLogger(MenuBarMgr.class.getName());
 
 	private CommunicationMgr cmdMgr;
-	private FunctionController fnController;
+	private UpdateController updater;
 
-	public MenuBarMgr(CommunicationMgr cmdMgr, FunctionController fnController) {
+	public MenuBarMgr(CommunicationMgr cmdMgr, UpdateController updater) {
 		this.cmdMgr = cmdMgr;
-		this.fnController = fnController;
+		this.updater = updater;
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MenuBarMgr extends MenuBarDesign {
 			if (m.matches()) {
 				// Updates fnController if project opens successfully
 				if (cmdMgr.openProject(m.group("name"))) {
-					fnController.update();
+					updater.update();
 				}
 
 				// Project fails to open
