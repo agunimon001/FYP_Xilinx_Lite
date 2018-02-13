@@ -8,10 +8,11 @@ import java.util.logging.SimpleFormatter;
 
 import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.DesignManager;
-import com.xilinxlite.gui.functions.UpdateController;
+import com.xilinxlite.gui.functions.FunctionPack;
 import com.xilinxlite.gui.functions.LayoutController;
 import com.xilinxlite.gui.functions.LocalOrRemoteMgr;
 import com.xilinxlite.gui.functions.MenuBarMgr;
+import com.xilinxlite.gui.functions.UpdateController;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,7 +32,8 @@ public class MainApplication extends Application implements LayoutController {
 	private final String DEFAULT_TITLE = "Xilinx_Lite";
 
 	private CommunicationMgr cmdMgr = new CommunicationMgr();
-	private UpdateController fnControl = new UpdateController();
+	private UpdateController updater = new UpdateController();
+	private FunctionPack fnPack = FunctionPack.getInstance(cmdMgr, updater);
 
 	private final File SETTINGS_FOLDER = new File("Xilinx_Lite/.settings");
 
@@ -63,7 +65,7 @@ public class MainApplication extends Application implements LayoutController {
 
 		// Build window with menu bar
 		mainLayout = new BorderPane();
-		mainLayout.setTop(new MenuBarMgr(cmdMgr, fnControl).getInstance());
+		mainLayout.setTop(new MenuBarMgr().getMenubar());
 
 		// Instantiate LocalOrRemoteMgr and update to main window
 		DesignManager dm = new LocalOrRemoteMgr(cmdMgr, SETTINGS_FOLDER, this);
@@ -81,7 +83,7 @@ public class MainApplication extends Application implements LayoutController {
 	@Override
 	public void updateLayout(DesignManager dm) {
 		mainLayout.setCenter(dm.getLayout());
-		fnControl.setUpdateTarget(dm);
+		updater.setUpdateTarget(dm);
 	}
 
 	/**

@@ -83,16 +83,16 @@ public interface Commands {
 	 * 
 	 * @param family
 	 *            New family name
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current family
 	 */
-	public Map<String, String> setFamily(String family);
+	public String setFamily(String family);
 
 	/**
 	 * Getter for Device Family attribute.
 	 * 
-	 * @return A Map containing Family attribute.
+	 * @return Current family
 	 */
-	public Map<String, String> getFamily();
+	public String getFamily();
 
 	// Attribute: Device
 	/**
@@ -100,16 +100,16 @@ public interface Commands {
 	 * 
 	 * @param device
 	 *            New device name
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current device
 	 */
-	public Map<String, String> setDevice(String device);
+	public String setDevice(String device);
 
 	/**
 	 * Getter for Device attribute.
 	 * 
-	 * @return a Map containing Device attribute.
+	 * @return Current device
 	 */
-	public Map<String, String> getDevice();
+	public String getDevice();
 
 	// Attribute: Package
 	/**
@@ -117,16 +117,16 @@ public interface Commands {
 	 * 
 	 * @param _package
 	 *            New package name
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current package
 	 */
-	public Map<String, String> setPackage(String _package);
+	public String setPackage(String _package);
 
 	/**
 	 * Getter for Package attribute.
 	 * 
-	 * @return A Map containing Package attribute.
+	 * @return Current package
 	 */
-	public Map<String, String> getPackage();
+	public String getPackage();
 
 	// Attribute: Speed Grade
 	/**
@@ -134,16 +134,16 @@ public interface Commands {
 	 * 
 	 * @param speed
 	 *            New speed rating
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current speed
 	 */
-	public Map<String, String> setSpeed(String speed);
+	public String setSpeed(String speed);
 
 	/**
 	 * Getter for Speed Grade attribute.
 	 * 
-	 * @return A Map containing Speed Grade attribute.
+	 * @return Current speed
 	 */
-	public Map<String, String> getSpeed();
+	public String getSpeed();
 
 	// Attribute: Top-Level Source Type
 	/**
@@ -151,16 +151,16 @@ public interface Commands {
 	 * 
 	 * @param type
 	 *            New top source type name
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current top-level source type
 	 */
-	public Map<String, String> setTopSourceType(String type);
+	public String setTopSourceType(String type);
 
 	/**
 	 * Getter for Top-Level Source Type attribute.
 	 * 
-	 * @return A Map containing Top-Level Source Type attribute.
+	 * @return Current top-level source type
 	 */
-	public Map<String, String> getTopSourceType();
+	public String getTopSourceType();
 
 	// Attribute: Synthesis Tool
 	/**
@@ -168,16 +168,16 @@ public interface Commands {
 	 * 
 	 * @param synthesis
 	 *            New synthesis name
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current synthesis tool
 	 */
-	public Map<String, String> setSynthesis(String synthesis);
+	public String setSynthesis(String synthesis);
 
 	/**
 	 * Getter for Synthesis Tool attribute.
 	 * 
-	 * @return A Map containing Synthesis Tool attribute.
+	 * @return Current synthesis tool
 	 */
-	public Map<String, String> getSynthesis();
+	public String getSynthesis();
 
 	// Attribute: Simulator
 	/**
@@ -185,16 +185,16 @@ public interface Commands {
 	 * 
 	 * @param simulator
 	 *            New simulator name
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current simulator
 	 */
-	public Map<String, String> setSimulator(String simulator);
+	public String setSimulator(String simulator);
 
 	/**
 	 * Getter for Simulator attribute.
 	 * 
-	 * @return A Map containing Simulator attribute.
+	 * @return Current simulator
 	 */
-	public Map<String, String> getSimulator();
+	public String getSimulator();
 
 	// Attribute: Preferred Language
 	/**
@@ -202,16 +202,16 @@ public interface Commands {
 	 * 
 	 * @param language
 	 *            New preferred language
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current preferred language
 	 */
-	public Map<String, String> setPreferredLanguage(String language);
+	public String setPreferredLanguage(String language);
 
 	/**
 	 * Getter for Preferred Language attribute.
 	 * 
-	 * @return A Map containing Preferred Language attribute.
+	 * @return Current preferred language
 	 */
-	public Map<String, String> getPreferredLanguage();
+	public String getPreferredLanguage();
 
 	// Attribute: Enable Message Filtering
 	/**
@@ -219,16 +219,16 @@ public interface Commands {
 	 * 
 	 * @param filter
 	 *            New message filter setting
-	 * @return A Map containing entry if successful; empty Map if otherwise.
+	 * @return Current message filter setting
 	 */
-	public Map<String, String> setMessageFilter(boolean filter);
+	public boolean setMessageFilter(boolean filter);
 
 	/**
 	 * Getter for Enable Message Filtering attribute.
 	 * 
-	 * @return A Map containing Enable Message Filtering attribute.
+	 * @return Current message filter setting
 	 */
-	public Map<String, String> getMessageFilter();
+	public boolean getMessageFilter();
 
 	// Other methods
 	/**

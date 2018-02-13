@@ -21,7 +21,7 @@ public abstract class MenuBarDesign {
 	 * 
 	 * @return Instance of MenuBar
 	 */
-	public MenuBar getInstance() {
+	public MenuBar getMenubar() {
 		// MenuBar
 		MenuBar mb = new MenuBar();
 
@@ -35,27 +35,21 @@ public abstract class MenuBarDesign {
 		MenuItem fMenuNewFile = new MenuItem("File");
 		fMenuNew.getItems().addAll(fMenuNewProject, fMenuNewFile);
 		MenuItem fMenuOpenProject = new MenuItem("Open Project");
-		MenuItem fMenuSave = new MenuItem("Save");
-		MenuItem fMenuSaveAs = new MenuItem("Save as...");
 		MenuItem fMenuClose = new MenuItem("Close Project");
 		MenuItem fMenuExit = new MenuItem("Exit");
-		fileMenu.getItems().addAll(fMenuNew, fMenuOpenProject, fMenuSave, fMenuSaveAs, fMenuClose, fMenuExit);
+		fileMenu.getItems().addAll(fMenuNew, fMenuOpenProject, fMenuClose, fMenuExit);
 		mb.getMenus().add(fileMenu);
 
 		// Functions for Menu: File
 		fMenuNewProject.setOnAction(e -> newProject());
 		fMenuNewFile.setOnAction(e -> createFile());
 		fMenuOpenProject.setOnAction(e -> openProject());
-		fMenuSave.setOnAction(e -> saveProject());
-		fMenuSaveAs.setOnAction(e -> saveProjectAs());
 		fMenuClose.setOnAction(e -> closeProject());
 		fMenuExit.setOnAction(e -> Platform.exit());
 
 		// Accelerators for Menu: File
 		fMenuNew.setAccelerator(KeyCombination.keyCombination("shortcut+N"));
 		fMenuOpenProject.setAccelerator(KeyCombination.keyCombination("shortcut+O"));
-		fMenuSave.setAccelerator(KeyCombination.keyCombination("shortcut+S"));
-		fMenuSaveAs.setAccelerator(KeyCombination.keyCombination("shortcut+shift+S"));
 
 		///////////////////
 		// Menu: Project //
@@ -102,23 +96,45 @@ public abstract class MenuBarDesign {
 		return mb;
 	}
 
+	/**
+	 * Function for creating new Project
+	 */
 	protected abstract void newProject();
 
+	/**
+	 * Function for creating a new file. Not an IDE, so don't need to allow editing.
+	 * Let user edit with their own editor.
+	 */
 	protected abstract void createFile();
 
+	/**
+	 * Opens project. If project is in a different working directory, the working
+	 * directory is changed to the new directory.
+	 */
 	protected abstract void openProject();
 
-	protected abstract void saveProject();
-
-	protected abstract void saveProjectAs();
-
+	/**
+	 * Closes currently opened project.
+	 */
 	protected abstract void closeProject();
 
+	/**
+	 * Opens project settings window.
+	 */
 	protected abstract void projectSettings();
 
+	/**
+	 * Synchronize files with remote server.
+	 */
 	protected abstract void synchronizeFiles();
 
+	/**
+	 * Opens connection settings window.
+	 */
 	protected abstract void connectionSettings();
 
+	/**
+	 * Show help.
+	 */
 	protected abstract void help();
 }

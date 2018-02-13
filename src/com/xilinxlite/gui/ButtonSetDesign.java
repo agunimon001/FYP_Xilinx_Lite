@@ -20,6 +20,8 @@ public abstract class ButtonSetDesign implements DesignManager {
 
 	@Override
 	public Pane getLayout() {
+		
+		initialize();
 
 		FlowPane layout = new FlowPane(20, 20);
 		layout.setAlignment(Pos.CENTER_LEFT);

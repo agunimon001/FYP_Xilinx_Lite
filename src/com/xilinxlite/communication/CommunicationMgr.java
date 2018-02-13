@@ -175,101 +175,101 @@ public class CommunicationMgr implements Commands {
 	}
 
 	@Override
-	public Map<String, String> setFamily(String family) {
+	public String setFamily(String family) {
 		logger.fine("Setting family attribute: " + family);
 		return cmd.setFamily(family);
 	}
 
 	@Override
-	public Map<String, String> getFamily() {
+	public String getFamily() {
 		return cmd.getFamily();
 	}
 
 	@Override
-	public Map<String, String> setDevice(String device) {
+	public String setDevice(String device) {
 		logger.fine("Setting device attribute: " + device);
 		return cmd.setDevice(device);
 	}
 
 	@Override
-	public Map<String, String> getDevice() {
+	public String getDevice() {
 		return cmd.getDevice();
 	}
 
 	@Override
-	public Map<String, String> setPackage(String _package) {
+	public String setPackage(String _package) {
 		logger.fine("Setting package attribute: " + _package);
 		return cmd.setPackage(_package);
 	}
 
 	@Override
-	public Map<String, String> getPackage() {
+	public String getPackage() {
 		return cmd.getPackage();
 	}
 
 	@Override
-	public Map<String, String> setSpeed(String speed) {
+	public String setSpeed(String speed) {
 		logger.fine("Setting speed attribute: " + speed);
 		return cmd.setSpeed(speed);
 	}
 
 	@Override
-	public Map<String, String> getSpeed() {
+	public String getSpeed() {
 		return cmd.getSpeed();
 	}
 
 	@Override
-	public Map<String, String> setTopSourceType(String type) {
+	public String setTopSourceType(String type) {
 		logger.fine("Setting top source type attribute: " + type);
 		return cmd.setTopSourceType(type);
 	}
 
 	@Override
-	public Map<String, String> getTopSourceType() {
+	public String getTopSourceType() {
 		return cmd.getTopSourceType();
 	}
 
 	@Override
-	public Map<String, String> setSynthesis(String synthesis) {
+	public String setSynthesis(String synthesis) {
 		logger.fine("Setting synthesis attribute: " + synthesis);
 		return cmd.setSynthesis(synthesis);
 	}
 
 	@Override
-	public Map<String, String> getSynthesis() {
+	public String getSynthesis() {
 		return cmd.getSynthesis();
 	}
 
 	@Override
-	public Map<String, String> setSimulator(String simulator) {
+	public String setSimulator(String simulator) {
 		logger.fine("Setting simulator attribute: " + simulator);
 		return cmd.setSimulator(simulator);
 	}
 
 	@Override
-	public Map<String, String> getSimulator() {
+	public String getSimulator() {
 		return cmd.getSimulator();
 	}
 
 	@Override
-	public Map<String, String> setPreferredLanguage(String language) {
+	public String setPreferredLanguage(String language) {
 		logger.fine("Setting preferred language attribute: " + language);
 		return cmd.setPreferredLanguage(language);
 	}
 
 	@Override
-	public Map<String, String> getPreferredLanguage() {
+	public String getPreferredLanguage() {
 		return cmd.getPreferredLanguage();
 	}
 
 	@Override
-	public Map<String, String> setMessageFilter(boolean filter) {
+	public boolean setMessageFilter(boolean filter) {
 		logger.fine("Setting message filter attribute: " + filter);
 		return cmd.setMessageFilter(filter);
 	}
 
 	@Override
-	public Map<String, String> getMessageFilter() {
+	public boolean getMessageFilter() {
 		return cmd.getMessageFilter();
 	}
 

@@ -61,111 +61,111 @@ public class SshCommands implements Commands {
 	}
 
 	@Override
-	public Map<String, String> setFamily(String family) {
+	public String setFamily(String family) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getFamily() {
+	public String getFamily() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setDevice(String device) {
+	public String setDevice(String device) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getDevice() {
+	public String getDevice() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setPackage(String _package) {
+	public String setPackage(String _package) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getPackage() {
+	public String getPackage() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setSpeed(String speed) {
+	public String setSpeed(String speed) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getSpeed() {
+	public String getSpeed() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setTopSourceType(String type) {
+	public String setTopSourceType(String type) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getTopSourceType() {
+	public String getTopSourceType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setSynthesis(String synthesis) {
+	public String setSynthesis(String synthesis) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getSynthesis() {
+	public String getSynthesis() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setSimulator(String simulator) {
+	public String setSimulator(String simulator) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getSimulator() {
+	public String getSimulator() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setPreferredLanguage(String language) {
+	public String setPreferredLanguage(String language) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> getPreferredLanguage() {
+	public String getPreferredLanguage() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<String, String> setMessageFilter(boolean filter) {
+	public boolean setMessageFilter(boolean filter) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override
-	public Map<String, String> getMessageFilter() {
+	public boolean getMessageFilter() {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 	@Override

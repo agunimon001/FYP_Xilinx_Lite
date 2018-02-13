@@ -11,3 +11,4 @@ sync.ffs_db
 logfile*
 /doc
 /Xilinx_Lite
+*.zip

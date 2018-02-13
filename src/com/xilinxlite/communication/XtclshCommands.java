@@ -275,198 +275,198 @@ class XtclshCommands implements Commands {
 	}
 
 	@Override
-	public Map<String, String> setFamily(String family) {
+	public String setFamily(String family) {
 		try {
 			run("set_family", family);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.FAMILY.toString());
 	}
 
 	@Override
-	public Map<String, String> getFamily() {
+	public String getFamily() {
 		try {
 			run("get_family");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.FAMILY.toString());
 	}
 
 	@Override
-	public Map<String, String> setDevice(String device) {
+	public String setDevice(String device) {
 		try {
 			run("set_device", device);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.DEVICE.toString());
 	}
 
 	@Override
-	public Map<String, String> getDevice() {
+	public String getDevice() {
 		try {
 			run("get_device");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.DEVICE.toString());
 	}
 
 	@Override
-	public Map<String, String> setPackage(String _package) {
+	public String setPackage(String _package) {
 		try {
 			run("set_package", _package);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.PACKAGE.toString());
 	}
 
 	@Override
-	public Map<String, String> getPackage() {
+	public String getPackage() {
 		try {
 			run("get_package");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.PACKAGE.toString());
 	}
 
 	@Override
-	public Map<String, String> setSpeed(String speed) {
+	public String setSpeed(String speed) {
 		try {
 			run("set_speed", speed);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.SPEED.toString());
 	}
 
 	@Override
-	public Map<String, String> getSpeed() {
+	public String getSpeed() {
 		try {
 			run("get_speed");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.SPEED.toString());
 	}
 
 	@Override
-	public Map<String, String> setTopSourceType(String type) {
+	public String setTopSourceType(String type) {
 		try {
 			run("set_top_level_source_type", type);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.TOP_SOURCE_TYPE.toString());
 	}
 
 	@Override
-	public Map<String, String> getTopSourceType() {
+	public String getTopSourceType() {
 		try {
 			run("get_top_level_source_type");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.TOP_SOURCE_TYPE.toString());
 	}
 
 	@Override
-	public Map<String, String> setSynthesis(String synthesis) {
+	public String setSynthesis(String synthesis) {
 		try {
 			run("set_synthesis", synthesis);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.SYNTHESIS.toString());
 	}
 
 	@Override
-	public Map<String, String> getSynthesis() {
+	public String getSynthesis() {
 		try {
 			run("get_synthesis");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.SYNTHESIS.toString());
 	}
 
 	@Override
-	public Map<String, String> setSimulator(String simulator) {
+	public String setSimulator(String simulator) {
 		try {
 			run("set_simulator", simulator);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.SIMULATOR.toString());
 	}
 
 	@Override
-	public Map<String, String> getSimulator() {
+	public String getSimulator() {
 		try {
 			run("get_simulator");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.SIMULATOR.toString());
 	}
 
 	@Override
-	public Map<String, String> setPreferredLanguage(String language) {
+	public String setPreferredLanguage(String language) {
 		try {
 			run("set_language", language);
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.LANGUAGE.toString());
 	}
 
 	@Override
-	public Map<String, String> getPreferredLanguage() {
+	public String getPreferredLanguage() {
 		try {
 			run("get_language");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.LANGUAGE.toString());
 	}
 
 	@Override
-	public Map<String, String> setMessageFilter(boolean filter) {
+	public boolean setMessageFilter(boolean filter) {
 		try {
 			run("set_message_filter", (filter ? "true" : "false"));
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.MESSAGE.toString()).toLowerCase().equals("true");
 	}
 
 	@Override
-	public Map<String, String> getMessageFilter() {
+	public boolean getMessageFilter() {
 		try {
 			run("get_message_filter");
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
 
-		return readAttributes();
+		return readAttributes().get(XilinxAttribute.MESSAGE.toString()).toLowerCase().equals("true");
 	}
 
 	@Override
@@ -502,7 +502,7 @@ class XtclshCommands implements Commands {
 			while (filename.contains("//")) {
 				filename.replaceAll("//", "/");
 			}
-			
+
 			run("remove_file", filename);
 
 			BufferedReader r = xtclsh.getInputReader();
@@ -549,7 +549,7 @@ class XtclshCommands implements Commands {
 		List<String> list = new ArrayList<String>();
 
 		try {
-			run("get_family_list");
+			run((projectName.isEmpty() ? "NIL" : ""), "get_family_list");
 
 			r = xtclsh.getInputReader();
 			while ((line = r.readLine()) != null) {
@@ -578,7 +578,7 @@ class XtclshCommands implements Commands {
 		Map<String, String[]> _default = new HashMap<String, String[]>();
 
 		try {
-			run("get_arch_data", architect);
+			run((projectName.isEmpty() ? "NIL" : ""), "get_arch_data", architect);
 
 			r = xtclsh.getInputReader();
 			String[] strArr = null;
