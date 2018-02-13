@@ -38,6 +38,11 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		updateVerilogFiles();
 		updateSynthesisFiles();
 
+		// Activate/deactivate buttons
+		boolean projectOpen = !cmd.getProjectName().isEmpty();
+		addFile.setDisable(!projectOpen);
+		removeFile.setDisable(!projectOpen);
+
 	}
 
 	@Override
@@ -79,11 +84,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 			}
 		});
 
-		// Clear root list
-		root.getChildren().clear();
-
-		// Update non-verilog lists
-		updateSynthesisFiles();
+		update();
 
 	}
 

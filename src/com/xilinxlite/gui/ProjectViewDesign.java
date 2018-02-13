@@ -22,7 +22,7 @@ public abstract class ProjectViewDesign implements DesignManager {
 		
 		BorderPane layout1 = new BorderPane();
 		
-		layout.setRight(layout1);
+		layout.setCenter(layout1);
 		
 		layout1.setTop(setButtonSet());
 		

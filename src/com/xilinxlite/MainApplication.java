@@ -8,7 +8,7 @@ import java.util.logging.SimpleFormatter;
 
 import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.DesignManager;
-import com.xilinxlite.gui.functions.FunctionController;
+import com.xilinxlite.gui.functions.UpdateController;
 import com.xilinxlite.gui.functions.LayoutController;
 import com.xilinxlite.gui.functions.LocalOrRemoteMgr;
 import com.xilinxlite.gui.functions.MenuBarMgr;
@@ -31,7 +31,7 @@ public class MainApplication extends Application implements LayoutController {
 	private final String DEFAULT_TITLE = "Xilinx_Lite";
 
 	private CommunicationMgr cmdMgr = new CommunicationMgr();
-	private FunctionController fnControl = new FunctionController();
+	private UpdateController fnControl = new UpdateController();
 
 	private final File SETTINGS_FOLDER = new File("Xilinx_Lite/.settings");
 

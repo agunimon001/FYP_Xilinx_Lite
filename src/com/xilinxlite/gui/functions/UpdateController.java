@@ -6,7 +6,7 @@ package com.xilinxlite.gui.functions;
  * @author Ong Hock Leng
  *
  */
-public class FunctionController {
+public class UpdateController implements Updateable {
 
 	private Updateable updateTarget = () -> {
 	};
@@ -40,6 +40,7 @@ public class FunctionController {
 	/**
 	 * Notify preset Updateable to update.
 	 */
+	@Override
 	public void update() {
 		updateTarget.update();
 	}
