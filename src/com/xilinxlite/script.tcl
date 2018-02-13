@@ -185,6 +185,14 @@ proc add_file {fileVar} {
 	}
 }
 
+proc remove_file {fileVar} {
+	if [open_project] {
+		xfile remove $fileVar
+		project save
+		puts [search $fileVar]
+	}
+}
+
 # view all verilog files in project
 proc view_files {} {
 	if [open_project] {
@@ -219,6 +227,7 @@ switch $option {
 	"get_family_list" {get_family_list}
 	"get_arch_data" {get_arch_data [lindex $argv 2]}
 	"add_file" {add_file [lindex $argv 2]}
+	"remove_file" {remove_file [lindex $argv 2]}
 	"view_files" {view_files}
 	"set_family" {set_family [lindex $argv 2]}
 	"get_family" {get_family}

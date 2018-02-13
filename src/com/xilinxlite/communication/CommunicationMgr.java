@@ -280,6 +280,12 @@ public class CommunicationMgr implements Commands {
 	}
 
 	@Override
+	public boolean removeFile(String filename) {
+		logger.fine("Removing file: " + filename);
+		return cmd.removeFile(filename);
+	}
+
+	@Override
 	public List<String> getFiles() {
 		return cmd.getFiles();
 	}

@@ -39,7 +39,7 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 
 	@Override
 	protected Pane setDirectoryView() {
-		DirectoryViewMgr pane = new DirectoryViewMgr();
+		DirectoryViewMgr pane = new DirectoryViewMgr(cmdMgr);
 		updateList.add(pane);
 		return pane.getLayout();
 	}

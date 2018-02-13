@@ -40,7 +40,8 @@ public class MainApplication extends Application implements LayoutController {
 	/**
 	 * Launches program.
 	 * 
-	 * @param args Extra parameters
+	 * @param args
+	 *            Extra parameters
 	 */
 	public static void main(String[] args) {
 		launch(); // launches JavaFX
@@ -70,10 +71,10 @@ public class MainApplication extends Application implements LayoutController {
 
 		// Set scene and show window
 		window.setScene(new Scene(mainLayout, 800, 600));
-		window.setMinHeight(600);
-		window.setMinWidth(800);
 		window.setTitle(DEFAULT_TITLE);
 		window.show();
+		window.setMinHeight(window.getHeight());
+		window.setMinWidth(window.getWidth());
 
 	}
 

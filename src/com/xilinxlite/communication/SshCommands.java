@@ -175,6 +175,12 @@ public class SshCommands implements Commands {
 	}
 
 	@Override
+	public boolean removeFile(String filename) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public List<String> getFiles() {
 		// TODO Auto-generated method stub
 		return null;

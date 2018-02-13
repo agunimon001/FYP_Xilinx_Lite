@@ -1,8 +1,7 @@
 package com.xilinxlite.gui;
 
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 /**
  * GUI design template for project view.
@@ -14,17 +13,20 @@ public abstract class ProjectViewDesign implements DesignManager {
 
 	@Override
 	public Pane getLayout() {
-		VBox layout = new VBox(20);
-
-		HBox layout1 = new HBox(20);
-
-		VBox layout1a = new VBox(20);
-
-		layout1a.getChildren().addAll(setButtonSet(), setMessageView());
-
-		layout1.getChildren().addAll(setDirectoryView(), layout1a);
-
-		layout.getChildren().addAll(setSummaryTable(), layout1);
+		
+		BorderPane layout = new BorderPane();
+		
+		layout.setTop(setSummaryTable());
+		
+		layout.setLeft(setDirectoryView());
+		
+		BorderPane layout1 = new BorderPane();
+		
+		layout.setRight(layout1);
+		
+		layout1.setTop(setButtonSet());
+		
+		layout1.setBottom(setMessageView());
 
 		return layout;
 	}

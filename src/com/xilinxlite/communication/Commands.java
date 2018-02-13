@@ -242,6 +242,15 @@ public interface Commands {
 	public boolean addFile(String filename);
 
 	/**
+	 * Removes file from a project.
+	 * 
+	 * @param filename
+	 *            Filename of file to be removed
+	 * @return True if removal is successful; false if otherwise;
+	 */
+	public boolean removeFile(String filename);
+
+	/**
 	 * Gets list of .v files.
 	 * 
 	 * @return List of .v files.

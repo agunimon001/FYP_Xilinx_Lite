@@ -495,6 +495,29 @@ class XtclshCommands implements Commands {
 	}
 
 	@Override
+	public boolean removeFile(String filename) {
+		logger.log(Level.FINE, "Removing file " + filename);
+		try {
+			filename = filename.replaceAll("\\\\", "/");
+			while (filename.contains("//")) {
+				filename.replaceAll("//", "/");
+			}
+			
+			run("remove_file", filename);
+
+			BufferedReader r = xtclsh.getInputReader();
+			while ((line = r.readLine()) != null) {
+				if (line.contains(filename)) {
+					return false;
+				}
+			}
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Reader error", e);
+		}
+		return true;
+	}
+
+	@Override
 	public List<String> getFiles() {
 		List<String> output = new ArrayList<String>();
 
