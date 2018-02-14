@@ -4,13 +4,15 @@ import java.util.logging.Logger;
 
 import com.xilinxlite.gui.MenuBarDesign;
 
+import javafx.scene.control.MenuItem;
+
 /**
  * Function implementation for MenuBarDesign GUI.
  * 
  * @author Ong Hock Leng
  *
  */
-public class MenuBarMgr extends MenuBarDesign {
+public class MenuBarMgr extends MenuBarDesign implements Updateable {
 
 	private static final Logger logger = Logger.getLogger(MenuBarMgr.class.getName());
 
@@ -18,7 +20,8 @@ public class MenuBarMgr extends MenuBarDesign {
 
 	@Override
 	public void newProject() {
-		logger.warning("newProject() not implemented.");
+		if (!fnPack.getCommunicationMgr().isNone())
+			fnPack.newProject();
 	}
 
 	@Override
@@ -28,12 +31,14 @@ public class MenuBarMgr extends MenuBarDesign {
 
 	@Override
 	public void openProject() {
-		fnPack.openProject();
+		if (!fnPack.getCommunicationMgr().isNone())
+			fnPack.openProject();
 	}
 
 	@Override
 	public void closeProject() {
-		logger.warning("closeProject() not implemented.");
+		if (!fnPack.getCommunicationMgr().isNone())
+			fnPack.closeProject();
 	}
 
 	@Override
@@ -55,6 +60,14 @@ public class MenuBarMgr extends MenuBarDesign {
 	public void help() {
 		logger.warning("help() not implemented.");
 		// MainGUI.about();
+	}
+
+	@Override
+	public void update() {
+		boolean flag = !fnPack.getCommunicationMgr().isRemote();
+		for (MenuItem i : menuItems) {
+			i.setDisable(flag);
+		}
 	}
 
 }

@@ -65,7 +65,10 @@ public class MainApplication extends Application implements LayoutController {
 
 		// Build window with menu bar
 		mainLayout = new BorderPane();
-		mainLayout.setTop(new MenuBarMgr().getMenubar());
+		MenuBarMgr mbMgr = new MenuBarMgr();
+		mainLayout.setTop(mbMgr.getMenubar());
+		updater.setMenuBar(mbMgr);
+		updater.update();
 
 		// Instantiate LocalOrRemoteMgr and update to main window
 		DesignManager dm = new LocalOrRemoteMgr(cmdMgr, SETTINGS_FOLDER, this);
