@@ -13,3 +13,4 @@ logfile*
 /Xilinx_Lite
 *.zip
 Test.java
+/testbed

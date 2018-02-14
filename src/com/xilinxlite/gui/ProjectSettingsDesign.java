@@ -138,7 +138,7 @@ public abstract class ProjectSettingsDesign {
 		DirectoryChooser dc = new DirectoryChooser();
 		dc.setTitle("Select working directory...");
 		File file = dc.showDialog(new Stage());
-		return file.getAbsolutePath();
+		return file == null ? "" : file.getAbsolutePath();
 	}
 
 	protected abstract void initialize();
