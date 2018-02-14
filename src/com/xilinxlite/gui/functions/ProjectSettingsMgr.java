@@ -8,6 +8,9 @@ import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.communication.XilinxAttribute;
 import com.xilinxlite.gui.ProjectSettingsDesign;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class ProjectSettingsMgr extends ProjectSettingsDesign {
 
 	private FunctionPack fnPack = FunctionPack.getInstance();
@@ -46,12 +49,13 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 
 		preferredLanguageField.getItems().add("Verilog");
 
+		workingDirectoryField.setText(cmd.getWorkingDirectory());
+
 		if (cmd.getProjectName().isEmpty()) {
 			setDefault();
 		} else {
 			attributes = cmd.getAttributes();
 			projectNameField.setText(cmd.getProjectName());
-			workingDirectoryField.setText(cmd.getWorkingDirectory());
 			familyField.setValue(attributes.get(XilinxAttribute.FAMILY.toString()));
 			deviceField.setValue(attributes.get(XilinxAttribute.DEVICE.toString()));
 			packageField.setValue(attributes.get(XilinxAttribute.PACKAGE.toString()));
@@ -60,7 +64,6 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			synthesisToolField.setValue(attributes.get(XilinxAttribute.SYNTHESIS.toString()));
 			simulatorField.setValue(attributes.get(XilinxAttribute.SIMULATOR.toString()));
 			preferredLanguageField.setValue(attributes.get(XilinxAttribute.LANGUAGE.toString()));
-
 		}
 	}
 
@@ -149,8 +152,15 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			cmd.setWorkingDirectory(workingDirectoryField.getText());
 		}
 
-		if (cmd.getProjectName().isEmpty() && !projectNameField.getText().isEmpty()) {
-			cmd.newProject(projectNameField.getText());
+		if (createProject && cmd.getProjectName().isEmpty() && !projectNameField.getText().isEmpty()) {
+			if (cmd.newProject(projectNameField.getText())) {
+				attributes = cmd.getAttributes();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("A project of the same name is found in the working directory!!!");
+				alert.showAndWait();
+				return;
+			}
 		}
 
 		Map<String, String> attr = new HashMap<String, String>();
@@ -172,6 +182,8 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			attr.put(XilinxAttribute.LANGUAGE.toString(), preferredLanguageField.getValue());
 
 		cmd.setAttributes(attr);
+		
+		fnPack.update();
 
 		close();
 	}

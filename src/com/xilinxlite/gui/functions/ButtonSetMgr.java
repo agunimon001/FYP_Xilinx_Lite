@@ -15,7 +15,7 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 
 	@Override
 	public void update() {
-
+		synthesizeBtn.setDisable(cmd.getProjectName().isEmpty());
 	}
 
 	@Override
@@ -33,8 +33,7 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 
 	@Override
 	protected void createProject() {
-		// TODO Auto-generated method stub
-
+		fnPack.newProject();
 	}
 
 	@Override
@@ -44,8 +43,7 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 
 	@Override
 	protected void synthesize() {
-		// TODO Auto-generated method stub
-
+		fnPack.synthesize();
 	}
 
 }

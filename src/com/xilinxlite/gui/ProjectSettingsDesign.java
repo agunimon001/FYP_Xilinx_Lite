@@ -81,7 +81,8 @@ public abstract class ProjectSettingsDesign {
 
 		layout1.add(workingDirectoryLabel, 0, row);
 		layout1.add(new Label(":"), 1, row);
-		layout1.add(workingDirectoryField, 2, row++);
+		layout1.add(workingDirectoryField, 2, row);
+		layout1.add(directoryChooserBtn, 3, row++);
 
 		layout1.add(familyLabel, 0, row);
 		layout1.add(new Label(":"), 1, row);
