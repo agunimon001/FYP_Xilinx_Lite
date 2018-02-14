@@ -1,5 +1,8 @@
 package com.xilinxlite.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Platform;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -14,6 +17,8 @@ import javafx.scene.input.KeyCombination;
  *
  */
 public abstract class MenuBarDesign {
+	
+	protected List<MenuItem> menuItems = new ArrayList<>();
 
 	/**
 	 * Call this method to get a MenuBar GUI. Best to use BorderPane to put this
@@ -71,7 +76,9 @@ public abstract class MenuBarDesign {
 
 		Menu remoteMenu = new Menu("Remote");
 		MenuItem rMenuSync = new MenuItem("Synchronize");
+		menuItems.add(rMenuSync);
 		MenuItem rMenuConnection = new MenuItem("Connection Settings");
+		menuItems.add(rMenuConnection);
 		remoteMenu.getItems().addAll(rMenuSync, rMenuConnection);
 		mb.getMenus().add(remoteMenu);
 
