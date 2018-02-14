@@ -27,6 +27,7 @@ public abstract class LocalOrRemoteDesign implements DesignManager {
 		Label prompt = new Label("Choose local or remote Xilinx:");
 		Button btnLocal = new Button("Local");
 		Button btnRemote = new Button("Remote");
+		btnRemote.setDisable(true);	// remove when remote is implemented
 
 		btnLocal.setOnAction(e -> setLocal());
 
