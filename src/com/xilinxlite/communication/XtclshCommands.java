@@ -539,6 +539,10 @@ class XtclshCommands implements Commands {
 	public void synthesize() {
 		try {
 			run("synthesize");
+			r = xtclsh.getInputReader();
+			while ((line = r.readLine()) != null) {
+				// do nothing
+			}
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Reader error", e);
 		}
