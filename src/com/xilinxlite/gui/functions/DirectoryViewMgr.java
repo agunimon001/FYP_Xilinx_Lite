@@ -47,45 +47,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	@Override
 	protected void initialize() {
-
-		// Button functionalites
-		addFile.setOnAction(e -> {
-			FileChooser fc = new FileChooser();
-			fc.setTitle("Select file...");
-			fc.setInitialDirectory(new File(cmd.getWorkingDirectory()));
-			fc.setSelectedExtensionFilter(new ExtensionFilter("Verilog file", "*.v"));
-			File file = fc.showOpenDialog(new Stage());
-
-			if (file != null) {
-				addVerilogFile(file);
-				updateVerilogFiles();
-			}
-		});
-		removeFile.setOnAction(e -> {
-			MultipleSelectionModel<TreeItem<Object>> tvSelModel = treeView.getSelectionModel();
-			TreeItem<Object> item = tvSelModel.getSelectedItem();
-			if (item.getValue() instanceof File) {
-				if (item.getParent() == verilogFiles) {
-					removeVerilogFile((File) item.getValue());
-					verilogFiles.getChildren().remove(item);
-					updateVerilogFiles();
-				} else if (item.getParent() == synthesisFiles) {
-					Alert alert = new Alert(AlertType.CONFIRMATION);
-					alert.setContentText("Delete file from disk?");
-					Optional<ButtonType> result = alert.showAndWait();
-					if (result.get() == ButtonType.OK) {
-						File file = (File) item.getValue();
-						if (file.delete()) {
-							synthesisFiles.getChildren().remove(item);
-						}
-					}
-					updateSynthesisFiles();
-				}
-			}
-		});
-
 		update();
-
 	}
 
 	private void updateList() {
@@ -173,6 +135,49 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	private boolean removeVerilogFile(File file) {
 		return cmd.removeFile(file.getAbsolutePath());
+	}
+
+	@Override
+	protected void addFile() {
+		FileChooser fc = new FileChooser();
+		fc.setTitle("Select file...");
+		fc.setInitialDirectory(new File(cmd.getWorkingDirectory()));
+		fc.setSelectedExtensionFilter(new ExtensionFilter("Verilog file", "*.v"));
+		File file = fc.showOpenDialog(new Stage());
+
+		if (file != null) {
+			addVerilogFile(file);
+			updateVerilogFiles();
+		}
+	}
+
+	@Override
+	protected void removeFile() {
+		MultipleSelectionModel<TreeItem<Object>> tvSelModel = treeView.getSelectionModel();
+		TreeItem<Object> item = tvSelModel.getSelectedItem();
+		if (item.getValue() instanceof File) {
+			if (item.getParent() == verilogFiles) {
+				removeVerilogFile((File) item.getValue());
+				verilogFiles.getChildren().remove(item);
+				updateVerilogFiles();
+			} else if (item.getParent() == synthesisFiles) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setContentText("Delete file from disk?");
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == ButtonType.OK) {
+					File file = (File) item.getValue();
+					if (file.delete()) {
+						synthesisFiles.getChildren().remove(item);
+					}
+				}
+				updateSynthesisFiles();
+			}
+		}
+	}
+
+	@Override
+	protected void refresh() {
+		update();
 	}
 
 }

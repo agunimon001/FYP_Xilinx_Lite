@@ -25,6 +25,7 @@ public abstract class DirectoryViewDesign implements DesignManager {
 
 	protected Button addFile = new Button("Add");
 	protected Button removeFile = new Button("Remove Selected");
+	protected Button refreshBtn = new Button("Refresh");
 
 	private Label heading = new Label("Project Explorer");
 
@@ -50,11 +51,25 @@ public abstract class DirectoryViewDesign implements DesignManager {
 		treeView.setShowRoot(false);
 
 		// Set buttons group
-		HBox layout2 = new HBox(10);
+		VBox layout2 = new VBox(10);
 		layout.setBottom(layout2);
-		layout2.getChildren().addAll(addFile, removeFile);
-		layout2.setAlignment(Pos.CENTER);
-		layout2.setPadding(new Insets(10));
+
+		HBox layout2a = new HBox(10);
+		layout2.getChildren().add(layout2a);
+		layout2a.getChildren().addAll(addFile, removeFile);
+		layout2a.setAlignment(Pos.CENTER);
+		layout2a.setPadding(new Insets(10));
+
+		addFile.setOnAction(e -> addFile());
+		removeFile.setOnAction(e -> removeFile());
+
+		HBox layout2b = new HBox(10);
+		layout2.getChildren().add(layout2b);
+		layout2b.getChildren().addAll(refreshBtn);
+		layout2b.setAlignment(Pos.CENTER);
+		layout2b.setPadding(new Insets(10));
+		
+		refreshBtn.setOnAction(e->refresh());
 
 		return layout;
 	}
@@ -63,5 +78,20 @@ public abstract class DirectoryViewDesign implements DesignManager {
 	 * Initial settings to layout
 	 */
 	protected abstract void initialize();
+	
+	/**
+	 * Added file to project
+	 */
+	protected abstract void addFile();
+	
+	/**
+	 * Remove selected file
+	 */
+	protected abstract void removeFile();
+	
+	/**
+	 * Refreshes tree
+	 */
+	protected abstract void refresh();
 
 }

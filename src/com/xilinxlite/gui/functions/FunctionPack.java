@@ -125,6 +125,20 @@ public class FunctionPack {
 		// Check for open project
 		checkAndCloseProject();
 
-//		new ProjectSettingsMgr().launch();
+		new ProjectSettingsMgr(true).launch();
+	}
+	
+	public void closeProject() {
+		cmdMgr.closeProject();
+		updater.update();
+	}
+	
+	public void synthesize() {
+		cmdMgr.synthesize();
+		updater.update();
+	}
+	
+	public void update() {
+		updater.update();
 	}
 }
