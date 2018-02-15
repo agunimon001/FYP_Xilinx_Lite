@@ -42,7 +42,7 @@ public class FunctionPack {
 
 		return instance;
 	}
-	
+
 	public CommunicationMgr getCommunicationMgr() {
 		return cmdMgr;
 	}
@@ -63,7 +63,7 @@ public class FunctionPack {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -123,21 +123,21 @@ public class FunctionPack {
 
 	public void newProject() {
 		// Check for open project
-		checkAndCloseProject();
-
-		new ProjectSettingsMgr(true).launch();
+		if (checkAndCloseProject()) {
+			new ProjectSettingsMgr(true).launch();
+		}
 	}
-	
+
 	public void closeProject() {
 		cmdMgr.closeProject();
 		updater.update();
 	}
-	
+
 	public void synthesize() {
 		cmdMgr.synthesize();
 		updater.update();
 	}
-	
+
 	public void update() {
 		updater.update();
 	}

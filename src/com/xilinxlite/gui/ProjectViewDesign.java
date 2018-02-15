@@ -13,20 +13,20 @@ public abstract class ProjectViewDesign implements DesignManager {
 
 	@Override
 	public Pane getLayout() {
-		
+
 		BorderPane layout = new BorderPane();
-		
+
 		layout.setTop(setSummaryTable());
-		
+
 		layout.setLeft(setDirectoryView());
-		
+
 		BorderPane layout1 = new BorderPane();
-		
+
 		layout.setCenter(layout1);
-		
+
 		layout1.setTop(setButtonSet());
-		
-		layout1.setBottom(setMessageView());
+
+		layout1.setCenter(setMessageView());
 
 		return layout;
 	}

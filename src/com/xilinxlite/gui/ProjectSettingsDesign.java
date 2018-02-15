@@ -65,7 +65,7 @@ public abstract class ProjectSettingsDesign {
 		layout1.setVgap(10);
 		layout1.setHgap(10);
 
-		directoryChooserBtn.setOnAction(e -> workingDirectoryField.setText(directoryChooser()));
+		directoryChooserBtn.setOnAction(e -> directoryChooser());
 		familyField.setOnAction(e -> loadFamily());
 		deviceField.setOnAction(e -> loadDevice());
 		packageField.setOnAction(e -> loadPackage());
@@ -134,11 +134,13 @@ public abstract class ProjectSettingsDesign {
 		window.showAndWait();
 	}
 	
-	private String directoryChooser() {
+	private void directoryChooser() {
 		DirectoryChooser dc = new DirectoryChooser();
 		dc.setTitle("Select working directory...");
 		File file = dc.showDialog(new Stage());
-		return file == null ? "" : file.getAbsolutePath();
+		if (file != null) {
+			workingDirectoryField.setText(file.getAbsolutePath());
+		}
 	}
 
 	protected abstract void initialize();
