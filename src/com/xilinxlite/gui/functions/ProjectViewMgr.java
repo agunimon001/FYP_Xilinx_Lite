@@ -18,7 +18,11 @@ import javafx.scene.layout.Pane;
 public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 
 	private CommunicationMgr cmdMgr = null;
+	
 	List<Updateable> updateList = new ArrayList<Updateable>();
+	
+	private DirectoryViewMgr dvMgr = null;
+	private MessageViewMgr mvMgr = null;
 
 	/**
 	 * Constructor.
@@ -41,6 +45,10 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 	protected Pane setDirectoryView() {
 		DirectoryViewMgr pane = new DirectoryViewMgr(cmdMgr);
 		updateList.add(pane);
+		dvMgr = pane;
+		if (mvMgr != null) {
+			dvMgr.setMessageViewMgr(mvMgr);
+		}
 		return pane.getLayout();
 	}
 
@@ -55,6 +63,10 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 	protected Pane setMessageView() {
 		MessageViewMgr pane = new MessageViewMgr();
 		updateList.add(pane);
+		mvMgr = pane;
+		if (dvMgr != null) {
+			dvMgr.setMessageViewMgr(mvMgr);
+		}
 		return pane.getLayout();
 	}
 

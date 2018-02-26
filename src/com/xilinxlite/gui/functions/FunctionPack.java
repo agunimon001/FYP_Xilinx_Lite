@@ -46,6 +46,10 @@ public class FunctionPack {
 	public CommunicationMgr getCommunicationMgr() {
 		return cmdMgr;
 	}
+	
+	public boolean isProjectClosed() {
+		return cmdMgr.getProjectName().isEmpty();
+	}
 
 	private boolean checkAndCloseProject() {
 		// Check if a project is currently opened, close if user accepts

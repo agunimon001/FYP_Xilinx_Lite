@@ -9,6 +9,8 @@ import java.util.logging.Logger;
 import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.DirectoryViewDesign;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
@@ -26,28 +28,27 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	private TreeItem<Object> verilogFiles = new TreeItem<>("Verilog files");
 	private TreeItem<Object> synthesisFiles = new TreeItem<>("Synthesis files");
+	
+	private MessageViewMgr messageView = null;
 
 	public DirectoryViewMgr(CommunicationMgr cmd) {
 		this.cmd = cmd;
 	}
+	
+	public void setMessageViewMgr(MessageViewMgr mgr) {
+		this.messageView = mgr;
+		
+		treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<Object>>() {
 
-	@Override
-	public void update() {
-
-		// Update each category
-		updateVerilogFiles();
-		updateSynthesisFiles();
-
-		// Activate/deactivate buttons
-		boolean projectOpen = !cmd.getProjectName().isEmpty();
-		addFile.setDisable(!projectOpen);
-		removeFile.setDisable(!projectOpen);
-
-	}
-
-	@Override
-	protected void initialize() {
-		update();
+			@Override
+			public void changed(ObservableValue<? extends TreeItem<Object>> observable, TreeItem<Object> oldValue,
+					TreeItem<Object> newValue) {
+				if (newValue.getValue() instanceof File) {
+					messageView.viewFile((File) newValue.getValue());
+				}
+			}
+			
+		});
 	}
 
 	private void updateList() {
@@ -135,6 +136,31 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	private boolean removeVerilogFile(File file) {
 		return cmd.removeFile(file.getAbsolutePath());
+	}
+	
+	private void openFileRead(File file) {
+		if (messageView != null) {
+			messageView.viewFile(file);
+		}
+	}
+
+	@Override
+	public void update() {
+	
+		// Update each category
+		updateVerilogFiles();
+		updateSynthesisFiles();
+	
+		// Activate/deactivate buttons
+		boolean projectOpen = !cmd.getProjectName().isEmpty();
+		addFile.setDisable(!projectOpen);
+		removeFile.setDisable(!projectOpen);
+	
+	}
+
+	@Override
+	protected void initialize() {
+		update();
 	}
 
 	@Override
