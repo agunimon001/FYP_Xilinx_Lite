@@ -173,6 +173,15 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	@Override
 	protected void initialize() {
 		update();
+		treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<Object>>() {
+
+			@Override
+			public void changed(ObservableValue<? extends TreeItem<Object>> observable, TreeItem<Object> oldValue,
+					TreeItem<Object> newValue) {
+				removeFile.setDisable(!(newValue.getValue() instanceof File));
+			}
+			
+		});
 	}
 
 	@Override
