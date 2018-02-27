@@ -3,7 +3,6 @@ package com.xilinxlite.gui.functions;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.ProjectViewDesign;
 
 import javafx.scene.layout.Pane;
@@ -17,33 +16,21 @@ import javafx.scene.layout.Pane;
  */
 public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 
-	private CommunicationMgr cmdMgr = null;
-	
 	List<Updateable> updateList = new ArrayList<Updateable>();
-	
+
 	private DirectoryViewMgr dvMgr = null;
 	private MessageViewMgr mvMgr = null;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param cmdMgr
-	 *            CommunicationMgr instance
-	 */
-	public ProjectViewMgr(CommunicationMgr cmdMgr) {
-		this.cmdMgr = cmdMgr;
-	}
-
 	@Override
 	protected Pane setSummaryTable() {
-		SummaryTableMgr pane = new SummaryTableMgr(cmdMgr);
+		SummaryTableMgr pane = new SummaryTableMgr();
 		updateList.add(pane);
 		return pane.getLayout();
 	}
 
 	@Override
 	protected Pane setDirectoryView() {
-		DirectoryViewMgr pane = new DirectoryViewMgr(cmdMgr);
+		DirectoryViewMgr pane = new DirectoryViewMgr();
 		updateList.add(pane);
 		dvMgr = pane;
 		if (mvMgr != null) {

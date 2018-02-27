@@ -3,6 +3,8 @@ package com.xilinxlite.gui.functions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.communication.XilinxAttribute;
@@ -11,7 +13,15 @@ import com.xilinxlite.gui.ProjectSettingsDesign;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Function implementation for PRojectSettingsDesign.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class ProjectSettingsMgr extends ProjectSettingsDesign {
+
+	private static Logger logger = Logger.getLogger(ProjectSettingsMgr.class.getName());
 
 	private FunctionPack fnPack = FunctionPack.getInstance();
 	private CommunicationMgr cmd;
@@ -21,10 +31,19 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 	private Map<String, Map<String, String[]>> architectData;
 	private Map<String, String> attributes;
 
+	/**
+	 * Default constructor. Flag for creating new project is set to false.
+	 */
 	public ProjectSettingsMgr() {
 
 	}
 
+	/**
+	 * Constructor. Sets flag for creating new project.
+	 * 
+	 * @param createProject
+	 *            Set true to enable flag
+	 */
 	public ProjectSettingsMgr(boolean createProject) {
 		this.createProject = createProject;
 	}
@@ -54,6 +73,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 		if (cmd.getProjectName().isEmpty()) {
 			setDefault();
 		} else {
+			// Use XilinxAttribute as key to Map<> from attributes.get()
 			attributes = cmd.getAttributes();
 			projectNameField.setText(cmd.getProjectName());
 			familyField.setValue(attributes.get(XilinxAttribute.FAMILY.toString()));
@@ -83,7 +103,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			packageField.getItems().addAll(devices.keySet());
 			packageField.setValue(packageField.getItems().get(0));
 		} catch (NullPointerException e) {
-
+			logger.log(Level.FINE, "Error loading for device " + deviceField.getValue(), e);
 		}
 	}
 
@@ -95,38 +115,39 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			speedField.getItems().addAll(speeds);
 			speedField.setValue(speedField.getItems().get(0));
 		} catch (NullPointerException e) {
-
+			logger.log(Level.FINE, "Error loading for package " + packageField.getValue(), e);
 		}
 	}
 
 	@Override
 	protected void loadSpeed() {
-
+		// do nothing; nothing else to load along with speed
 	}
 
 	@Override
 	protected void loadTopLevelSourceType() {
-
+		// do nothing; current default only one setting
 	}
 
 	@Override
 	protected void loadSynthesisTool() {
-
+		// do nothing; current default only one setting
 	}
 
 	@Override
 	protected void loadSimulator() {
-
+		// do nothing; current default only one setting
 	}
 
 	@Override
 	protected void loadPreferredLanguage() {
-
+		// do nothing; current default only one setting
 	}
 
 	@Override
 	protected void setDefault() {
 
+		// Load for each new value; to ensure Xilinx ISE contains those values
 		familyField.setValue("spartan6");
 		loadFamily();
 		deviceField.setValue("xc6slx4");
@@ -136,6 +157,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 		speedField.setValue("-3");
 		loadSpeed();
 
+		// Default values
 		topLevelSourceTypeField.setValue("HDL");
 
 		synthesisToolField.setValue("XST (VHDL/Verilog)");
@@ -148,14 +170,18 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 	@Override
 	protected void save() {
 
+		// Change working directory if new working directory is not equal to
+		// CommunicationMgr's
 		if (!cmd.getWorkingDirectory().equals(workingDirectoryField.getText())) {
 			cmd.setWorkingDirectory(workingDirectoryField.getText());
 		}
 
+		// If project creation is successful, obtain attributes of created project
 		if (createProject && cmd.getProjectName().isEmpty() && !projectNameField.getText().isEmpty()) {
 			if (cmd.newProject(projectNameField.getText())) {
 				attributes = cmd.getAttributes();
 			} else {
+				// Alert if a project with the same name is found
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setContentText("A project of the same name is found in the working directory!!!");
 				alert.showAndWait();
@@ -163,6 +189,8 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			}
 		}
 
+		// Build attribute map to use for updating project with; compares with current
+		// attribute settings to determine which to update with
 		Map<String, String> attr = new HashMap<String, String>();
 		if (!familyField.getValue().equals(attributes.get(XilinxAttribute.FAMILY.toString())))
 			attr.put(XilinxAttribute.FAMILY.toString(), familyField.getValue());
@@ -182,7 +210,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 			attr.put(XilinxAttribute.LANGUAGE.toString(), preferredLanguageField.getValue());
 
 		cmd.setAttributes(attr);
-		
+
 		fnPack.update();
 
 		close();

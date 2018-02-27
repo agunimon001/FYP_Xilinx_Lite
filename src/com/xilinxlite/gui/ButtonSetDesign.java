@@ -41,10 +41,19 @@ public abstract class ButtonSetDesign implements DesignManager {
 	 */
 	protected abstract void initialize();
 
+	/**
+	 * Creates new project
+	 */
 	protected abstract void createProject();
 
+	/**
+	 * Opens existing project
+	 */
 	protected abstract void openProject();
 
+	/**
+	 * Synthesize currently opened project
+	 */
 	protected abstract void synthesize();
 
 }

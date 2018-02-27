@@ -1,7 +1,5 @@
 package com.xilinxlite.gui.functions;
 
-import javafx.scene.control.MenuBar;
-
 /**
  * Allows storing a target Updateable object and notifies it to update.
  * 
@@ -12,7 +10,8 @@ public class UpdateController implements Updateable {
 
 	private Updateable updateTarget = () -> {
 	};
-	private Updateable menuBar = () -> {};
+	private Updateable menuBar = () -> {
+	};
 
 	/**
 	 * Attempts to set new update target. Input o is checked to be an instance of
@@ -39,7 +38,13 @@ public class UpdateController implements Updateable {
 		updateTarget = () -> {
 		};
 	}
-	
+
+	/**
+	 * Sets menubar to update.
+	 * 
+	 * @param mb
+	 *            Menubar of the GUI
+	 */
 	public void setMenuBar(MenuBarMgr mb) {
 		menuBar = mb;
 	}

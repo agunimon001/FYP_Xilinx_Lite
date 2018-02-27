@@ -114,10 +114,25 @@ public abstract class LocalSettingDesign {
 		}
 	}
 
+	/**
+	 * Initializes functionalities
+	 */
 	abstract protected void initialize();
 
+	/**
+	 * Saves settings and closes window. Pass the window as argument.
+	 * 
+	 * @param window
+	 *            Current window
+	 */
 	abstract protected void save(Stage window);
 
+	/**
+	 * Closes window. Pass the window as argument.
+	 * 
+	 * @param window
+	 *            Current window
+	 */
 	abstract protected void close(Stage window);
 
 }

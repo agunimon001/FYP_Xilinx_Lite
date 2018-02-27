@@ -43,7 +43,13 @@ public abstract class LocalOrRemoteDesign implements DesignManager {
 		return main;
 	}
 
+	/**
+	 * Sets up local connection
+	 */
 	protected abstract void setLocal();
 
+	/**
+	 * Sets up remote connection
+	 */
 	protected abstract void setRemote();
 }

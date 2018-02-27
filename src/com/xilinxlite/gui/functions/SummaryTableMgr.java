@@ -1,24 +1,34 @@
 package com.xilinxlite.gui.functions;
 
-import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.SummaryTableDesign;
 
+/**
+ * Function implementation for SummaryTableDesign.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class SummaryTableMgr extends SummaryTableDesign implements Updateable {
 
-	CommunicationMgr cmdMgr;
+	private FunctionPack fnPack = null;
 
-	public SummaryTableMgr(CommunicationMgr cmdMgr) {
-		this.cmdMgr = cmdMgr;
+	/**
+	 * Constructor.
+	 * 
+	 * @param cmdMgr
+	 */
+	public SummaryTableMgr() {
+		fnPack = FunctionPack.getInstance();
 	}
 
 	@Override
 	protected void updateProjectTitle() {
-		projectTitle.setText(cmdMgr.getProjectName());
+		projectTitle.setText(fnPack.getProjectName());
 	}
 
 	@Override
 	protected void updateConnectionStatus() {
-		connectionStatus.setText(cmdMgr.getConnectiontype().toString());
+		connectionStatus.setText(fnPack.getConnectionStatus());
 	}
 
 	@Override

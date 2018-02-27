@@ -1,6 +1,7 @@
 package com.xilinxlite.gui.functions;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +18,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+/**
+ * Singleton. Contains access to functions for global use.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class FunctionPack {
 
 	private static Logger logger = Logger.getLogger(FunctionPack.class.getName());
@@ -26,31 +33,66 @@ public class FunctionPack {
 	private CommunicationMgr cmdMgr = null;
 	private Updateable updater = null;
 
+	/**
+	 * Private constructor for singleton.
+	 * 
+	 * @param cmdMgr
+	 *            One instance of CommunicationMgr
+	 * @param updater
+	 *            One instance of Updateable
+	 */
 	private FunctionPack(CommunicationMgr cmdMgr, Updateable updater) {
 		this.cmdMgr = cmdMgr;
 		this.updater = updater;
 	}
 
+	/**
+	 * Allows getting instance from anywhere
+	 * 
+	 * @return FunctionPack instance if available; null if otherwise
+	 */
 	public static FunctionPack getInstance() {
 		return instance;
 	}
 
+	/**
+	 * 
+	 * @param cmdMgr
+	 * @param updater
+	 * @return FunctionPack instance if instantiated successfully; null if otherwise
+	 */
 	public static FunctionPack getInstance(CommunicationMgr cmdMgr, Updateable updater) {
-		if (instance == null) {
+		if (instance == null && cmdMgr != null && updater != null) {
 			instance = new FunctionPack(cmdMgr, updater);
 		}
 
 		return instance;
 	}
 
+	/**
+	 * Gets instance of CommunicationMgr
+	 * 
+	 * @return instance of CommunicationMgr
+	 */
 	public CommunicationMgr getCommunicationMgr() {
 		return cmdMgr;
 	}
-	
+
+	/**
+	 * Checks if project is closed
+	 * 
+	 * @return True if no project is opened; false if otherwise
+	 */
 	public boolean isProjectClosed() {
 		return cmdMgr.getProjectName().isEmpty();
 	}
 
+	/**
+	 * Checks if any project is opened. Prompt user if user wish to close existing
+	 * project.
+	 * 
+	 * @return True if no project is left open; false if otherwise
+	 */
 	private boolean checkAndCloseProject() {
 		// Check if a project is currently opened, close if user accepts
 		if (!cmdMgr.getProjectName().isEmpty()) {
@@ -71,6 +113,9 @@ public class FunctionPack {
 		return true;
 	}
 
+	/**
+	 * Prompts user to locate a project to open.
+	 */
 	public void openProject() {
 		// Check for open project
 		if (!checkAndCloseProject())
@@ -125,6 +170,9 @@ public class FunctionPack {
 
 	}
 
+	/**
+	 * Creates new project. Checks if any project is opened before creating a new one.
+	 */
 	public void newProject() {
 		// Check for open project
 		if (checkAndCloseProject()) {
@@ -132,17 +180,78 @@ public class FunctionPack {
 		}
 	}
 
+	/**
+	 * Closes opened project if any.
+	 */
 	public void closeProject() {
 		cmdMgr.closeProject();
 		updater.update();
 	}
 
+	/**
+	 * Execute synthesis
+	 */
 	public void synthesize() {
 		cmdMgr.synthesize();
 		updater.update();
 	}
 
+	/**
+	 * Updates assigned Updateable.
+	 */
 	public void update() {
 		updater.update();
+	}
+	
+	/**
+	 * Get list of verilog files used by Xilinx project
+	 * @return list of verilog files
+	 */
+	public List<String> getVerilogFiles(){
+		return cmdMgr.getFiles();
+	}
+	
+	/**
+	 * Gets current working directory
+	 * @return current working directory
+	 */
+	public String getWorkingDirectory() {
+		return cmdMgr.getWorkingDirectory();
+	}
+	
+	/**
+	 * Adds file indicated by filepath to project.
+	 * @param filepath
+	 * @return True if added successfully; false if otherwise
+	 */
+	public boolean addFile(String filepath) {
+		return cmdMgr.addFile(filepath);
+	}
+	
+	/**
+	 * Removes file indicated by filepath from project.
+	 * @param filepath
+	 * @return True if file is removed successfully; false if otherwise
+	 */
+	public boolean removeFile(String filepath) {
+		return cmdMgr.removeFile(filepath);
+	}
+	
+	/**
+	 * Returns current project name.
+	 * 
+	 * @return Project name; empty String if unavailable.
+	 */
+	public String getProjectName() {
+		return cmdMgr.getProjectName();
+	}
+	
+	/**
+	 * Returns current connection status. Available status are LOCAL, REMOTE and NONE.
+	 * 
+	 * @return Connection status in String format
+	 */
+	public String getConnectionStatus() {
+		return cmdMgr.getConnectiontype().toString();
 	}
 }

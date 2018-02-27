@@ -6,7 +6,6 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.DirectoryViewDesign;
 
 import javafx.beans.value.ChangeListener;
@@ -20,24 +19,37 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+/**
+ * Function implementation of DirectoryViewDesign.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable {
 
 	private static Logger logger = Logger.getLogger(DirectoryViewMgr.class.getName());
 
-	private CommunicationMgr cmd = null;
+	private FunctionPack fnPack = null;
 
 	private TreeItem<Object> verilogFiles = new TreeItem<>("Verilog files");
 	private TreeItem<Object> synthesisFiles = new TreeItem<>("Synthesis files");
-	
+
 	private MessageViewMgr messageView = null;
 
-	public DirectoryViewMgr(CommunicationMgr cmd) {
-		this.cmd = cmd;
+	/**
+	 * Constructor.
+	 */
+	public DirectoryViewMgr() {
+		this.fnPack = FunctionPack.getInstance();
 	}
-	
+
+	/**
+	 * Sets MessageViewMgr reference. Also sets listener to treeView.
+	 * @param mgr
+	 */
 	public void setMessageViewMgr(MessageViewMgr mgr) {
 		this.messageView = mgr;
-		
+
 		treeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<Object>>() {
 
 			@Override
@@ -47,7 +59,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 					messageView.viewFile((File) newValue.getValue());
 				}
 			}
-			
+
 		});
 	}
 
@@ -67,13 +79,13 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	private void updateVerilogFiles() {
 
-		if (cmd == null) {
-			logger.log(Level.SEVERE, "Attempted update with no CommunicationMgr", new Exception());
+		if (fnPack == null) {
+			logger.log(Level.SEVERE, "FunctionPack is missing", new Exception());
 			return;
 		}
 
 		// Get list of verilog files in project
-		List<String> verilogList = cmd.getFiles();
+		List<String> verilogList = fnPack.getVerilogFiles();
 
 		// Update verilog list
 		verilogFiles.getChildren().clear();
@@ -92,7 +104,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	private void updateSynthesisFiles() {
 
 		// Get list of files found in working directory
-		File[] wdFiles = new File(cmd.getWorkingDirectory()).listFiles();
+		File[] wdFiles = new File(fnPack.getWorkingDirectory()).listFiles();
 
 		// Clear tree list
 		synthesisFiles.getChildren().clear();
@@ -127,7 +139,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	}
 
 	private boolean addVerilogFile(File file) {
-		if (cmd.addFile(file.getAbsolutePath())) {
+		if (fnPack.addFile(file.getAbsolutePath())) {
 			verilogFiles.getChildren().add(new TreeItem<>(treeItemFile(file)));
 			return true;
 		} else
@@ -135,9 +147,9 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	}
 
 	private boolean removeVerilogFile(File file) {
-		return cmd.removeFile(file.getAbsolutePath());
+		return fnPack.removeFile(file.getAbsolutePath());
 	}
-	
+
 	private void openFileRead(File file) {
 		if (messageView != null) {
 			messageView.viewFile(file);
@@ -146,16 +158,16 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	@Override
 	public void update() {
-	
+
 		// Update each category
 		updateVerilogFiles();
 		updateSynthesisFiles();
-	
+
 		// Activate/deactivate buttons
-		boolean projectOpen = !cmd.getProjectName().isEmpty();
-		addFile.setDisable(!projectOpen);
-		removeFile.setDisable(!projectOpen);
-	
+		boolean projectClosed = fnPack.isProjectClosed();
+		addFile.setDisable(projectClosed);
+		removeFile.setDisable(projectClosed);
+
 	}
 
 	@Override
@@ -167,7 +179,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	protected void addFile() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select file...");
-		fc.setInitialDirectory(new File(cmd.getWorkingDirectory()));
+		fc.setInitialDirectory(new File(fnPack.getWorkingDirectory()));
 		fc.setSelectedExtensionFilter(new ExtensionFilter("Verilog file", "*.v"));
 		File file = fc.showOpenDialog(new Stage());
 

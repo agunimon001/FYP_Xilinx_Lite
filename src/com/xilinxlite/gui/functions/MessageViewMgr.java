@@ -10,6 +10,12 @@ import java.util.logging.Logger;
 
 import com.xilinxlite.gui.MessageViewDesign;
 
+/**
+ * Function implementations for MessageViewDesign.
+ * 
+ * @author Ong Hock Leng
+ *
+ */
 public class MessageViewMgr extends MessageViewDesign implements Updateable {
 
 	private static final Logger logger = Logger.getLogger(MessageViewMgr.class.getCanonicalName());

@@ -31,12 +31,32 @@ public abstract class ProjectViewDesign implements DesignManager {
 		return layout;
 	}
 
+	/**
+	 * Returns a Pane for SummaryTable. Used in getLayout().
+	 * 
+	 * @return Pane for SummaryTable
+	 */
 	protected abstract Pane setSummaryTable();
 
+	/**
+	 * Returns a Pane for DirectoryView. Used in getLayout().
+	 * 
+	 * @return Pane for DirectoryView
+	 */
 	protected abstract Pane setDirectoryView();
 
+	/**
+	 * Returns a Pane for ButtonSet. Used in getLayout().
+	 * 
+	 * @return Pane for ButtonSet
+	 */
 	protected abstract Pane setButtonSet();
 
+	/**
+	 * Returns a Pane for MessageView. Used in getLayout().
+	 * 
+	 * @return Pane for MessageView
+	 */
 	protected abstract Pane setMessageView();
 
 }

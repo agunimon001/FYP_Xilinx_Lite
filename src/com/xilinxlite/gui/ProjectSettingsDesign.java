@@ -17,7 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public abstract class ProjectSettingsDesign {
-	
+
 	protected Stage window;
 
 	private Label projectNameLabel = new Label("Project Name");
@@ -133,7 +133,7 @@ public abstract class ProjectSettingsDesign {
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.showAndWait();
 	}
-	
+
 	private void directoryChooser() {
 		DirectoryChooser dc = new DirectoryChooser();
 		dc.setTitle("Select working directory...");
@@ -143,27 +143,63 @@ public abstract class ProjectSettingsDesign {
 		}
 	}
 
+	/**
+	 * Initializes functionalities
+	 */
 	protected abstract void initialize();
 
+	/**
+	 * Loads Family data
+	 */
 	protected abstract void loadFamily();
 
+	/**
+	 * Loads Device data
+	 */
 	protected abstract void loadDevice();
 
+	/**
+	 * Loads Package data
+	 */
 	protected abstract void loadPackage();
 
+	/**
+	 * Loads Speed data
+	 */
 	protected abstract void loadSpeed();
 
+	/**
+	 * Loads Top-Level Source Type data
+	 */
 	protected abstract void loadTopLevelSourceType();
 
+	/**
+	 * Loads Synthesis Tool data
+	 */
 	protected abstract void loadSynthesisTool();
 
+	/**
+	 * Loads Simulator data
+	 */
 	protected abstract void loadSimulator();
 
+	/**
+	 * Loads Preferred Language data
+	 */
 	protected abstract void loadPreferredLanguage();
-	
+
+	/**
+	 * Sets default values to all fields
+	 */
 	protected abstract void setDefault();
 
+	/**
+	 * Saves settings and closes window
+	 */
 	protected abstract void save();
 
+	/**
+	 * Closes window without saving settings
+	 */
 	protected abstract void close();
 }

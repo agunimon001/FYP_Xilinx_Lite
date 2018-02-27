@@ -44,7 +44,7 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign {
 	protected void setLocal() {
 		new LocalSettingMgr(mgr, settingsFolderPath).launch();
 		if (mgr.isLocal()) {
-			masterLayout.updateLayout(new ProjectViewMgr(mgr)); // to update with next layout
+			masterLayout.updateLayout(new ProjectViewMgr()); // to update with next layout
 		}
 	}
 
