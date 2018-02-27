@@ -52,8 +52,7 @@ public abstract class MessageViewDesign implements DesignManager {
 		fileTab.setContent(fileView);
 		fileView.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		fileView.setStyle("-fx-text-fill: black;");
-		
-		
+
 		return layout;
 	}
 
@@ -82,5 +81,10 @@ public abstract class MessageViewDesign implements DesignManager {
 	 *            File to be read
 	 */
 	protected abstract void viewFile(File file);
+
+	/**
+	 * Clears content in the file view.
+	 */
+	protected abstract void clearFileView();
 
 }

@@ -82,6 +82,14 @@ public class MessageViewMgr extends MessageViewDesign implements Updateable {
 
 	}
 
+	@Override
+	protected void clearFileView() {
+		Level level = logger.getLevel();
+		logger.setLevel(Level.OFF);
+		viewFile(null);
+		logger.setLevel(level);
+	}
+
 	// private void viewSynthesisReport() {
 	// String content = fileView.getText();
 	// String output =

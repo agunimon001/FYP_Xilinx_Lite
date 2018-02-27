@@ -57,6 +57,8 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 					TreeItem<Object> newValue) {
 				if (newValue.getValue() instanceof File) {
 					messageView.viewFile((File) newValue.getValue());
+				} else {
+					messageView.clearFileView();
 				}
 			}
 
