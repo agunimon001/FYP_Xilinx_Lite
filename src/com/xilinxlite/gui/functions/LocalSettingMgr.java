@@ -58,16 +58,18 @@ public class LocalSettingMgr extends LocalSettingDesign {
 	 */
 	@Override
 	protected void initialize() {
-		logger.entering("LocalSettingMgr", "initialize");
+		logger.log(Level.INFO, "Initializing LocalSetting");
 
 		File script = new File(settingsFolderPath.getAbsolutePath() + File.separator + "script.tcl");
 		scriptPath = script.getAbsolutePath();
 
 		if (!script.exists()) {
+			logger.log(Level.INFO, "Adding script...");
 			URL internalScriptURL = this.getClass().getResource("/com/xilinxlite/script.tcl");
 			try (InputStream stream = internalScriptURL.openStream()) {
 				Files.copy(stream, script.toPath());
 				stream.close();
+				logger.log(Level.INFO, "Script added.");
 			} catch (IOException e) {
 				logger.log(Level.SEVERE, "Script not created", e);
 			}
@@ -79,6 +81,8 @@ public class LocalSettingMgr extends LocalSettingDesign {
 		value = props.get(KEY.KEY_WD);
 		workingDirectoryField
 				.setText(value != null ? value : System.getProperty("user.home") + File.separator + "Xilinx_Lite");
+
+		logger.log(Level.INFO, "Initializing complete.");
 	}
 
 	/**
@@ -87,16 +91,22 @@ public class LocalSettingMgr extends LocalSettingDesign {
 	 */
 	@Override
 	protected void save(Stage window) {
+		logger.log(Level.INFO, "Saving LocalSetting settings");
 		if (cmdMgr.localConnection(xtclshPathField.getText(), scriptPath, workingDirectoryField.getText())) {
-			
+
+			logger.log(Level.INFO, "Connection established. Now saving properties...");
+
 			props.put(KEY.KEY_XTCLSH, xtclshPathField.getText());
 			props.put(KEY.KEY_WD, workingDirectoryField.getText());
 
 			props.save();
 
 			window.close();
+
+			logger.log(Level.INFO, "Properties saved.");
 		} else {
-			logger.warning("connection not established");
+			logger.log(Level.WARNING, "Connection not established. xtclshPath: " + xtclshPathField.getText()
+					+ ", workingDirectory: " + workingDirectoryField.getText());
 		}
 	}
 

@@ -1,6 +1,7 @@
 package com.xilinxlite.communication;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ class XtclshCommands implements Commands {
 					}
 				}
 			} catch (IOException e) {
+				logger.log(Level.WARNING, "Error with input reader", e);
 			}
 		}
 
@@ -614,6 +616,20 @@ class XtclshCommands implements Commands {
 		}
 
 		return map;
+	}
+
+	@Override
+	public void simulate(File file) {
+		try {
+			run("simulate", file.getAbsolutePath());
+			
+			r = xtclsh.getInputReader();
+			while ((line = r.readLine()) != null) {
+				
+			}
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Error simulating.", e);
+		}
 	}
 
 }

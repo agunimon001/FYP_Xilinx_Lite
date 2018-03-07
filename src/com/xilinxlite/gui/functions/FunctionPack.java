@@ -32,6 +32,7 @@ public class FunctionPack {
 
 	private CommunicationMgr cmdMgr = null;
 	private Updateable updater = null;
+	private File ROOT_FOLDER = null;
 
 	/**
 	 * Private constructor for singleton.
@@ -41,9 +42,10 @@ public class FunctionPack {
 	 * @param updater
 	 *            One instance of Updateable
 	 */
-	private FunctionPack(CommunicationMgr cmdMgr, Updateable updater) {
+	private FunctionPack(CommunicationMgr cmdMgr, Updateable updater, File ROOT_FOLDER) {
 		this.cmdMgr = cmdMgr;
 		this.updater = updater;
+		this.ROOT_FOLDER = ROOT_FOLDER;
 	}
 
 	/**
@@ -61,9 +63,9 @@ public class FunctionPack {
 	 * @param updater
 	 * @return FunctionPack instance if instantiated successfully; null if otherwise
 	 */
-	public static FunctionPack getInstance(CommunicationMgr cmdMgr, Updateable updater) {
-		if (instance == null && cmdMgr != null && updater != null) {
-			instance = new FunctionPack(cmdMgr, updater);
+	public static FunctionPack getInstance(CommunicationMgr cmdMgr, Updateable updater, File ROOT_FOLDER) {
+		if (instance == null && cmdMgr != null && updater != null && ROOT_FOLDER != null) {
+			instance = new FunctionPack(cmdMgr, updater, ROOT_FOLDER);
 		}
 
 		return instance;
@@ -253,5 +255,9 @@ public class FunctionPack {
 	 */
 	public String getConnectionStatus() {
 		return cmdMgr.getConnectiontype().toString();
+	}
+	
+	public void simulate() {
+		// TODO: simulate
 	}
 }

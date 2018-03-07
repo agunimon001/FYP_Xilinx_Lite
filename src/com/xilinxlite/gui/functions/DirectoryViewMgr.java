@@ -152,12 +152,6 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		return fnPack.removeFile(file.getAbsolutePath());
 	}
 
-	private void openFileRead(File file) {
-		if (messageView != null) {
-			messageView.viewFile(file);
-		}
-	}
-
 	@Override
 	public void update() {
 

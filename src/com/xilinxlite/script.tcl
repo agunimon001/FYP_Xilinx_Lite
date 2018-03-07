@@ -208,6 +208,34 @@ proc synthesize {} {
 	}
 }
 
+# Simulate
+proc simulate {verilogTest} {
+	if [open_project] {
+		puts [exec vlogcomp $verilogTest]
+		puts [exec fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o $verilogTest\_isim_beh work.$verilogTest work.glbl]
+		# return simulation data by running the simulation file
+	}
+}
+
+proc set_top_module {fileVar} {
+	if [open_project] {
+		project set top $fileVar
+		get_top_module
+	}
+}
+
+proc get_top_modules {} {
+	if [open_project] {
+		puts [search /*]
+	}
+}
+
+proc get_top_module {} {
+	if [open_project] {
+		puts [project get top]
+	}
+}
+
 # == Main Code ==
 
 if {[llength $argv] < 2} {
@@ -247,5 +275,8 @@ switch $option {
 	"get_language" {get_language}
 	"set_message_filter" {set_message_filter [lindex $argv 2]}
 	"get_message_filter" {get_message_filter}
+	"set_top_module" {set_top_module [lindex $argv 2]}
+	"get_top_module" {get_top_module}
+	"simulate" {simulate [lindex $argv 2] [lindex $argv 3]}
 	default {puts "ERROR: option invalid"}
 }

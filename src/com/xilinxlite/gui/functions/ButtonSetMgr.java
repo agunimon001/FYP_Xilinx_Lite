@@ -20,6 +20,7 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 	@Override
 	public void update() {
 		synthesizeBtn.setDisable(fnPack.isProjectClosed());
+		simulateBtn.setDisable(fnPack.isProjectClosed());
 	}
 
 	@Override
@@ -29,6 +30,7 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 		if (fnPack == null) {
 			logger.log(Level.SEVERE, "No FunctionPack detected.", new Exception());
 		}
+		update();
 	}
 
 	@Override
@@ -44,6 +46,11 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 	@Override
 	protected void synthesize() {
 		fnPack.synthesize();
+	}
+
+	@Override
+	protected void simulate() {
+		
 	}
 
 }

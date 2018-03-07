@@ -1,5 +1,6 @@
 package com.xilinxlite.communication;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -281,5 +282,13 @@ public interface Commands {
 	 * @return Tree format of information for provided architect.
 	 */
 	public Map<String, Map<String, String[]>> getArchitectData(String architect);
+
+	/**
+	 * Simulates with selected file as Verilog test file
+	 * 
+	 * @param file
+	 *            Verilog test file
+	 */
+	public void simulate(File file);
 
 }

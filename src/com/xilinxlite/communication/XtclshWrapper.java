@@ -81,6 +81,7 @@ class XtclshWrapper {
 
 		// Return instance if valid; else throw exception
 		if (errorMsg.isEmpty()) {
+			logger.config("Instantiating new XtclshWrapper");
 			return new XtclshWrapper(xtclshPath, tclScriptPath, workingDirectory);
 		} else {
 			throw new FileNotFoundException(errorMsg);

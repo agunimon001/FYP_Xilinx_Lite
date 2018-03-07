@@ -1,5 +1,6 @@
 package com.xilinxlite.communication;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -41,14 +42,19 @@ public class CommunicationMgr implements Commands {
 	 * @return True if connection is live; false otherwise.
 	 */
 	public boolean localConnection(String xtclshPath, String tclScriptPath, String workingDirectory) {
+		// Test for existing connection; return false if true
 		if (cmd != null) {
 			logger.info("Connection is live. Close connection first.");
 			return false;
 		}
 
+		// Try to establish local connection
 		try {
+			logger.info("Establishing local connection...");
 			cmd = new XtclshCommands(xtclshPath, tclScriptPath, workingDirectory);
-			return ((XtclshCommands) cmd).testConnection();
+			boolean flag = ((XtclshCommands) cmd).testConnection();
+			logger.log(Level.CONFIG, "Connection status: " + flag);
+			return flag;
 		} catch (FileNotFoundException e) {
 			logger.log(Level.WARNING, "Error(s) in provided parameters.", e);
 			return false;
@@ -307,5 +313,12 @@ public class CommunicationMgr implements Commands {
 		logger.fine("Getting data for architect: " + architect);
 		return cmd.getArchitectData(architect);
 	}
+
+	@Override
+	public void simulate(File file) {
+		logger.fine("Simulating project");
+		cmd.simulate(file);
+	}
+
 
 }

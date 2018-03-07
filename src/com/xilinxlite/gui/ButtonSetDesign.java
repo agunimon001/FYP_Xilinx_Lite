@@ -17,10 +17,11 @@ public abstract class ButtonSetDesign implements DesignManager {
 	protected Button createProjectBtn = new Button("Create Project");
 	protected Button openProjectBtn = new Button("Open Project");
 	protected Button synthesizeBtn = new Button("Synthesize");
+	protected Button simulateBtn = new Button("Simulate");
 
 	@Override
 	public Pane getLayout() {
-		
+
 		initialize();
 
 		FlowPane layout = new FlowPane(20, 20);
@@ -30,8 +31,9 @@ public abstract class ButtonSetDesign implements DesignManager {
 		createProjectBtn.setOnAction(e -> createProject());
 		openProjectBtn.setOnAction(e -> openProject());
 		synthesizeBtn.setOnAction(e -> synthesize());
+		simulateBtn.setOnAction(e -> simulate());
 
-		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn);
+		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, simulateBtn);
 
 		return layout;
 	}
@@ -55,5 +57,10 @@ public abstract class ButtonSetDesign implements DesignManager {
 	 * Synthesize currently opened project
 	 */
 	protected abstract void synthesize();
+
+	/**
+	 * Simulate currently opened project
+	 */
+	protected abstract void simulate();
 
 }

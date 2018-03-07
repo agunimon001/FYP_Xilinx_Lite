@@ -3,6 +3,7 @@ package com.xilinxlite;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -31,11 +32,13 @@ public class MainApplication extends Application implements LayoutController {
 
 	private final String DEFAULT_TITLE = "Xilinx_Lite";
 
+	private final File SETTINGS_FOLDER = new File("Xilinx_Lite/.settings");
+	private final File ROOT_FOLDER = SETTINGS_FOLDER.getParentFile();
+
 	private CommunicationMgr cmdMgr = new CommunicationMgr();
 	private UpdateController updater = new UpdateController();
-	private FunctionPack fnPack = FunctionPack.getInstance(cmdMgr, updater);
-
-	private final File SETTINGS_FOLDER = new File("Xilinx_Lite/.settings");
+	@SuppressWarnings("unused")
+	private FunctionPack fnPack = FunctionPack.getInstance(cmdMgr, updater, ROOT_FOLDER);
 
 	private BorderPane mainLayout;
 
@@ -104,6 +107,6 @@ public class MainApplication extends Application implements LayoutController {
 			logger.finer(e.getMessage());
 		}
 
-		// logger.setLevel(Level.FINE);
+		logger.setLevel(Level.CONFIG);
 	}
 }

@@ -1,5 +1,6 @@
 package com.xilinxlite.communication;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -202,6 +203,12 @@ public class SshCommands implements Commands {
 	public Map<String, Map<String, String[]>> getArchitectData(String architect) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void simulate(File file) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
