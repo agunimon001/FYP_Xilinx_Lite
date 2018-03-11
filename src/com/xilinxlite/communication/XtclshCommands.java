@@ -625,7 +625,7 @@ class XtclshCommands implements Commands {
 
 			r = xtclsh.getInputReader();
 			while ((line = r.readLine()) != null) {
-
+				// TODO
 			}
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Error simulating.", e);
@@ -635,25 +635,26 @@ class XtclshCommands implements Commands {
 	@Override
 	public String getTopModule() {
 
-		try {
-			// Run command
-			run("get_top_module");
+		// Runs only if project is opened
+		if (!projectName.isEmpty()) {
 
-			r = xtclsh.getInputReader();
+			try {
+				// Run command
+				run("get_top_module");
 
-			line = r.readLine();
+				r = xtclsh.getInputReader();
 
-			if (line != null && !line.isEmpty()) {
-				return line.substring(1);
-			}
-			
-			if (line != null) {
-				if (!line.isEmpty()) {
-					return line.substring(1);
+				line = r.readLine();
+
+				if (line != null) {
+					if (!line.isEmpty()) {
+						return line;
+					}
 				}
+			} catch (IOException e) {
+				logger.log(Level.WARNING, "Error getting top module.", e);
 			}
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Error getting top module.", e);
+
 		}
 
 		return "";
@@ -664,18 +665,21 @@ class XtclshCommands implements Commands {
 
 		List<String> modules = new ArrayList<>();
 
-		try {
-			run("get_top_modules");
+		// runs only if project is opened
+		if (!projectName.isEmpty()) {
+			try {
+				run("get_top_modules");
 
-			r = xtclsh.getInputReader();
+				r = xtclsh.getInputReader();
 
-			while ((line = r.readLine()) != null) {
-				if (!line.isEmpty()) {
-					modules.add(line.substring(1));
+				while ((line = r.readLine()) != null) {
+					if (!line.isEmpty()) {
+						modules.add(line);
+					}
 				}
+			} catch (IOException e) {
+				logger.log(Level.WARNING, "Error getting list of modules.", e);
 			}
-		} catch (IOException e) {
-			logger.log(Level.WARNING, "Error getting list of modules.", e);
 		}
 
 		return modules;
@@ -687,7 +691,8 @@ class XtclshCommands implements Commands {
 		boolean success = false;
 
 		try {
-			run("set_top_module", topModule);
+			// Expecting input topModule doesn't have the preceding '/'
+			run("set_top_module", topModule.substring(1));
 
 			r = xtclsh.getInputReader();
 
@@ -695,7 +700,8 @@ class XtclshCommands implements Commands {
 
 			if (line != null) {
 				if (!line.isEmpty())
-					success = line.substring(1).equals(topModule);
+					if (!line.contains("Error"))
+						success = line.equals(topModule);
 			}
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Error setting top module.", e);

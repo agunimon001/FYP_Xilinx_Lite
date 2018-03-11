@@ -263,10 +263,34 @@ public class FunctionPack {
 		return cmdMgr.getConnectiontype().toString();
 	}
 
-	public void setTopModule(String topModule) {
-		
+	/**
+	 * Gets the top module of the project.
+	 * 
+	 * @return Value of the top module; empty string if doesn't exist
+	 */
+	public String getTopModule() {
+		return cmdMgr.getTopModule();
 	}
-	
+
+	/**
+	 * Gets the list of available modules to be set as top module.
+	 * 
+	 * @return list of modules; empty list if nothing
+	 */
+	public List<String> getTopModules() {
+		return cmdMgr.getTopModules();
+	}
+
+	/**
+	 * Set top module to the project for synthesis.
+	 * 
+	 * @param topModule
+	 *            Module to be set as top module for the project
+	 */
+	public void setTopModule(String topModule) {
+		cmdMgr.setTopModule(topModule);
+	}
+
 	/**
 	 * Does Simulation based on the opened project.
 	 */

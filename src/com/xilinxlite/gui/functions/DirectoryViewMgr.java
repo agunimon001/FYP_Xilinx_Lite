@@ -33,6 +33,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	private TreeItem<Object> verilogFiles = new TreeItem<>("Verilog files");
 	private TreeItem<Object> synthesisFiles = new TreeItem<>("Synthesis files");
+	private TreeItem<Object> modulesForTop = new TreeItem<>("Modules");
 
 	private MessageViewMgr messageView = null;
 
@@ -45,6 +46,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	/**
 	 * Sets MessageViewMgr reference. Also sets listener to treeView.
+	 * 
 	 * @param mgr
 	 */
 	public void setMessageViewMgr(MessageViewMgr mgr) {
@@ -55,8 +57,10 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 			@Override
 			public void changed(ObservableValue<? extends TreeItem<Object>> observable, TreeItem<Object> oldValue,
 					TreeItem<Object> newValue) {
-				if (newValue.getValue() instanceof File) {
-					messageView.viewFile((File) newValue.getValue());
+				if (newValue != null) {
+					if (newValue.getValue() instanceof File) {
+						messageView.viewFile((File) newValue.getValue());
+					}
 				} else {
 					messageView.clearFileView();
 				}
@@ -76,6 +80,10 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 		if (!synthesisFiles.getChildren().isEmpty()) {
 			root.getChildren().add(synthesisFiles);
+		}
+
+		if (!modulesForTop.getChildren().isEmpty()) {
+			root.getChildren().add(modulesForTop);
 		}
 	}
 
@@ -123,6 +131,36 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 	}
 
+	private void updateModules() {
+
+		String top = fnPack.getTopModule();
+		List<String> modules = fnPack.getTopModules();
+		modulesForTop.getChildren().clear();
+
+		// error if either is empty
+		if (top.isEmpty() || modules.isEmpty()) {
+			logger.log(Level.WARNING, "Error with modules detected");
+		}
+
+		// error if modules does not contain top when it should
+		else if (!modules.contains(top)) {
+			System.out.println("top : " + top);
+			for (String s : modules) {
+				System.out.println("s : " + s);
+			}
+			logger.log(Level.WARNING, "Error with top", new Exception());
+		}
+
+		else {
+			for (String module : modules) {
+				modulesForTop.getChildren().add(new TreeItem<>(module.substring(1) + (module.equals(top) ? "*" : "")));
+			}
+		}
+
+		updateList();
+
+	}
+
 	private File treeItemFile(String filepath) {
 		return treeItemFile(new File(filepath));
 	}
@@ -158,6 +196,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		// Update each category
 		updateVerilogFiles();
 		updateSynthesisFiles();
+		updateModules();
 
 		// Activate/deactivate buttons
 		boolean projectClosed = fnPack.isProjectClosed();
@@ -174,9 +213,11 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 			@Override
 			public void changed(ObservableValue<? extends TreeItem<Object>> observable, TreeItem<Object> oldValue,
 					TreeItem<Object> newValue) {
-				removeFile.setDisable(!(newValue.getValue() instanceof File));
+				if (newValue != null) {
+					removeFile.setDisable(!(newValue.getValue() instanceof File));
+				}
 			}
-			
+
 		});
 	}
 
@@ -191,6 +232,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		if (file != null) {
 			addVerilogFile(file);
 			updateVerilogFiles();
+			updateModules();
 		}
 	}
 
@@ -203,6 +245,8 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 				removeVerilogFile((File) item.getValue());
 				verilogFiles.getChildren().remove(item);
 				updateVerilogFiles();
+				updateModules();
+				messageView.clearFileView();
 			} else if (item.getParent() == synthesisFiles) {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setContentText("Delete file from disk?");
@@ -211,6 +255,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 					File file = (File) item.getValue();
 					if (file.delete()) {
 						synthesisFiles.getChildren().remove(item);
+						messageView.clearFileView();
 					}
 				}
 				updateSynthesisFiles();

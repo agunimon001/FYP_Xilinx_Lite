@@ -279,5 +279,5 @@ switch $option {
 	"get_top_module" {get_top_module}
 	"get_top_modules" {get_top_modules}
 	"simulate" {simulate [lindex $argv 2] [lindex $argv 3]}
-	default {puts "ERROR: option invalid"}
+	default {puts "Error: option invalid"}
 }
