@@ -291,4 +291,27 @@ public interface Commands {
 	 */
 	public void simulate(File file);
 
+	/**
+	 * Gets current project's top module.
+	 * 
+	 * @return top module
+	 */
+	public String getTopModule();
+
+	/**
+	 * Gets list of available modules in current project.
+	 * 
+	 * @return List of modules available
+	 */
+	public List<String> getTopModules();
+
+	/**
+	 * Sets new module as top module. Return the success state of the method.
+	 * 
+	 * @param topModule
+	 *            String of the module to set as top module
+	 * @return true if successfully set top module; false if otherwise
+	 */
+	public boolean setTopModule(String topModule);
+
 }

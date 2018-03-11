@@ -277,6 +277,7 @@ switch $option {
 	"get_message_filter" {get_message_filter}
 	"set_top_module" {set_top_module [lindex $argv 2]}
 	"get_top_module" {get_top_module}
+	"get_top_modules" {get_top_modules}
 	"simulate" {simulate [lindex $argv 2] [lindex $argv 3]}
 	default {puts "ERROR: option invalid"}
 }

@@ -173,7 +173,8 @@ public class FunctionPack {
 	}
 
 	/**
-	 * Creates new project. Checks if any project is opened before creating a new one.
+	 * Creates new project. Checks if any project is opened before creating a new
+	 * one.
 	 */
 	public void newProject() {
 		// Check for open project
@@ -204,41 +205,45 @@ public class FunctionPack {
 	public void update() {
 		updater.update();
 	}
-	
+
 	/**
 	 * Get list of verilog files used by Xilinx project
+	 * 
 	 * @return list of verilog files
 	 */
-	public List<String> getVerilogFiles(){
+	public List<String> getVerilogFiles() {
 		return cmdMgr.getFiles();
 	}
-	
+
 	/**
 	 * Gets current working directory
+	 * 
 	 * @return current working directory
 	 */
 	public String getWorkingDirectory() {
 		return cmdMgr.getWorkingDirectory();
 	}
-	
+
 	/**
 	 * Adds file indicated by filepath to project.
+	 * 
 	 * @param filepath
 	 * @return True if added successfully; false if otherwise
 	 */
 	public boolean addFile(String filepath) {
 		return cmdMgr.addFile(filepath);
 	}
-	
+
 	/**
 	 * Removes file indicated by filepath from project.
+	 * 
 	 * @param filepath
 	 * @return True if file is removed successfully; false if otherwise
 	 */
 	public boolean removeFile(String filepath) {
 		return cmdMgr.removeFile(filepath);
 	}
-	
+
 	/**
 	 * Returns current project name.
 	 * 
@@ -247,16 +252,24 @@ public class FunctionPack {
 	public String getProjectName() {
 		return cmdMgr.getProjectName();
 	}
-	
+
 	/**
-	 * Returns current connection status. Available status are LOCAL, REMOTE and NONE.
+	 * Returns current connection status. Available status are LOCAL, REMOTE and
+	 * NONE.
 	 * 
 	 * @return Connection status in String format
 	 */
 	public String getConnectionStatus() {
 		return cmdMgr.getConnectiontype().toString();
 	}
+
+	public void setTopModule(String topModule) {
+		
+	}
 	
+	/**
+	 * Does Simulation based on the opened project.
+	 */
 	public void simulate() {
 		// TODO: simulate
 	}

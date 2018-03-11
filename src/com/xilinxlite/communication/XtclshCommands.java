@@ -622,14 +622,86 @@ class XtclshCommands implements Commands {
 	public void simulate(File file) {
 		try {
 			run("simulate", file.getAbsolutePath());
-			
+
 			r = xtclsh.getInputReader();
 			while ((line = r.readLine()) != null) {
-				
+
 			}
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Error simulating.", e);
 		}
+	}
+
+	@Override
+	public String getTopModule() {
+
+		try {
+			// Run command
+			run("get_top_module");
+
+			r = xtclsh.getInputReader();
+
+			line = r.readLine();
+
+			if (line != null && !line.isEmpty()) {
+				return line.substring(1);
+			}
+			
+			if (line != null) {
+				if (!line.isEmpty()) {
+					return line.substring(1);
+				}
+			}
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Error getting top module.", e);
+		}
+
+		return "";
+	}
+
+	@Override
+	public List<String> getTopModules() {
+
+		List<String> modules = new ArrayList<>();
+
+		try {
+			run("get_top_modules");
+
+			r = xtclsh.getInputReader();
+
+			while ((line = r.readLine()) != null) {
+				if (!line.isEmpty()) {
+					modules.add(line.substring(1));
+				}
+			}
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Error getting list of modules.", e);
+		}
+
+		return modules;
+	}
+
+	@Override
+	public boolean setTopModule(String topModule) {
+
+		boolean success = false;
+
+		try {
+			run("set_top_module", topModule);
+
+			r = xtclsh.getInputReader();
+
+			line = r.readLine();
+
+			if (line != null) {
+				if (!line.isEmpty())
+					success = line.substring(1).equals(topModule);
+			}
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Error setting top module.", e);
+		}
+
+		return success;
 	}
 
 }

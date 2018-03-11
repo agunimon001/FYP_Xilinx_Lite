@@ -320,5 +320,23 @@ public class CommunicationMgr implements Commands {
 		cmd.simulate(file);
 	}
 
+	@Override
+	public String getTopModule() {
+		logger.fine("Getting top module");
+		return cmd.getTopModule();
+	}
+
+	@Override
+	public List<String> getTopModules() {
+		logger.fine("Getting list of modules for setting as top module");
+		return cmd.getTopModules();
+	}
+
+	@Override
+	public boolean setTopModule(String topModule) {
+		logger.fine("Sets top module " + topModule);
+		return cmd.setTopModule(topModule);
+	}
+
 
 }
