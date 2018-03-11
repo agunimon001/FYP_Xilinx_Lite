@@ -59,11 +59,11 @@ public class MainApplication extends Application implements LayoutController {
 	@Override
 	public void start(Stage window) {
 
-		// Enable logging to file
-		setLogger();
-
 		// Build SETTINGS_FOLDER
 		SETTINGS_FOLDER.mkdirs();
+
+		// Enable logging to file
+		setLogger();
 
 		// Build window with menu bar
 		mainLayout = new BorderPane();

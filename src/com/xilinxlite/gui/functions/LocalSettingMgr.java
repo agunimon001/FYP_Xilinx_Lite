@@ -1,13 +1,10 @@
 package com.xilinxlite.gui.functions;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,8 +12,6 @@ import com.xilinxlite.communication.CommunicationMgr;
 import com.xilinxlite.gui.LocalSettingDesign;
 import com.xilinxlite.gui.functions.PropertiesController.KEY;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 /**
