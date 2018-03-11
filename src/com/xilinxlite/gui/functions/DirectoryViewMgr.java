@@ -215,6 +215,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 					TreeItem<Object> newValue) {
 				if (newValue != null) {
 					removeFile.setDisable(!(newValue.getValue() instanceof File));
+					topModuleBtn.setDisable(!newValue.getParent().equals(modulesForTop));
 				}
 			}
 
