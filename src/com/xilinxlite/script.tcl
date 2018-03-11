@@ -19,6 +19,7 @@ proc new_project {} {
 		puts "Error: project $projectName exists"
 	} else {
 		project new $projectName
+		project set "Consider Include Files in Search" true
 	}
 }
 
