@@ -338,5 +338,4 @@ public class CommunicationMgr implements Commands {
 		return cmd.setTopModule(topModule);
 	}
 
-
 }

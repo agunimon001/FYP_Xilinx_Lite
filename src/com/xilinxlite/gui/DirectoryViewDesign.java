@@ -26,6 +26,7 @@ public abstract class DirectoryViewDesign implements DesignManager {
 	protected Button addFile = new Button("Add");
 	protected Button removeFile = new Button("Remove Selected");
 	protected Button refreshBtn = new Button("Refresh");
+	protected Button topModuleBtn = new Button("Set Top Module");
 
 	private Label heading = new Label("Project Explorer");
 
@@ -65,11 +66,12 @@ public abstract class DirectoryViewDesign implements DesignManager {
 
 		HBox layout2b = new HBox(10);
 		layout2.getChildren().add(layout2b);
-		layout2b.getChildren().addAll(refreshBtn);
+		layout2b.getChildren().addAll(refreshBtn, topModuleBtn);
 		layout2b.setAlignment(Pos.CENTER);
 		layout2b.setPadding(new Insets(10));
-		
-		refreshBtn.setOnAction(e->refresh());
+
+		refreshBtn.setOnAction(e -> refresh());
+		topModuleBtn.setOnAction(e -> setTopModule());
 
 		return layout;
 	}
@@ -78,20 +80,24 @@ public abstract class DirectoryViewDesign implements DesignManager {
 	 * Initial settings to layout
 	 */
 	protected abstract void initialize();
-	
+
 	/**
 	 * Added file to project
 	 */
 	protected abstract void addFile();
-	
+
 	/**
 	 * Remove selected file
 	 */
 	protected abstract void removeFile();
-	
+
 	/**
 	 * Refreshes tree
 	 */
 	protected abstract void refresh();
 
+	/**
+	 * Sets top module
+	 */
+	protected abstract void setTopModule();
 }

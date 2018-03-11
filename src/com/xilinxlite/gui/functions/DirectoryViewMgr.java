@@ -268,4 +268,29 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		update();
 	}
 
+	@Override
+	protected void setTopModule() {
+		// Get reference to selected item
+		TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
+		
+		// test if parent is variable 'modulesForTop'
+		if (selectedItem.getParent().equals(modulesForTop)) {
+			// expects String for selected item
+			// error if not String
+			if (!(selectedItem.getValue() instanceof String)) {
+				logger.log(Level.SEVERE, "Non-String found in topModules.", new Exception());
+				return;
+			}
+			
+			String item = (String) selectedItem.getValue();
+			
+			// runs if selected item is not top module
+			if (!item.endsWith("*")) {
+				logger.log(Level.INFO, "setting \"" + item + "\" as top module.");
+				fnPack.setTopModule("/" + item);
+				updateModules();
+			}
+		}
+	}
+
 }

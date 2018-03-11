@@ -309,7 +309,7 @@ public interface Commands {
 	 * Sets new module as top module. Return the success state of the method.
 	 * 
 	 * @param topModule
-	 *            String of the module to set as top module
+	 *            String of the module with preceding '/' to set as top module
 	 * @return true if successfully set top module; false if otherwise
 	 */
 	public boolean setTopModule(String topModule);
