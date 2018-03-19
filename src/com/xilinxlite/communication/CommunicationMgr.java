@@ -1,6 +1,5 @@
 package com.xilinxlite.communication;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Map;
@@ -315,9 +314,9 @@ public class CommunicationMgr implements Commands {
 	}
 
 	@Override
-	public void simulate(File file) {
-		logger.fine("Simulating project");
-		cmd.simulate(file);
+	public void simulate(String moduleName) {
+		logger.fine("Simulating for " + moduleName);
+		cmd.simulate(moduleName);
 	}
 
 	@Override
@@ -336,6 +335,18 @@ public class CommunicationMgr implements Commands {
 	public boolean setTopModule(String topModule) {
 		logger.fine("Sets top module " + topModule);
 		return cmd.setTopModule(topModule);
+	}
+
+	@Override
+	public String getXtclshPath() {
+		logger.fine("Getting xtclsh.exe path");
+		return cmd.getXtclshPath();
+	}
+
+	@Override
+	public void generatePrgFile() {
+		logger.fine("Generating programming file");
+		cmd.generatePrgFile();
 	}
 
 }

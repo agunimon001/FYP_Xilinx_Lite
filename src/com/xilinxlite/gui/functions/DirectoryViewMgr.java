@@ -69,6 +69,24 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		});
 	}
 
+	/**
+	 * Gets currently selected module's name. If current selection is not a module,
+	 * returns null instead.
+	 * 
+	 * @return module's name; null if otherwise
+	 */
+	public String getSelectedModuleName() {
+		TreeItem<Object> treeItem = treeView.getSelectionModel().getSelectedItem();
+		if (treeItem.getParent().equals(modulesForTop)) {
+			String name = (String) treeItem.getValue();
+			if (name.endsWith("*")) {
+				name = name.substring(0, name.length() - 1);
+			}
+			return name.substring(1);
+		}
+		return null;
+	}
+
 	private void updateList() {
 		// Clear list
 		root.getChildren().clear();
@@ -153,7 +171,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 
 		else {
 			for (String module : modules) {
-				modulesForTop.getChildren().add(new TreeItem<>(module.substring(1) + (module.equals(top) ? "*" : "")));
+				modulesForTop.getChildren().add(new TreeItem<>(module + (module.equals(top) ? "*" : "")));
 			}
 		}
 
@@ -273,7 +291,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	protected void setTopModule() {
 		// Get reference to selected item
 		TreeItem<Object> selectedItem = treeView.getSelectionModel().getSelectedItem();
-		
+
 		// test if parent is variable 'modulesForTop'
 		if (selectedItem.getParent().equals(modulesForTop)) {
 			// expects String for selected item
@@ -282,13 +300,13 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 				logger.log(Level.SEVERE, "Non-String found in topModules.", new Exception());
 				return;
 			}
-			
+
 			String item = (String) selectedItem.getValue();
-			
+
 			// runs if selected item is not top module
 			if (!item.endsWith("*")) {
 				logger.log(Level.INFO, "setting \"" + item + "\" as top module.");
-				fnPack.setTopModule("/" + item);
+				fnPack.setTopModule(item);
 				updateModules();
 			}
 		}

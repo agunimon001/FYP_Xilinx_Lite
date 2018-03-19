@@ -1,6 +1,5 @@
 package com.xilinxlite.communication;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -206,9 +205,9 @@ public class SshCommands implements Commands {
 	}
 
 	@Override
-	public void simulate(File file) {
+	public void simulate(String moduleName) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -227,6 +226,18 @@ public class SshCommands implements Commands {
 	public boolean setTopModule(String topModule) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public String getXtclshPath() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void generatePrgFile() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

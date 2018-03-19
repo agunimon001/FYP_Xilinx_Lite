@@ -619,17 +619,46 @@ class XtclshCommands implements Commands {
 	}
 
 	@Override
-	public void simulate(File file) {
+	public void simulate(String moduleName) {
+		// getting path for glbl.v
+		String glbl_path = new File(xtclsh.getXtclshPath()).getParentFile().getParentFile().getParent() + File.separator
+				+ "verilog" + File.separator + "src" + File.separator + "glbl.v";
+		File glbl_file = new File(glbl_path);
+		
+		if (!glbl_file.exists()) {
+			logger.log(Level.SEVERE, "glbl.v not found! Cannot simulate");
+			return;
+		}
+		
+		// forming list of project files, including glbl.v
+		List<String> files = getFiles();
+		files.add(glbl_file.getAbsolutePath().replaceAll("\\\\", "/"));
+		
+		// form String array to run
+		List<String> commands = new ArrayList<>();
+		commands.add("simulate");
+		commands.add(moduleName);
+		commands.addAll(files);
+		
+		// try running
 		try {
-			run("simulate", file.getAbsolutePath());
-
-			r = xtclsh.getInputReader();
+			run(commands.toArray(new String[0]));
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Error creating simulation file");
+			return;
+		}
+		
+		r = xtclsh.getErrorReader();
+		try {
 			while ((line = r.readLine()) != null) {
-				// TODO
+				// TODO: to handle log for creating simulation file
+				System.out.println(line);
 			}
 		} catch (IOException e) {
-			logger.log(Level.WARNING, "Error simulating.", e);
+			logger.log(Level.WARNING, "Error reading for simulation");
 		}
+		
+		logger.log(Level.INFO, "Simulate finished");
 	}
 
 	@Override
@@ -691,8 +720,7 @@ class XtclshCommands implements Commands {
 		boolean success = false;
 
 		try {
-			// Expecting input topModule doesn't have the preceding '/'
-			run("set_top_module", topModule.substring(1));
+			run("set_top_module", topModule);
 
 			r = xtclsh.getInputReader();
 
@@ -708,6 +736,25 @@ class XtclshCommands implements Commands {
 		}
 
 		return success;
+	}
+
+	@Override
+	public String getXtclshPath() {
+		return xtclsh.getXtclshPath();
+	}
+
+	@Override
+	public void generatePrgFile() {
+		try {
+			run("generate_programming_file");
+			// TODO: handle log output
+			r = xtclsh.getInputReader();
+			while ((line = r.readLine()) != null) {
+				System.out.println(line);
+			}
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Error generating programming file");
+		}
 	}
 
 }

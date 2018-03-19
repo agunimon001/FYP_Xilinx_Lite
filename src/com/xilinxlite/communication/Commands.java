@@ -1,6 +1,5 @@
 package com.xilinxlite.communication;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -284,12 +283,12 @@ public interface Commands {
 	public Map<String, Map<String, String[]>> getArchitectData(String architect);
 
 	/**
-	 * Simulates with selected file as Verilog test file
+	 * Simulates with Top Module of the project. Module name must be provided.
 	 * 
-	 * @param file
-	 *            Verilog test file
+	 * @param moduleName
+	 *            Module to simulate
 	 */
-	public void simulate(File file);
+	public void simulate(String moduleName);
 
 	/**
 	 * Gets current project's top module.
@@ -313,5 +312,17 @@ public interface Commands {
 	 * @return true if successfully set top module; false if otherwise
 	 */
 	public boolean setTopModule(String topModule);
+
+	/**
+	 * Gets path to xtclsh.exe
+	 * 
+	 * @return path to xtclsh.exe
+	 */
+	public String getXtclshPath();
+
+	/**
+	 * Generate programming file for the project's top module.
+	 */
+	public void generatePrgFile();
 
 }

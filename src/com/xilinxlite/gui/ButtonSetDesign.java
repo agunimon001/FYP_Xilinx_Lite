@@ -18,6 +18,7 @@ public abstract class ButtonSetDesign implements DesignManager {
 	protected Button openProjectBtn = new Button("Open Project");
 	protected Button synthesizeBtn = new Button("Synthesize");
 	protected Button simulateBtn = new Button("Simulate");
+	protected Button generatePrgFileBtn = new Button("Generate Programming File");
 
 	@Override
 	public Pane getLayout() {
@@ -32,8 +33,9 @@ public abstract class ButtonSetDesign implements DesignManager {
 		openProjectBtn.setOnAction(e -> openProject());
 		synthesizeBtn.setOnAction(e -> synthesize());
 		simulateBtn.setOnAction(e -> simulate());
+		generatePrgFileBtn.setOnAction(e -> generatePrgFile());
 
-		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, simulateBtn);
+		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, simulateBtn, generatePrgFileBtn);
 
 		return layout;
 	}
@@ -62,5 +64,10 @@ public abstract class ButtonSetDesign implements DesignManager {
 	 * Simulate currently opened project
 	 */
 	protected abstract void simulate();
+	
+	/**
+	 * Generate Programming File
+	 */
+	protected abstract void generatePrgFile();
 
 }

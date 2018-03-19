@@ -20,6 +20,9 @@ proc new_project {} {
 	} else {
 		project new $projectName
 		project set "Consider Include Files in Search" true
+		# default settings for new project
+		project set family spartan
+		project set package csg225
 	}
 }
 
@@ -210,9 +213,12 @@ proc synthesize {} {
 }
 
 # Simulate
-proc simulate {verilogTest} {
+proc simulate {verilogTest file_list} {
 	if [open_project] {
-		puts [exec vlogcomp $verilogTest]
+		project clean
+		foreach file $file_list {
+			puts [exec vlogcomp $file]
+		}
 		puts [exec fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o $verilogTest\_isim_beh work.$verilogTest work.glbl]
 		# return simulation data by running the simulation file
 	}
@@ -234,6 +240,12 @@ proc get_top_modules {} {
 proc get_top_module {} {
 	if [open_project] {
 		puts [project get top]
+	}
+}
+
+proc generate_programming_file {} {
+	if [open_project] {
+		puts [process run "Generate Programming File" -force rerun_all]
 	}
 }
 
@@ -279,6 +291,7 @@ switch $option {
 	"set_top_module" {set_top_module [lindex $argv 2]}
 	"get_top_module" {get_top_module}
 	"get_top_modules" {get_top_modules}
-	"simulate" {simulate [lindex $argv 2] [lindex $argv 3]}
+	"simulate" {simulate [lindex $argv 2] [lrange $argv 3 end]}
+	"generate_programming_file" {generate_programming_file}
 	default {puts "Error: option invalid"}
 }

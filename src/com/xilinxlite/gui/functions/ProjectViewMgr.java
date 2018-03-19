@@ -20,6 +20,7 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 
 	private DirectoryViewMgr dvMgr = null;
 	private MessageViewMgr mvMgr = null;
+	private ButtonSetMgr bsMgr = null;
 
 	@Override
 	protected Pane setSummaryTable() {
@@ -33,6 +34,9 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 		DirectoryViewMgr pane = new DirectoryViewMgr();
 		updateList.add(pane);
 		dvMgr = pane;
+		if (bsMgr != null) {
+			bsMgr.setDirectoryViewMgr(dvMgr);
+		}
 		if (mvMgr != null) {
 			dvMgr.setMessageViewMgr(mvMgr);
 		}
@@ -43,6 +47,10 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 	protected Pane setButtonSet() {
 		ButtonSetMgr pane = new ButtonSetMgr();
 		updateList.add(pane);
+		bsMgr = pane;
+		if (dvMgr != null) {
+			bsMgr.setDirectoryViewMgr(dvMgr);
+		}
 		return pane.getLayout();
 	}
 

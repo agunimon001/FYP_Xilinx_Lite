@@ -294,7 +294,14 @@ public class FunctionPack {
 	/**
 	 * Does Simulation based on the opened project.
 	 */
-	public void simulate() {
-		// TODO: simulate
+	public void simulate(String moduleName) {
+		cmdMgr.simulate(moduleName);
+	}
+
+	/**
+	 * Generate programming file for top module
+	 */
+	public void generatePrgFile() {
+		cmdMgr.generatePrgFile();
 	}
 }
