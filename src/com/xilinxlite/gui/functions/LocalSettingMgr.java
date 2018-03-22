@@ -73,6 +73,20 @@ public class LocalSettingMgr extends LocalSettingDesign {
 				logger.log(Level.SEVERE, "Script not created", e);
 			}
 		}
+		
+		script = new File(settingsFolderPath.getAbsolutePath() + File.separator + "isim_script.tcl");
+		
+		if (!script.exists()) {
+			logger.log(Level.INFO, "Adding script...");
+			URL internalScriptURL = this.getClass().getResource("/com/xilinxlite/isim_script.tcl");
+			try (InputStream stream = internalScriptURL.openStream()) {
+				Files.copy(stream, script.toPath());
+				stream.close();
+				logger.log(Level.INFO, "Script added.");
+			} catch (IOException e) {
+				logger.log(Level.SEVERE, "Script not created", e);
+			}
+		}
 
 		String value = props.get(KEY.KEY_XTCLSH);
 		xtclshPathField.setText(value != null ? value : "");

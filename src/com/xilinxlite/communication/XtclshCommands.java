@@ -624,22 +624,20 @@ class XtclshCommands implements Commands {
 		String glbl_path = new File(xtclsh.getXtclshPath()).getParentFile().getParentFile().getParent() + File.separator
 				+ "verilog" + File.separator + "src" + File.separator + "glbl.v";
 		File glbl_file = new File(glbl_path);
-		
+
 		if (!glbl_file.exists()) {
 			logger.log(Level.SEVERE, "glbl.v not found! Cannot simulate");
 			return;
 		}
-		
-		// forming list of project files, including glbl.v
-		List<String> files = getFiles();
-		files.add(glbl_file.getAbsolutePath().replaceAll("\\\\", "/"));
-		
+
 		// form String array to run
+		// note: verilog files added into project is expected to be loaded automatically
+		// by TCL script
 		List<String> commands = new ArrayList<>();
 		commands.add("simulate");
 		commands.add(moduleName);
-		commands.addAll(files);
-		
+		commands.add(glbl_file.getAbsolutePath().replaceAll("\\\\", "/"));
+
 		// try running
 		try {
 			run(commands.toArray(new String[0]));
@@ -647,8 +645,8 @@ class XtclshCommands implements Commands {
 			logger.log(Level.WARNING, "Error creating simulation file");
 			return;
 		}
-		
-		r = xtclsh.getErrorReader();
+
+		r = xtclsh.getInputReader();
 		try {
 			while ((line = r.readLine()) != null) {
 				// TODO: to handle log for creating simulation file
@@ -657,7 +655,7 @@ class XtclshCommands implements Commands {
 		} catch (IOException e) {
 			logger.log(Level.WARNING, "Error reading for simulation");
 		}
-		
+
 		logger.log(Level.INFO, "Simulate finished");
 	}
 

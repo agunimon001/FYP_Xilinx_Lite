@@ -213,14 +213,19 @@ proc synthesize {} {
 }
 
 # Simulate
-proc simulate {verilogTest file_list} {
+proc simulate {verilogTest glbl_path} {
 	if [open_project] {
 		project clean
-		foreach file $file_list {
-			puts [exec vlogcomp $file]
+		#foreach file $file_list {
+		#	puts [exec vlogcomp $file]
+		#}
+		puts [exec vlogcomp $glbl_path]
+		collection foreach obj [search *.v] {
+			puts [exec vlogcomp [object get $obj name]]
 		}
 		puts [exec fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o $verilogTest\_isim_beh work.$verilogTest work.glbl]
 		# return simulation data by running the simulation file
+		puts [exec $verilogTest\_isim_beh -tclbatch .settings/isim_script.tcl]
 	}
 }
 
@@ -291,7 +296,8 @@ switch $option {
 	"set_top_module" {set_top_module [lindex $argv 2]}
 	"get_top_module" {get_top_module}
 	"get_top_modules" {get_top_modules}
-	"simulate" {simulate [lindex $argv 2] [lrange $argv 3 end]}
+	#"simulate" {simulate [lindex $argv 2] [lrange $argv 3 end]}
+	"simulate" {simulate [lindex $argv 2] [lindex $argv 3]}
 	"generate_programming_file" {generate_programming_file}
 	default {puts "Error: option invalid"}
 }
