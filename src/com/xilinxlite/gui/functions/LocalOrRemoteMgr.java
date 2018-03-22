@@ -17,6 +17,7 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign {
 	private static final Logger logger = Logger.getLogger(LocalOrRemoteMgr.class.getName());
 
 	private CommunicationMgr mgr = null;
+	private File workingDirectoryPath;
 	private File settingsFolderPath;
 	private LayoutController masterLayout;
 
@@ -28,12 +29,16 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign {
 	 *            Pass reference to CommunicatonMgr
 	 * @param settingsFolderPath
 	 *            Location for Settings folder
+	 * @param workingDirectoryPath
+	 *            Location for desired working directory
 	 * @param masterLayout
 	 *            Parent layout
 	 */
-	public LocalOrRemoteMgr(CommunicationMgr mgr, File settingsFolderPath, LayoutController masterLayout) {
+	public LocalOrRemoteMgr(CommunicationMgr mgr, File settingsFolderPath, File workingDirectoryPath,
+			LayoutController masterLayout) {
 		this.mgr = mgr;
 		this.settingsFolderPath = settingsFolderPath;
+		this.workingDirectoryPath = workingDirectoryPath;
 		this.masterLayout = masterLayout;
 	}
 
@@ -42,7 +47,7 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign {
 	 */
 	@Override
 	protected void setLocal() {
-		new LocalSettingMgr(mgr, settingsFolderPath).launch();
+		new LocalSettingMgr(mgr, settingsFolderPath, workingDirectoryPath).launch();
 		if (mgr.isLocal()) {
 			masterLayout.updateLayout(new ProjectViewMgr()); // to update with next layout
 		}

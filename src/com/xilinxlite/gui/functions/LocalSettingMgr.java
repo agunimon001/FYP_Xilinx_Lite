@@ -26,6 +26,7 @@ public class LocalSettingMgr extends LocalSettingDesign {
 
 	private CommunicationMgr cmdMgr = null;
 
+	private File workingDirectoryPath;
 	private File settingsFolderPath;
 	private String scriptPath = "";
 	private File config;
@@ -39,10 +40,13 @@ public class LocalSettingMgr extends LocalSettingDesign {
 	 *            Reference to CommunicationMgr
 	 * @param settingsFolderPath
 	 *            Path for Settings folder
+	 * @param workingDirectoryPath
+	 *            Path for desired working directory
 	 */
-	public LocalSettingMgr(CommunicationMgr cmdMgr, File settingsFolderPath) {
+	public LocalSettingMgr(CommunicationMgr cmdMgr, File settingsFolderPath, File workingDirectoryPath) {
 		this.cmdMgr = cmdMgr;
 		this.settingsFolderPath = settingsFolderPath;
+		this.workingDirectoryPath = workingDirectoryPath;
 		this.config = new File(this.settingsFolderPath + File.separator + "XilinxLite_config.properties");
 		this.props = PropertiesController.load(this.config);
 	}
@@ -74,8 +78,7 @@ public class LocalSettingMgr extends LocalSettingDesign {
 		xtclshPathField.setText(value != null ? value : "");
 
 		value = props.get(KEY.KEY_WD);
-		workingDirectoryField
-				.setText(value != null ? value : System.getProperty("user.home") + File.separator + "Xilinx_Lite");
+		workingDirectoryField.setText(value != null ? value : workingDirectoryPath.getAbsolutePath());
 
 		logger.log(Level.INFO, "Initializing complete.");
 	}

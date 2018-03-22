@@ -73,7 +73,7 @@ public class MainApplication extends Application implements LayoutController {
 		updater.update();
 
 		// Instantiate LocalOrRemoteMgr and update to main window
-		DesignManager dm = new LocalOrRemoteMgr(cmdMgr, SETTINGS_FOLDER, this);
+		DesignManager dm = new LocalOrRemoteMgr(cmdMgr, SETTINGS_FOLDER, ROOT_FOLDER, this);
 		updateLayout(dm);
 
 		// Set scene and show window
