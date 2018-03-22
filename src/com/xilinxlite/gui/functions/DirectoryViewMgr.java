@@ -245,11 +245,16 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select file...");
 		fc.setInitialDirectory(new File(fnPack.getWorkingDirectory()));
-		fc.setSelectedExtensionFilter(new ExtensionFilter("Verilog file", "*.v"));
-		File file = fc.showOpenDialog(new Stage());
+		fc.getExtensionFilters().add(new ExtensionFilter("Verilog file", "*.v"));
+		List<File> files = fc.showOpenMultipleDialog(new Stage());
 
-		if (file != null) {
-			addVerilogFile(file);
+		if (files != null) {
+			for (File file : files) {
+				if (!addVerilogFile(file)) {
+					logger.log(Level.WARNING, "Fail to add file: " + file.getName());
+					// Consider adding error handling for each failed file
+				}
+			}
 			updateVerilogFiles();
 			updateModules();
 		}
