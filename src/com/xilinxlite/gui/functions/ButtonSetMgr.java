@@ -28,8 +28,10 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 
 	@Override
 	public void update() {
-		synthesizeBtn.setDisable(fnPack.isProjectClosed());
-		simulateBtn.setDisable(fnPack.isProjectClosed());
+		boolean projectClosed = fnPack.isProjectClosed();
+		synthesizeBtn.setDisable(projectClosed);
+		simulateBtn.setDisable(projectClosed);
+		generatePrgFileBtn.setDisable(projectClosed);
 	}
 
 	@Override

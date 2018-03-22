@@ -55,7 +55,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 		projectNameField.setDisable(!createProject);
 		workingDirectoryField.setDisable(!createProject);
 		saveBtn.setDisable(!createProject && cmd.getProjectName().isEmpty());
-		directoryChooserBtn.setDisable(saveBtn.isDisabled());
+		directoryChooserBtn.setDisable(!createProject);
 
 		List<String> architectList = cmd.getArchitectList();
 		familyField.getItems().addAll(architectList);

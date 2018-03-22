@@ -19,6 +19,7 @@ public class SummaryTableMgr extends SummaryTableDesign implements Updateable {
 	 */
 	public SummaryTableMgr() {
 		fnPack = FunctionPack.getInstance();
+		updateConnectionStatus();
 	}
 
 	@Override

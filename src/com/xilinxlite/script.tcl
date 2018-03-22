@@ -189,6 +189,17 @@ proc add_file {fileVar} {
 	}
 }
 
+# not tested
+proc add_files {files} {
+	if [open_project] {
+		foreach item $files {
+			xfile add $item
+			puts [search $item]
+		}
+		project save
+	}
+}
+
 proc remove_file {fileVar} {
 	if [open_project] {
 		xfile remove $fileVar
@@ -273,6 +284,7 @@ switch $option {
 	"get_family_list" {get_family_list}
 	"get_arch_data" {get_arch_data [lindex $argv 2]}
 	"add_file" {add_file [lindex $argv 2]}
+	"add_files" {add_file [lrange $argv 2 end]}
 	"remove_file" {remove_file [lindex $argv 2]}
 	"view_files" {view_files}
 	"set_family" {set_family [lindex $argv 2]}
