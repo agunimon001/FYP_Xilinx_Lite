@@ -315,6 +315,10 @@ public class CommunicationMgr implements Commands {
 
 	@Override
 	public void simulate(String moduleName) {
+		int index = moduleName.indexOf('/');
+		if (index != -1) {
+			moduleName = moduleName.substring(0, index);
+		}
 		logger.fine("Simulating for " + moduleName);
 		cmd.simulate(moduleName);
 	}

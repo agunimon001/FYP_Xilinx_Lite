@@ -19,6 +19,7 @@ public abstract class ButtonSetDesign implements DesignManager {
 	protected Button synthesizeBtn = new Button("Synthesize");
 	protected Button simulateBtn = new Button("Simulate");
 	protected Button generatePrgFileBtn = new Button("Generate Programming File");
+	protected Button filterBtn = new Button("Filter");
 
 	@Override
 	public Pane getLayout() {
@@ -34,8 +35,10 @@ public abstract class ButtonSetDesign implements DesignManager {
 		synthesizeBtn.setOnAction(e -> synthesize());
 		simulateBtn.setOnAction(e -> simulate());
 		generatePrgFileBtn.setOnAction(e -> generatePrgFile());
+		filterBtn.setOnAction(e -> filter());
 
-		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, simulateBtn, generatePrgFileBtn);
+		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, simulateBtn, generatePrgFileBtn,
+				filterBtn);
 
 		return layout;
 	}
@@ -64,10 +67,15 @@ public abstract class ButtonSetDesign implements DesignManager {
 	 * Simulate currently opened project
 	 */
 	protected abstract void simulate();
-	
+
 	/**
 	 * Generate Programming File
 	 */
 	protected abstract void generatePrgFile();
+	
+	/**
+	 * Filters message. Used for synthesis report.
+	 */
+	protected abstract void filter();
 
 }

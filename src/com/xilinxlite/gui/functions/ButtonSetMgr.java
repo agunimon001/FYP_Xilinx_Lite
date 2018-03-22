@@ -21,9 +21,14 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 	private FunctionPack fnPack;
 	
 	private DirectoryViewMgr dvm;
+	private MessageViewMgr mvm;
 	
 	public void setDirectoryViewMgr(DirectoryViewMgr dvm) {
 		this.dvm = dvm;
+	}
+	
+	public void setMessageViewMgr(MessageViewMgr mvm) {
+		this.mvm = mvm;
 	}
 
 	@Override
@@ -32,6 +37,7 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 		synthesizeBtn.setDisable(projectClosed);
 		simulateBtn.setDisable(projectClosed);
 		generatePrgFileBtn.setDisable(projectClosed);
+		filterBtn.setDisable(projectClosed);
 	}
 
 	@Override
@@ -74,6 +80,11 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 	@Override
 	protected void generatePrgFile() {
 		fnPack.generatePrgFile();
+	}
+
+	@Override
+	protected void filter() {
+		mvm.filterSynthesisReport();
 	}
 
 }

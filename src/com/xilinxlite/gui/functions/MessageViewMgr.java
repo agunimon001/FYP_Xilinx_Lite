@@ -21,6 +21,10 @@ public class MessageViewMgr extends MessageViewDesign implements Updateable {
 	private static final Logger logger = Logger.getLogger(MessageViewMgr.class.getCanonicalName());
 
 	private FunctionPack fnPack = FunctionPack.getInstance();
+	
+	public void filterSynthesisReport() {
+		// TODO: setup filter for synthesis report
+	}
 
 	@Override
 	public void update() {
@@ -89,15 +93,5 @@ public class MessageViewMgr extends MessageViewDesign implements Updateable {
 		viewFile(null);
 		logger.setLevel(level);
 	}
-
-	// private void viewSynthesisReport() {
-	// String content = fileView.getText();
-	// String output =
-	//
-	// Pattern p = Pattern.compile("Number of Slice LUTs:\\s+(\\d+\\s+out
-	// of\\s+\\d+\\s+\\d+%)");
-	// Matcher m = p.matcher(content);
-	//
-	// }
 
 }

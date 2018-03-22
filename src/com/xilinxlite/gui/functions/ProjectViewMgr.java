@@ -51,6 +51,9 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 		if (dvMgr != null) {
 			bsMgr.setDirectoryViewMgr(dvMgr);
 		}
+		if (mvMgr != null) {
+			bsMgr.setMessageViewMgr(mvMgr);
+		}
 		return pane.getLayout();
 	}
 
@@ -61,6 +64,9 @@ public class ProjectViewMgr extends ProjectViewDesign implements Updateable {
 		mvMgr = pane;
 		if (dvMgr != null) {
 			dvMgr.setMessageViewMgr(mvMgr);
+		}
+		if (bsMgr != null) {
+			bsMgr.setMessageViewMgr(mvMgr);
 		}
 		return pane.getLayout();
 	}
