@@ -7,6 +7,7 @@ import com.xilinxlite.gui.ButtonSetDesign;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Tooltip;
 
 /**
  * Function implementation for ButtonSetDesign.
@@ -47,6 +48,13 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 		if (fnPack == null) {
 			logger.log(Level.SEVERE, "No FunctionPack detected.", new Exception());
 		}
+		
+		createProjectBtn.setTooltip(new Tooltip("Creates new project"));
+		openProjectBtn.setTooltip(new Tooltip("Opens existing project"));
+		synthesizeBtn.setTooltip(new Tooltip("Synthesizes top module"));
+		simulateBtn.setTooltip(new Tooltip("Simulates for selected Modules item in Project Explorer."));
+		generatePrgFileBtn.setTooltip(new Tooltip("Generates programming file for top module"));
+		
 		update();
 	}
 
