@@ -240,4 +240,16 @@ public class SshCommands implements Commands {
 		
 	}
 
+	@Override
+	public void resetTopModule() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean addFiles(String... filenames) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

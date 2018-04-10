@@ -108,6 +108,7 @@ public abstract class LocalSettingDesign {
 	 */
 	private void directoryChooser(TextField txt) {
 		DirectoryChooser chooser = new DirectoryChooser();
+		chooser.setInitialDirectory(new File(workingDirectoryField.getText()));
 		File file = chooser.showDialog(new Stage());
 		if (file != null) {
 			txt.setText(file.getAbsolutePath());

@@ -183,9 +183,8 @@ proc get_arch_data {arch} {
 
 proc add_file {fileVar} {
 	if [open_project] {
-		xfile add $fileVar
+		puts [xfile add $fileVar]
 		project save
-		puts [search $fileVar]
 	}
 }
 
@@ -193,8 +192,7 @@ proc add_file {fileVar} {
 proc add_files {files} {
 	if [open_project] {
 		foreach item $files {
-			xfile add $item
-			puts [search $item]
+			puts [xfile add $item]
 		}
 		project save
 	}
@@ -204,7 +202,6 @@ proc remove_file {fileVar} {
 	if [open_project] {
 		xfile remove $fileVar
 		project save
-		puts [search $fileVar]
 	}
 }
 
@@ -236,7 +233,7 @@ proc simulate {verilogTest glbl_path} {
 		}
 		puts [exec fuse -intstyle ise -incremental -lib unisims_ver -lib unimacro_ver -lib xilinxcorelib_ver -lib secureip -o $verilogTest\_isim_beh work.$verilogTest work.glbl]
 		# return simulation data by running the simulation file
-		puts [exec $verilogTest\_isim_beh -tclbatch .settings/isim_script.tcl]
+		puts [exec $verilogTest\_isim_beh -tclbatch [file dirname [info script]]/isim_script.tcl]
 	}
 }
 
@@ -259,10 +256,78 @@ proc get_top_module {} {
 	}
 }
 
+proc reset_top_module {} {
+	if [open_project] {
+		project set "Auto Implementation Top" true
+	}
+}
+
 proc generate_programming_file {} {
 	if [open_project] {
 		puts [process run "Generate Programming File" -force rerun_all]
 	}
+}
+
+proc process {cmd_list} {
+	if ![string match "/*" [lindex $cmd_list 0]] {
+		return 0
+	}
+	
+	puts $cmd_list
+	
+	set next [lsearch -start 1 $cmd_list "/*"]
+	if [expr $next == -1] {set next 2}
+	if [string equal [lindex $cmd_list 0] "/set_top_module"] {set next [expr $next + 1]}
+	set instruction_set [lrange $cmd_list 0 [expr $next - 1]]
+	
+	set flag 1
+	
+	puts $instruction_set
+	set option [string range [lindex $instruction_set 0] 1 end]
+	puts "xilinx_cmd_start: $option"
+	switch $option {
+		"end" {#do nothing}
+		"open_project" {open_project}
+		"synthesize" {synthesize}
+		"clean" {clean}
+		"new_project" {new_project}
+		"get_attributes" {get_attributes}
+		"get_family_list" {get_family_list}
+		"get_arch_data" {get_arch_data [lindex $instruction_set 1]}
+		"add_file" {add_file [lindex $instruction_set 1]}
+		"add_files" {add_file [lrange $instruction_set 1 end]}
+		"remove_file" {remove_file [lindex $instruction_set 1]}
+		"view_files" {view_files}
+		"set_family" {set_family [lindex $instruction_set 1]}
+		"get_family" {get_family}
+		"set_device" {set_device [lindex $instruction_set 1]}
+		"get_device" {get_device}
+		"set_package" {set_package [lindex $instruction_set 1]}
+		"get_package" {get_package}
+		"set_speed" {set_speed [lindex $instruction_set 1]}
+		"get_speed" {get_speed}
+		"set_top_level_source_type" {set_top_level_source_type [lindex $instruction_set 1]}
+		"get_top_level_source_type" {get_top_level_source_type}
+		"set_synthesis" {set_synthesis [lindex $instruction_set 1]}
+		"get_synthesis" {get_synthesis}
+		"set_simulator" {set_simulator [lindex $instruction_set 1]}
+		"get_simulator" {get_simulator}
+		"set_language" {set_language [lindex $instruction_set 1]}
+		"get_language" {get_language}
+		"set_message_filter" {set_message_filter [lindex $instruction_set 1]}
+		"get_message_filter" {get_message_filter}
+		"set_top_module" {set_top_module [lindex $instruction_set 1]}
+		"get_top_module" {get_top_module}
+		"get_top_modules" {get_top_modules}
+		"reset_top_module" {reset_top_module}
+		#"simulate" {simulate [lindex $instruction_set 1] [lrange $instruction_set 3 end]}
+		"simulate" {simulate [lindex $instruction_set 1] [lindex $instruction_set 2]}
+		"generate_programming_file" {generate_programming_file}
+		default {puts "Error: option $option invalid"}
+	}
+	puts "xilinx_cmd_end: $option"
+	
+	return [expr $flag || [process [lrange $cmd_list $next end]]]
 }
 
 # == Main Code ==
@@ -273,43 +338,9 @@ if {[llength $argv] < 2} {
 }
 
 set projectName [lindex $argv 0]
-set option [lindex $argv 1]
+set suppress_message [open_project]
+puts $argv
 
-switch $option {
-	"open_project" {open_project}
-	"synthesize" {synthesize}
-	"clean" {clean}
-	"new_project" {new_project}
-	"get_attributes" {get_attributes}
-	"get_family_list" {get_family_list}
-	"get_arch_data" {get_arch_data [lindex $argv 2]}
-	"add_file" {add_file [lindex $argv 2]}
-	"add_files" {add_file [lrange $argv 2 end]}
-	"remove_file" {remove_file [lindex $argv 2]}
-	"view_files" {view_files}
-	"set_family" {set_family [lindex $argv 2]}
-	"get_family" {get_family}
-	"set_device" {set_device [lindex $argv 2]}
-	"get_device" {get_device}
-	"set_package" {set_package [lindex $argv 2]}
-	"get_package" {get_package}
-	"set_speed" {set_speed [lindex $argv 2]}
-	"get_speed" {get_speed}
-	"set_top_level_source_type" {set_top_level_source_type [lindex $argv 2]}
-	"get_top_level_source_type" {get_top_level_source_type}
-	"set_synthesis" {set_synthesis [lindex $argv 2]}
-	"get_synthesis" {get_synthesis}
-	"set_simulator" {set_simulator [lindex $argv 2]}
-	"get_simulator" {get_simulator}
-	"set_language" {set_language [lindex $argv 2]}
-	"get_language" {get_language}
-	"set_message_filter" {set_message_filter [lindex $argv 2]}
-	"get_message_filter" {get_message_filter}
-	"set_top_module" {set_top_module [lindex $argv 2]}
-	"get_top_module" {get_top_module}
-	"get_top_modules" {get_top_modules}
-	#"simulate" {simulate [lindex $argv 2] [lrange $argv 3 end]}
-	"simulate" {simulate [lindex $argv 2] [lindex $argv 3]}
-	"generate_programming_file" {generate_programming_file}
-	default {puts "Error: option invalid"}
-}
+set arg_list [lrange $argv 1 end]
+lappend arg_list /end
+process $arg_list

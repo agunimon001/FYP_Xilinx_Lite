@@ -50,7 +50,8 @@ public class CommunicationMgr implements Commands {
 		// Try to establish local connection
 		try {
 			logger.info("Establishing local connection...");
-			cmd = new XtclshCommands(xtclshPath, tclScriptPath, workingDirectory);
+//			cmd = new XtclshCommands(xtclshPath, tclScriptPath, workingDirectory);
+			cmd = new XtclshCommandsChainImpl(xtclshPath, tclScriptPath, workingDirectory);
 			boolean flag = ((XtclshCommands) cmd).testConnection();
 			logger.log(Level.CONFIG, "Connection status: " + flag);
 			return flag;
@@ -351,6 +352,18 @@ public class CommunicationMgr implements Commands {
 	public void generatePrgFile() {
 		logger.fine("Generating programming file");
 		cmd.generatePrgFile();
+	}
+
+	@Override
+	public void resetTopModule() {
+		logger.fine("Reseting top module");
+		cmd.resetTopModule();
+	}
+
+	@Override
+	public boolean addFiles(String... filenames) {
+		logger.fine("Adding files to project.");
+		return cmd.addFiles(filenames);
 	}
 
 }

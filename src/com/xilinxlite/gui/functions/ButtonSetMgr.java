@@ -1,5 +1,9 @@
 package com.xilinxlite.gui.functions;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,6 +11,8 @@ import com.xilinxlite.gui.ButtonSetDesign;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 
 /**
@@ -93,6 +99,35 @@ public class ButtonSetMgr extends ButtonSetDesign implements Updateable {
 	@Override
 	protected void filter() {
 		mvm.filterSynthesisReport();
+	}
+
+	@Override
+	protected void generateVerilogTestFixture() {
+		// TODO
+		File source_file = dvm.getselectedVerilogName();
+		String dest_name = source_file.toString().replace(".v", "_test");
+		
+		TextInputDialog dialog = new TextInputDialog(dest_name);
+		dialog.setHeaderText("Creating Verilog Test Fixture...");
+		dialog.setContentText("Enter Verilog test fixture name:");
+		
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			File generatedFile;
+			if ((generatedFile = VerilogTestFixtureGenerator.parse(source_file, result.get())) != null) {
+				try {
+					Desktop.getDesktop().open(generatedFile);
+				} catch (IOException e) {
+					logger.log(Level.WARNING, "Error opening generated file.", e);
+				}
+				fnPack.addFile(generatedFile.getAbsolutePath());
+				fnPack.update();
+			} else {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("Error generating Verilog test fixture.");
+				alert.show();
+			}
+		}
 	}
 
 }

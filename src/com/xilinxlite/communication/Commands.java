@@ -242,6 +242,15 @@ public interface Commands {
 	public boolean addFile(String filename);
 
 	/**
+	 * Adds files to a project
+	 * 
+	 * @param filenames
+	 *            Provide absolute path of files to add.
+	 * @return True if adding files are successful; false if otherwise.
+	 */
+	public boolean addFiles(String... filenames);
+
+	/**
 	 * Removes file from a project.
 	 * 
 	 * @param filename
@@ -324,5 +333,10 @@ public interface Commands {
 	 * Generate programming file for the project's top module.
 	 */
 	public void generatePrgFile();
+
+	/**
+	 * Function to reset top module if file for top module has been removed.
+	 */
+	public void resetTopModule();
 
 }

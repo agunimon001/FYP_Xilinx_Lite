@@ -17,6 +17,7 @@ public abstract class ButtonSetDesign implements DesignManager {
 	protected Button createProjectBtn = new Button("Create Project");
 	protected Button openProjectBtn = new Button("Open Project");
 	protected Button synthesizeBtn = new Button("Synthesize");
+	protected Button tbBtn = new Button("Generate Verilog Test Fixture");
 	protected Button simulateBtn = new Button("Simulate");
 	protected Button generatePrgFileBtn = new Button("Generate Programming File");
 	protected Button filterBtn = new Button("Filter");
@@ -33,12 +34,13 @@ public abstract class ButtonSetDesign implements DesignManager {
 		createProjectBtn.setOnAction(e -> createProject());
 		openProjectBtn.setOnAction(e -> openProject());
 		synthesizeBtn.setOnAction(e -> synthesize());
+		tbBtn.setOnAction(e -> generateVerilogTestFixture());
 		simulateBtn.setOnAction(e -> simulate());
 		generatePrgFileBtn.setOnAction(e -> generatePrgFile());
 		filterBtn.setOnAction(e -> filter());
 
-		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, simulateBtn, generatePrgFileBtn,
-				filterBtn);
+		layout.getChildren().addAll(createProjectBtn, openProjectBtn, synthesizeBtn, tbBtn, simulateBtn,
+				generatePrgFileBtn, filterBtn);
 
 		return layout;
 	}
@@ -62,6 +64,11 @@ public abstract class ButtonSetDesign implements DesignManager {
 	 * Synthesize currently opened project
 	 */
 	protected abstract void synthesize();
+	
+	/**
+	 * Generates Verilog test fixtures
+	 */
+	protected abstract void generateVerilogTestFixture();
 
 	/**
 	 * Simulate currently opened project
@@ -72,7 +79,7 @@ public abstract class ButtonSetDesign implements DesignManager {
 	 * Generate Programming File
 	 */
 	protected abstract void generatePrgFile();
-	
+
 	/**
 	 * Filters message. Used for synthesis report.
 	 */

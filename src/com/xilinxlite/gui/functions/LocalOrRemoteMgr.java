@@ -20,6 +20,10 @@ public class LocalOrRemoteMgr extends LocalOrRemoteDesign {
 	private File workingDirectoryPath;
 	private File settingsFolderPath;
 	private LayoutController masterLayout;
+	
+	public LocalOrRemoteMgr() {
+		
+	}
 
 	/**
 	 * Sets up instance of LocalOrRemoteMgr. Remember to call getLayout() to get the

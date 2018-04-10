@@ -24,7 +24,6 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 	private static Logger logger = Logger.getLogger(ProjectSettingsMgr.class.getName());
 
 	private FunctionPack fnPack = FunctionPack.getInstance();
-	private CommunicationMgr cmd;
 
 	private boolean createProject = false;
 
@@ -50,14 +49,13 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 
 	@Override
 	protected void initialize() {
-		cmd = fnPack.getCommunicationMgr();
 
 		projectNameField.setDisable(!createProject);
 		workingDirectoryField.setDisable(!createProject);
-		saveBtn.setDisable(!createProject && cmd.getProjectName().isEmpty());
+		saveBtn.setDisable(!createProject && fnPack.isProjectClosed());
 		directoryChooserBtn.setDisable(!createProject);
 
-		List<String> architectList = cmd.getArchitectList();
+		List<String> architectList = fnPack.getArchitectList();
 		familyField.getItems().addAll(architectList);
 
 		topLevelSourceTypeField.getItems().add("HDL");
@@ -68,14 +66,14 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 
 		preferredLanguageField.getItems().add("Verilog");
 
-		workingDirectoryField.setText(cmd.getWorkingDirectory());
+		workingDirectoryField.setText(fnPack.getWorkingDirectory());
 
-		if (cmd.getProjectName().isEmpty()) {
+		if (fnPack.getProjectName().isEmpty()) {
 			setDefault();
 		} else {
 			// Use XilinxAttribute as key to Map<> from attributes.get()
-			attributes = cmd.getAttributes();
-			projectNameField.setText(cmd.getProjectName());
+			attributes = fnPack.getAttributes();
+			projectNameField.setText(fnPack.getProjectName());
 			familyField.setValue(attributes.get(XilinxAttribute.FAMILY.toString()));
 			deviceField.setValue(attributes.get(XilinxAttribute.DEVICE.toString()));
 			packageField.setValue(attributes.get(XilinxAttribute.PACKAGE.toString()));
@@ -89,7 +87,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 
 	@Override
 	protected void loadFamily() {
-		architectData = cmd.getArchitectData(familyField.getValue());
+		architectData = fnPack.getArchitectData(familyField.getValue());
 		deviceField.getItems().clear();
 		deviceField.getItems().addAll(architectData.keySet());
 		deviceField.setValue(deviceField.getItems().get(0));
@@ -172,14 +170,14 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 
 		// Change working directory if new working directory is not equal to
 		// CommunicationMgr's
-		if (!cmd.getWorkingDirectory().equals(workingDirectoryField.getText())) {
-			cmd.setWorkingDirectory(workingDirectoryField.getText());
+		if (!fnPack.getWorkingDirectory().equals(workingDirectoryField.getText())) {
+			fnPack.setWorkingDirectory(workingDirectoryField.getText());
 		}
 
 		// If project creation is successful, obtain attributes of created project
-		if (createProject && cmd.getProjectName().isEmpty() && !projectNameField.getText().isEmpty()) {
-			if (cmd.newProject(projectNameField.getText())) {
-				attributes = cmd.getAttributes();
+		if (createProject && fnPack.isProjectClosed() && !projectNameField.getText().isEmpty()) {
+			if (fnPack.newProject(projectNameField.getText())) {
+				attributes = fnPack.getAttributes();
 			} else {
 				// Alert if a project with the same name is found
 				Alert alert = new Alert(AlertType.ERROR);
@@ -209,7 +207,7 @@ public class ProjectSettingsMgr extends ProjectSettingsDesign {
 		if (!preferredLanguageField.getValue().equals(attributes.get(XilinxAttribute.LANGUAGE.toString())))
 			attr.put(XilinxAttribute.LANGUAGE.toString(), preferredLanguageField.getValue());
 
-		cmd.setAttributes(attr);
+		fnPack.setAttributes(attr);
 
 		fnPack.update();
 

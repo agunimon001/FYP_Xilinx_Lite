@@ -2,6 +2,7 @@ package com.xilinxlite.gui.functions;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,10 +119,10 @@ public class FunctionPack {
 	/**
 	 * Prompts user to locate a project to open.
 	 */
-	public void openProject() {
+	public boolean openProject() {
 		// Check for open project
 		if (!checkAndCloseProject())
-			return;
+			return false;
 
 		// Execute FileChooser to obtain project path
 		FileChooser fc = new FileChooser();
@@ -155,6 +156,7 @@ public class FunctionPack {
 				// Updates updater if project opens successfully
 				if (cmdMgr.openProject(m.group("name"))) {
 					updater.update();
+					return true;
 				}
 
 				// Project fails to open
@@ -169,6 +171,8 @@ public class FunctionPack {
 				}
 			}
 		}
+
+		return false;
 
 	}
 
@@ -203,6 +207,9 @@ public class FunctionPack {
 	 * Updates assigned Updateable.
 	 */
 	public void update() {
+		if (updater == null) {
+			logger.log(Level.WARNING, "Updater has nothing", new Exception());
+		}
 		updater.update();
 	}
 
@@ -232,6 +239,16 @@ public class FunctionPack {
 	 */
 	public boolean addFile(String filepath) {
 		return cmdMgr.addFile(filepath);
+	}
+
+	/**
+	 * Adds files indicated by filepath to project.
+	 * 
+	 * @param filepath
+	 * @return True if added successfully; false if otherwise
+	 */
+	public boolean addFiles(String... filepath) {
+		return cmdMgr.addFiles(filepath);
 	}
 
 	/**
@@ -303,5 +320,33 @@ public class FunctionPack {
 	 */
 	public void generatePrgFile() {
 		cmdMgr.generatePrgFile();
+	}
+
+	public List<String> getArchitectList() {
+		return cmdMgr.getArchitectList();
+	}
+
+	public Map<String, String> getAttributes() {
+		return cmdMgr.getAttributes();
+	}
+
+	public Map<String, Map<String, String[]>> getArchitectData(String family) {
+		return cmdMgr.getArchitectData(family);
+	}
+
+	public void setWorkingDirectory(String wd) {
+		cmdMgr.setWorkingDirectory(wd);
+	}
+
+	public boolean newProject(String projectName) {
+		return cmdMgr.newProject(projectName);
+	}
+
+	public void setAttributes(Map<String, String> attributes) {
+		cmdMgr.setAttributes(attributes);
+	}
+
+	public void resetTopModule() {
+		cmdMgr.resetTopModule();
 	}
 }

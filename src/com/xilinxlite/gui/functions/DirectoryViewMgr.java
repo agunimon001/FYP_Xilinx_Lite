@@ -1,6 +1,8 @@
 package com.xilinxlite.gui.functions;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -150,6 +152,10 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	}
 
 	private void updateModules() {
+		updateModules(false);
+	}
+
+	private void updateModules(boolean retry) {
 
 		String top = fnPack.getTopModule();
 		List<String> modules = fnPack.getTopModules();
@@ -164,9 +170,12 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		else if (!modules.contains(top)) {
 			System.out.println("top : " + top);
 			for (String s : modules) {
-				System.out.println("s : " + s);
+				System.out.println("s : " + s + " : " + s.equals(top));
 			}
-			logger.log(Level.WARNING, "Error with top", new Exception());
+			logger.log(Level.WARNING, "Error with top. Attempt to reconfigure top.", new Exception());
+			fnPack.resetTopModule();
+			updateModules(true);
+			return;
 		}
 
 		else {
@@ -202,6 +211,15 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 			return true;
 		} else
 			return false;
+	}
+
+	private boolean addVerilogFiles(File... files) {
+		String[] paths = new String[files.length];
+		int i = 0;
+		for (File file : files) {
+			paths[i++] = file.getAbsolutePath();
+		}
+		return fnPack.addFiles(paths);
 	}
 
 	private boolean removeVerilogFile(File file) {
@@ -241,7 +259,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 	}
 
 	@Override
-	protected void addFile() {
+	protected void addFiles() {
 		FileChooser fc = new FileChooser();
 		fc.setTitle("Select file...");
 		fc.setInitialDirectory(new File(fnPack.getWorkingDirectory()));
@@ -249,12 +267,7 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 		List<File> files = fc.showOpenMultipleDialog(new Stage());
 
 		if (files != null) {
-			for (File file : files) {
-				if (!addVerilogFile(file)) {
-					logger.log(Level.WARNING, "Fail to add file: " + file.getName());
-					// Consider adding error handling for each failed file
-				}
-			}
+			addVerilogFiles(files.toArray(new File[0]));
 			updateVerilogFiles();
 			updateModules();
 		}
@@ -314,6 +327,25 @@ public class DirectoryViewMgr extends DirectoryViewDesign implements Updateable 
 				fnPack.setTopModule(item);
 				updateModules();
 			}
+		}
+	}
+
+	public File getselectedVerilogName() {
+		TreeItem<Object> item = treeView.getSelectionModel().getSelectedItem();
+
+		if (verilogFiles.getChildren().contains(item)) {
+			return (File) item.getValue();
+		}
+
+		return null;
+	}
+
+	@Override
+	protected void openExplorer() {
+		try {
+			Desktop.getDesktop().browse(new File(fnPack.getWorkingDirectory()).toURI());
+		} catch (IOException e) {
+			logger.log(Level.WARNING, "Unable to open file explorer.", e);
 		}
 	}
 

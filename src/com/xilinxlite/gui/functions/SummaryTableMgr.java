@@ -36,6 +36,17 @@ public class SummaryTableMgr extends SummaryTableDesign implements Updateable {
 	public void update() {
 		updateProjectTitle();
 		updateConnectionStatus();
+		updateWorkingDirectory();
+	}
+
+	@Override
+	protected void setStatus(String message) {
+		status.setText(message);
+	}
+
+	@Override
+	protected void updateWorkingDirectory() {
+		workingDirectory.setText(fnPack.getWorkingDirectory());
 	}
 
 }

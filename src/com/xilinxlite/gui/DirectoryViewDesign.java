@@ -1,5 +1,7 @@
 package com.xilinxlite.gui;
 
+import java.awt.Desktop;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,6 +25,7 @@ public abstract class DirectoryViewDesign implements DesignManager {
 	protected TreeView<Object> treeView = new TreeView<>();
 	protected TreeItem<Object> root = new TreeItem<>("root");
 
+	protected Button openExplorer = new Button("Open");
 	protected Button addFile = new Button("Add");
 	protected Button removeFile = new Button("Remove Selected");
 	protected Button refreshBtn = new Button("Refresh");
@@ -44,7 +47,10 @@ public abstract class DirectoryViewDesign implements DesignManager {
 		// Heading
 		VBox layout1 = new VBox(10);
 		layout.setTop(layout1);
-		layout1.getChildren().addAll(heading, new Separator());
+		BorderPane layout1a = new BorderPane(); layout1a.setLeft(heading);layout1a.setRight(openExplorer); layout1a.setAlignment(heading, Pos.CENTER_LEFT);
+		layout1.getChildren().addAll(layout1a, new Separator());
+		
+		openExplorer.setOnAction(e -> openExplorer());
 
 		// Set TreeView with empty TreeItem root
 		layout.setCenter(treeView);
@@ -61,7 +67,7 @@ public abstract class DirectoryViewDesign implements DesignManager {
 		layout2a.setAlignment(Pos.CENTER);
 		layout2a.setPadding(new Insets(10));
 
-		addFile.setOnAction(e -> addFile());
+		addFile.setOnAction(e -> addFiles());
 		removeFile.setOnAction(e -> removeFile());
 
 		HBox layout2b = new HBox(10);
@@ -80,11 +86,16 @@ public abstract class DirectoryViewDesign implements DesignManager {
 	 * Initial settings to layout
 	 */
 	protected abstract void initialize();
+	
+	/**
+	 * Opens working directory
+	 */
+	protected abstract void openExplorer();
 
 	/**
 	 * Added file to project
 	 */
-	protected abstract void addFile();
+	protected abstract void addFiles();
 
 	/**
 	 * Remove selected file
